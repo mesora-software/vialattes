@@ -55,13 +55,13 @@ export default function Dashboard() {
       {/* Background */}
       <div
         className="
-          fixed
+          absolute
           inset-0
-          -z-10
+          z-0
           bg-cover
           bg-center
           bg-no-repeat
-          opacity-[0.55]
+          opacity-[0.35]
         "
         style={{
           backgroundImage:
@@ -69,7 +69,7 @@ export default function Dashboard() {
         }}
       />
 
-      <div className="mx-20 my-8 flex min-h-[calc(100vh-64px)] flex-col">
+      <div className="relative z-10 mx-20 my-8 flex min-h-[calc(100vh-64px)] flex-col">
 
         {/* HEADER */}
         <header className="flex items-center">

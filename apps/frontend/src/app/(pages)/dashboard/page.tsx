@@ -19,7 +19,7 @@ const modules = [
   {
     name: "Dinâmica",
     moduleId: "module02-dinamica",
-    image: "/images/assets/game-modules/dynamics.svg",
+    image: "/images/assets/game-modules/dynamic.svg",
     stars: 4,
   },
   {
@@ -31,7 +31,7 @@ const modules = [
   {
     name: "Estática",
     moduleId: "module04-estatica",
-    image: "/images/assets/game-modules/statics.svg",
+    image: "/images/assets/game-modules/static.svg",
     stars: 4,
   },
   {
@@ -43,7 +43,7 @@ const modules = [
   {
     name: "Eletromagnetismo",
     moduleId: "module06-eletromagnetismo",
-    image: "/images/assets/game-modules/electromagnetism.svg",
+    image: "/images/assets/game-modules/eletromagnetism.svg",
     stars: 4,
   },
 ];
@@ -149,7 +149,7 @@ export default function Dashboard() {
 
           <DashboardAction
             name="Conquistas"
-            image="/images/assets/ui/achievements.svg"
+            image="/images/assets/ui/rewards.svg"
             href="/conquistas"
           />
 

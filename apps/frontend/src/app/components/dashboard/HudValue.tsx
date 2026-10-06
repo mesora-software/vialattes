@@ -25,8 +25,8 @@ export default function HudValue({
         className="
           -ml-3
           flex
-          h-[42px]
-          min-w-[110px]
+          h-10.5
+          min-w-
           items-center
           justify-center
           rounded-r-full

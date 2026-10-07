@@ -13,41 +13,54 @@ export default function HudValue({
 }: HudValueProps) {
   return (
     <div className="flex items-center">
+      {/* Ícone */}
       <Image
         src={icon}
         alt={alt}
         width={50}
         height={50}
-        className="relative z-10 object-contain"
+        className="relative z-20 object-contain"
       />
 
+      {/* Moldura do visor */}
       <div
         className="
-          -ml-3
-          flex
-          h-10.5
-          min-w-
-          items-center
-          justify-center
-          rounded-r-full
-          rounded-l-lg
-          border-2
-          border-transparent
-          bg-[linear-gradient(#402e6a,#402e6a)_padding-box,radial-gradient(circle_at_50%_50%,#f8f8f8,#7458a9)_border-box]
-          px-4
+          -ml-8
+          rounded-r-lg
+          rounded-l-xl
+          p-0.5
         "
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
+        }}
       >
-        <span
+        {/* Interior do visor */}
+        <div
           className="
-            text-xl
-            font-bold
-            text-[#fdd501]
+            flex
+            h-9
+            min-w-25
+            items-center
+            justify-center
+            rounded-r-lg
+            rounded-l-lg
+
+            bg-[#402e6a]/90
+            px-6
           "
-          style={{ fontFamily: '"Comic Octo", cursive' }}
         >
-          {value}
-        </span>
+          <span
+            className="text-xl font-bold text-[#fdd501]"
+            style={{
+              fontFamily: '"Comic Octo", cursive',
+            }}
+          >
+            {value}
+          </span>
+        </div>
       </div>
     </div>
   );
 }
+

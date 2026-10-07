@@ -119,7 +119,7 @@ export default function Dashboard() {
 
         {/* MAIN */}
         <section className="flex flex-1 items-center justify-center">
-          <div className="flex w-full items-start justify-between">
+          <div className="flex w-full items-start justify-center gap-30">
             {modules.map((module) => (
               <ModuleCard
                 key={module.moduleId}
@@ -133,7 +133,7 @@ export default function Dashboard() {
         </section>
 
         {/* FOOTER */}
-        <footer className="flex items-center justify-center gap-8">
+        <footer className="flex items-center justify-center gap-30">
 
           <DashboardAction
             name="Colônia"

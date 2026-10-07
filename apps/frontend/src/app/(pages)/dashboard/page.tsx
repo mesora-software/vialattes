@@ -133,7 +133,7 @@ export default function Dashboard() {
         </section>
 
         {/* FOOTER */}
-        <footer className="flex items-center justify-center gap-30">
+        <footer className="flex items-center justify-center gap-50">
 
           <DashboardAction
             name="Colônia"

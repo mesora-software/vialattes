@@ -21,36 +21,52 @@ export default function DashboardAction({
       href={href}
       className="flex items-center transition-transform duration-200 hover:scale-105"
     >
+      {/* Ícone */}
       <Image
         src={image}
         alt={name}
         width={width}
         height={height}
-        className="relative z-10 object-contain"
+        className="relative z-20 object-contain"
       />
 
+      {/* Moldura do visor */}
       <div
         className="
-          -ml-4
-          flex
-          h-10.5
-          min-w-30
-          items-center
-          justify-center
-          rounded-r-full
-          rounded-l-lg
-          border-2
-          border-transparent
-          bg-[linear-gradient(#402e6a,#402e6a)_padding-box,radial-gradient(circle_at_50%_50%,#f8f8f8,#7458a9)_border-box]
-          px-4
+          -ml-8
+          rounded-r-lg
+          rounded-l-xl
+          p-0.5
         "
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
+        }}
       >
-        <span
-          className="text-lg font-bold text-[#fdd501]"
-          style={{ fontFamily: '"Comic Octo", cursive' }}
+        {/* Interior do visor */}
+        <div
+          className="
+            flex
+            h-9
+            min-w-20
+            items-center
+            justify-center
+            rounded-r-lg
+            rounded-l-lg
+
+            bg-[#402e6a]/90
+            px-6
+          "
         >
-          {name}
-        </span>
+          <span
+            className="text-xl font-bold text-[#fdd501]"
+            style={{
+              fontFamily: '"Comic Octo", cursive',
+            }}
+          >
+            {name}
+          </span>
+        </div>
       </div>
     </Link>
   );

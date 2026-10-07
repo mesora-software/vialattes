@@ -19,14 +19,15 @@ export default function ModuleCard({
       href={`/modules/${moduleId}`}
       className="flex flex-col items-center transition-transform duration-200 hover:scale-105"
     >
-      <div className="mb-2 flex h-6 items-center justify-center gap-1">
+      <div className="mb-2 flex items-center justify-center gap-1">
         {Array.from({ length: stars }).map((_, index) => (
-          <span
+          <Image
             key={index}
-            className="text-xl text-[#fdd501]"
-          >
-            ★
-          </span>
+            src="/images/assets/ui/star-empty.svg"
+            alt="estrela vazia"
+            width={24}
+            height={24}
+          />
         ))}
       </div>
 

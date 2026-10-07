@@ -75,7 +75,7 @@ export default function Dashboard() {
         <header className="flex items-center">
 
           {/* Patente */}
-          <div className="w-30 shrink-0">
+          <div className="w-30 shrink-0 -translate-4">
             <Image
               src="/images/assets/patents/recruit.svg"
               alt="Recruta"
@@ -86,7 +86,7 @@ export default function Dashboard() {
           </div>
 
           {/* XP + Lattecoins */}
-          <div className="flex flex-1 justify-center gap-8">
+          <div className="flex flex-1 justify-center gap-8 -translate-y-10">
 
             <HudValue
               icon="/images/assets/ui/xp.svg"
@@ -103,7 +103,7 @@ export default function Dashboard() {
           </div>
 
           {/* Login */}
-          <div className="flex w-25 shrink-0 justify-end">
+          <div className="flex w-25 shrink-0 justify-end -translate-4">
             <button type="button">
               <Image
                 src="/images/assets/ui/login.svg"

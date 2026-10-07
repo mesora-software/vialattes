@@ -13,8 +13,8 @@ export default function DashboardAction({
   name,
   image,
   href,
-  width = 110,
-  height = 110,
+  width = 100,
+  height = 100,
 }: DashboardActionProps) {
   return (
     <Link
@@ -59,7 +59,7 @@ export default function DashboardAction({
           "
         >
           <span
-            className="text-xl font-bold text-[#fdd501]"
+            className="text-xl font-extrabold text-[#fdd501]"
             style={{
               fontFamily: '"Comic Octo", cursive',
             }}

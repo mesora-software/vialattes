@@ -16,7 +16,7 @@ const modules = [
     moduleId: "module01-cinematica",
     image: "/images/assets/game-modules/kinematics.svg",
     stars: 4,
-    position: "-translate-x-[90px] -translate-y-[30px]",
+    position: "-translate-x-[50px] -translate-y-[30px]",
   },
   {
     name: "Dinâmica",
@@ -51,7 +51,7 @@ const modules = [
     moduleId: "module06-eletromagnetismo",
     image: "/images/assets/game-modules/eletromagnetism.svg",
     stars: 4,
-    position: "translate-x-[80px] translate-y-[200px]",
+    position: "translate-x-[40px] translate-y-[200px]",
   },
 ];
 

@@ -40,14 +40,14 @@ export default function HudValue({
           className="
             flex
             h-6
-            min-w-20
+            min-w-10
             items-center
             justify-center
             rounded-r-lg
             rounded-l-lg
 
             bg-[#402e6a]/90
-            px-6
+            px-8
           "
         >
           <span

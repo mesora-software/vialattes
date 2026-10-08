@@ -25,8 +25,8 @@ export default function ModuleCard({
             key={index}
             src="/images/assets/ui/star-empty.svg"
             alt="estrela vazia"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
           />
         ))}
       </div>
@@ -34,13 +34,13 @@ export default function ModuleCard({
       <Image
         src={image}
         alt={name}
-        width={130}
-        height={130}
+        width={100}
+        height={100}
         className="object-contain"
       />
 
       <span
-        className="mt-2 text-center text-xl text-[#fdd501]"
+        className="-mt-2 text-center text-xl text-[#fdd501]"
         style={{ fontFamily: '"Comic Octo", cursive' }}
       >
         {name}

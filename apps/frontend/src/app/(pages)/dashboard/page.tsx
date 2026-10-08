@@ -3,6 +3,7 @@ import Image from "next/image";
 import HudValue from "@/components/dashboard/HudValue";
 import ModuleCard from "@/components/dashboard/ModuleCard";
 import DashboardAction from "@/components/dashboard/DashboardAction";
+import ModulePath from "@/components/dashboard/ModulePath";
 
 const player = {
   xp: 0,
@@ -15,36 +16,42 @@ const modules = [
     moduleId: "module01-cinematica",
     image: "/images/assets/game-modules/kinematics.svg",
     stars: 4,
+    position: "-translate-x-[90px] -translate-y-[30px]",
   },
   {
     name: "Dinâmica",
     moduleId: "module02-dinamica",
     image: "/images/assets/game-modules/dynamic.svg",
     stars: 4,
+    position: "-translate-x-[60px] translate-y-[200px]",
   },
   {
     name: "Energia Mecânica",
     moduleId: "module03-energia-mecanica",
     image: "/images/assets/game-modules/mechanical-energy.svg",
     stars: 4,
+    position: "-translate-x-[30px] -translate-y-[40px]",
   },
   {
     name: "Estática",
     moduleId: "module04-estatica",
     image: "/images/assets/game-modules/static.svg",
     stars: 4,
+    position: "translate-x-[10px] translate-y-[210px]",
   },
   {
     name: "Termologia",
     moduleId: "module05-termologia",
     image: "/images/assets/game-modules/thermology.svg",
     stars: 4,
+    position: "translate-x-[40px] -translate-y-[30px]",
   },
   {
     name: "Eletromagnetismo",
     moduleId: "module06-eletromagnetismo",
     image: "/images/assets/game-modules/eletromagnetism.svg",
     stars: 4,
+    position: "translate-x-[80px] translate-y-[200px]",
   },
 ];
 
@@ -79,8 +86,8 @@ export default function Dashboard() {
             <Image
               src="/images/assets/patents/recruit.svg"
               alt="Recruta"
-              width={100}
-              height={100}
+              width={90}
+              height={90}
               className="object-contain"
             />
           </div>
@@ -117,19 +124,38 @@ export default function Dashboard() {
 
         </header>
 
+        
         {/* MAIN */}
         <section className="flex flex-1 items-center justify-center">
-          <div className="flex w-full items-start justify-center gap-30">
-            {modules.map((module) => (
-              <ModuleCard
-                key={module.moduleId}
-                name={module.name}
-                moduleId={module.moduleId}
-                image={module.image}
-                stars={module.stars}
-              />
-            ))}
+
+          <div className="relative w-full">
+
+            {/* Caminho pontilhado */}
+            <div className="pointer-events-none absolute inset-0 z-0">
+              <ModulePath />
+            </div>
+
+            {/* Módulos */}
+            <div className="relative z-10 grid min-h-90 grid-cols-6 items-start gap-4">
+
+              {modules.map((module) => (
+                <div
+                  key={module.moduleId}
+                  className={module.position}
+                >
+                  <ModuleCard
+                    name={module.name}
+                    moduleId={module.moduleId}
+                    image={module.image}
+                    stars={module.stars}
+                  />
+                </div>
+              ))}
+
+            </div>
+
           </div>
+
         </section>
 
         {/* FOOTER */}

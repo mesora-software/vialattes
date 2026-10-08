@@ -19,16 +19,25 @@ export default function ModuleCard({
       href={`/modules/${moduleId}`}
       className="flex flex-col items-center transition-transform duration-200 hover:scale-105"
     >
-      <div className="mb-2 flex items-center justify-center gap-1">
-        {Array.from({ length: stars }).map((_, index) => (
-          <Image
-            key={index}
-            src="/images/assets/ui/star-empty.svg"
-            alt="estrela vazia"
-            width={20}
-            height={20}
+      <div className="mb-2 flex h-11.25 items-center justify-center gap-1">
+        {Array.from({ length: stars }).map((_, index) => {
+          const center = (stars - 1) / 2;
+          const distance = Math.abs(index - center);
+          const offsetY = distance * distance * 8;
+
+          return (
+            <Image
+              key={index}
+              src="/images/assets/ui/star-empty.svg"
+              alt="estrela vazia"
+              width={20}
+              height={20}
+              style={{ 
+                transform: `translateY(${offsetY}px)`
+              }}
           />
-        ))}
+        );
+      })}
       </div>
 
       <Image
@@ -40,7 +49,7 @@ export default function ModuleCard({
       />
 
       <span
-        className="-mt-2 text-center text-xl text-[#fdd501]"
+        className="-mt-2 text-center text-xl font-extrabold text-[#fdd501]"
         style={{ fontFamily: '"Comic Octo", cursive' }}
       >
         {name}

@@ -16,42 +16,42 @@ const modules = [
     moduleId: "module01-cinematica",
     image: "/images/assets/game-modules/kinematics.svg",
     stars: 4,
-    position: "-translate-x-[50px] -translate-y-[30px]",
+    position: "-translate-x-[40px] -translate-y-[50px]",
   },
   {
     name: "Dinâmica",
     moduleId: "module02-dinamica",
     image: "/images/assets/game-modules/dynamic.svg",
     stars: 4,
-    position: "-translate-x-[60px] translate-y-[200px]",
+    position: "-translate-x-[60px] translate-y-[180px]",
   },
   {
     name: "Energia Mecânica",
     moduleId: "module03-energia-mecanica",
     image: "/images/assets/game-modules/mechanical-energy.svg",
     stars: 4,
-    position: "-translate-x-[30px] -translate-y-[40px]",
+    position: "-translate-x-[20px] -translate-y-[50px]",
   },
   {
     name: "Estática",
     moduleId: "module04-estatica",
     image: "/images/assets/game-modules/static.svg",
     stars: 4,
-    position: "translate-x-[10px] translate-y-[210px]",
+    position: "translate-x-[10px] translate-y-[190px]",
   },
   {
     name: "Termologia",
     moduleId: "module05-termologia",
     image: "/images/assets/game-modules/thermology.svg",
     stars: 4,
-    position: "translate-x-[40px] -translate-y-[30px]",
+    position: "translate-x-[40px] -translate-y-[50px]",
   },
   {
     name: "Eletromagnetismo",
     moduleId: "module06-eletromagnetismo",
     image: "/images/assets/game-modules/eletromagnetism.svg",
     stars: 4,
-    position: "translate-x-[40px] translate-y-[200px]",
+    position: "translate-x-[40px] translate-y-[180px]",
   },
 ];
 
@@ -86,8 +86,8 @@ export default function Dashboard() {
             <Image
               src="/images/assets/patents/recruit.svg"
               alt="Recruta"
-              width={90}
-              height={90}
+              width={100}
+              height={100}
               className="object-contain"
             />
           </div>

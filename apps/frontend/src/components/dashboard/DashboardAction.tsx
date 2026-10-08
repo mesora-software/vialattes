@@ -13,8 +13,8 @@ export default function DashboardAction({
   name,
   image,
   href,
-  width = 100,
-  height = 100,
+  width = 80,
+  height = 80,
 }: DashboardActionProps) {
   return (
     <Link
@@ -33,7 +33,7 @@ export default function DashboardAction({
       {/* Moldura do visor */}
       <div
         className="
-          -ml-8
+          -ml-6
           rounded-r-lg
           rounded-l-xl
           p-0.5

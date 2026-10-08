@@ -79,8 +79,8 @@ export default function Dashboard() {
             <Image
               src="/images/assets/patents/recruit.svg"
               alt="Recruta"
-              width={120}
-              height={120}
+              width={100}
+              height={100}
               className="object-contain"
             />
           </div>
@@ -108,8 +108,8 @@ export default function Dashboard() {
               <Image
                 src="/images/assets/ui/login.svg"
                 alt="Login"
-                width={100}
-                height={100}
+                width={80}
+                height={80}
                 className="object-contain transition-transform duration-200 hover:scale-105"
               />
             </button>

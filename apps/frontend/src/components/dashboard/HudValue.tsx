@@ -17,15 +17,15 @@ export default function HudValue({
       <Image
         src={icon}
         alt={alt}
-        width={50}
-        height={50}
+        width={30}
+        height={30}
         className="relative z-20 object-contain"
       />
 
       {/* Moldura do visor */}
       <div
         className="
-          -ml-8
+          -ml-6
           rounded-r-lg
           rounded-l-xl
           p-0.5
@@ -39,8 +39,8 @@ export default function HudValue({
         <div
           className="
             flex
-            h-9
-            min-w-25
+            h-6
+            min-w-20
             items-center
             justify-center
             rounded-r-lg

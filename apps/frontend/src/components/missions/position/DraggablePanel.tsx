@@ -4,10 +4,21 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type PointerEvent,
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
+
+const subscribe = () => () => {};
+
+function getClientSnapshot() {
+   return true;
+}
+
+function getServerSnapshot() {
+   return false;
+}
 
 interface DraggablePanelProps {
   children: ReactNode;
@@ -23,7 +34,12 @@ export default function DraggablePanel({
 }: DraggablePanelProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+   subscribe,
+   getClientSnapshot,
+   getServerSnapshot
+  );
+
   const [position, setPosition] = useState<Position | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -33,11 +49,6 @@ export default function DraggablePanel({
     offsetX: 0,
     offsetY: 0,
   });
-
-  // O portal permite posicionar o painel em relação à janela.
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Posição inicial: lado direito da tela.
   useEffect(() => {

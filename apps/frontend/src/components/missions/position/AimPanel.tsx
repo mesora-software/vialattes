@@ -51,7 +51,7 @@ export default function AimPanel({
         onClick={onMoveLeft}
         disabled={position <= -10}
         aria-label="Mover drone para esquerda"
-        className="absolute left-[51%] top-[61%] w-[12%] cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+        className="absolute z-20 left-[51%] top-[61%] w-[12%] cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Image
           src={`${assets}/btn-left.svg`}
@@ -68,7 +68,7 @@ export default function AimPanel({
         onClick={onMoveRight}
         disabled={position >= 10}
         aria-label="Mover drone para direita"
-        className="absolute left-[65%] top-[61%] w-[12%] cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+        className="absolute z-20 left-[65%] top-[61%] w-[12%] cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Image
           src={`${assets}/btn-right.svg`}
@@ -84,7 +84,7 @@ export default function AimPanel({
         type="button"
         onClick={onFire}
         aria-label="Disparar bomba"
-        className="absolute left-[20%] top-[60%] w-[59%] cursor-pointer transition-transform hover:scale-[1.03] active:scale-95"
+        className="absolute z-10 left-[20%] top-[60%] w-[59%] cursor-pointer transition-transform hover:scale-[1.03] active:scale-95"
       >
         <Image
           src={`${assets}/btn-fire.svg`}

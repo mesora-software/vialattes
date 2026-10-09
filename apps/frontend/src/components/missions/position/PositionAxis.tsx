@@ -7,23 +7,23 @@ const positions = Array.from(
 export default function PositionAxis() {
   return (
     <div className="relative w-full">
-      {/* Linha do eixo X */}
-      <div className="relative h-[3px] bg-[#fdd501]">
-        {/* Seta na extremidade direita */}
+      <div className="relative h-0.75 bg-[#fdd501]">
         <div
-          className="absolute -right-1 -top-[6px]
+          className="absolute -right-1 -top-1.5
                      h-0 w-0
-                     border-y-[8px] border-y-transparent
-                     border-l-[14px] border-l-[#fdd501]"
+                     border-y-8 border-y-transparent
+                     border-l-14 border-l-[#fdd501]"
         />
       </div>
 
-      {/* Coordenadas */}
-      <div className="mt-3 grid grid-cols-21">
+      <div className="relative mt-3 h-6">
         {positions.map((position) => (
           <span
             key={position}
-            className="text-center text-sm text-[#faf8f1]"
+            className="absolute -translate-x-1/2 text-sm font-bold text-[#fdd501]"
+            style={{
+              left: `${((position + 10) / 20) * 100}%`,
+            }}
           >
             {position}
           </span>
@@ -32,4 +32,5 @@ export default function PositionAxis() {
     </div>
   );
 }
+
 

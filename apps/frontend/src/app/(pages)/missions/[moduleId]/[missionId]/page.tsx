@@ -5,27 +5,27 @@ import PositionGame from "@/components/missions/position/PositionGame";
 
 export default function MissionPage() {
   return (
-    <main className="relative flex min-h-screen flex-col overflow-hidden bg-black">
+    <main className="relative flex min-h-screen w-full flex-col overflow-x-clip bg-black">
       {/* Background */}
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-70"
+        className="pointer-events-none absolute inset-0 bg-cover bg-position-[center_100%] bg-no-repeat opacity-90"
         style={{
           backgroundImage:
             "url('/images/missions/position/background.png')",
         }}
       />
 
-      <div className="relative z-10 mx-[80px] my-[32px] flex flex-1 flex-col">
+      <div className="relative z-10 mx-20 my-2.5 flex min-w-0 flex-1 flex-col">
         {/* Header */}
         <header className="flex items-center justify-between">
           <Image
             src="/images/assets/patents/recruit.svg"
             alt="Recruta"
-            width={120}
-            height={120}
+            width={90}
+            height={90}
           />
 
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-10 -translate-y-8">
             <HudValue
               icon="/images/assets/ui/xp.svg"
               alt="Experiência"
@@ -41,14 +41,14 @@ export default function MissionPage() {
 
           <Link
             href="/dashboard"
-            className="text-xl text-[#fdd501] hover:underline"
+            className="text-xl font-bold text-[#fdd501] -translate-y-8 hover:underline"
           >
             ← Sair da missão
           </Link>
         </header>
 
         {/* Identificação da missão */}
-        <section className="mt-8 text-center">
+        <section className="mt-8 text-start font-bold">
           <h1
             className="text-3xl text-[#fdd501]"
             style={{ fontFamily: '"Posey", cursive' }}
@@ -57,7 +57,7 @@ export default function MissionPage() {
           </h1>
 
           <p
-            className="mt-3 text-lg text-[#faf8f1]"
+            className="mt-3 text-lg font-bold text-[#faf8f1]"
             style={{ fontFamily: '"Posey", cursive' }}
           >
             Determine a posição de cada Zip e acerte o disparo.

@@ -15,8 +15,8 @@ export default function Drone({ position }: DroneProps) {
       <Image
         src="/images/missions/position/drone.svg"
         alt="Drone"
-        width={100}
-        height={100}
+        width={90}
+        height={90}
         priority
       />
     </div>

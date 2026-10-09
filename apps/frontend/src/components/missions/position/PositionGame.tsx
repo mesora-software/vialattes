@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import AimPanel from "./AimPanel";
+import DraggablePanel from "./DraggablePanel";
 import Drone from "./Drone";
 import PositionAxis from "./PositionAxis";
 
@@ -49,15 +50,15 @@ export default function PositionGame() {
     <div className="relative flex min-h-90 min-w-0 flex-1 flex-col">
       {/* Área do drone e painel */}
       <div className="relative flex-1">
-        {/* Painel de mira à direita */}
-        <div className="absolute right-0 top-17.5 z-30 -translate-y-1/2">
+        {/* Painel de mira arrastável */}
+        <DraggablePanel>
           <AimPanel
             position={dronePosition}
             onMoveLeft={moveLeft}
             onMoveRight={moveRight}
             onFire={fire}
           />
-        </div>
+        </DraggablePanel>
 
         {/* Área horizontal do jogo */}
         <div className="absolute inset-x-7.5 inset-y-0">
@@ -86,4 +87,3 @@ export default function PositionGame() {
     </div>
   );
 }
-

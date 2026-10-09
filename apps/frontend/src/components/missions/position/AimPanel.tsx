@@ -140,7 +140,7 @@ export default function AimPanel({
             type="button"
             onClick={() => setIsOpen(true)}
             aria-label="Abrir painel de mira"
-            className="absolute right-[38%] top-[42%] z-30 w-[8%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+            className="absolute right-[39%] top-[23%] z-30 w-[8%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
           >
             <Image
               src={`${assets}/open.svg`}

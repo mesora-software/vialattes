@@ -61,7 +61,7 @@ export default function PositionGame() {
         </DraggablePanel>
 
         {/* Área horizontal do jogo */}
-        <div className="absolute inset-x-7.5 inset-y-0">
+        <div className="pointer-events-none absolute inset-x-7.5 inset-y-0 overflow-visible">
           <Drone position={dronePosition} />
         </div>
       </div>

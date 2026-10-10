@@ -5,7 +5,7 @@ import PositionGame from "@/components/missions/position/PositionGame";
 
 export default function MissionPage() {
   return (
-    <main className="relative flex min-h-screen w-full flex-col overflow-x-clip bg-black">
+    <main className="relative flex min-h-screen w-full max-w-full flex-col overflow-x-clip bg-black">
       {/* Background */}
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-position-[center_100%] bg-no-repeat opacity-90"

@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   useSyncExternalStore,
 } from "react";
@@ -13,6 +14,10 @@ import DraggablePanel from "./DraggablePanel";
 import Drone from "./Drone";
 import PositionAxis from "./PositionAxis";
 import ZipEnemy from "./ZipEnemy";
+import RewardPopup from "./RewardPopup";
+
+import { POSITION_REWARDS } from "@/lib/rewards/reward-config";
+import { grantReward } from "@/lib/rewards/reward-storage";
 
 // Tipos
 type Zip = {
@@ -24,13 +29,20 @@ type Zip = {
 };
 
 type Shot = {
-  id: number;
+  id: string;
   position: number;
   phase: "falling" | "exploding";
 };
 
+type RewardEffect = {
+  id: string;
+  position: number;
+  xp: number;
+  lattecoins: number;
+};
+
 // Configurações
-const TOTAL_ZIPS = 20;
+const TOTAL_ZIPS = POSITION_REWARDS.totalZips;
 const EXPLOSION_DURATION = 500;
 const NEXT_ROUND_DELAY = 500;
 
@@ -45,7 +57,7 @@ function createZips(count: number): Zip[] {
     (_, index) => index - 10
   );
 
-  // Embaralhar as coordenadas sem repetições
+  // Embaralhar coordenadas sem repetições
   for (let i = positions.length - 1; i > 0; i--) {
     const j = getRandomInt(0, i);
 
@@ -69,7 +81,7 @@ const subscribe = () => () => {};
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
-// Componente principal do jogo
+// Lógica principal da missão
 function PositionGameClient() {
   // Estados
   const [dronePosition, setDronePosition] = useState(0);
@@ -79,7 +91,19 @@ function PositionGameClient() {
   const [shot, setShot] = useState<Shot | null>(null);
   const [missionCompleted, setMissionCompleted] = useState(false);
 
+  const [rewardEffects, setRewardEffects] = useState<RewardEffect[]>([]);
+
+  // Evitar processamento duplicado de impactos
+  const processedShots = useRef<Set<string>>(new Set());
+
   const isShooting = shot !== null;
+
+  // Remover animações de recompensa concluídas
+  const removeRewardEffect = useCallback((id: string) => {
+    setRewardEffects((current) =>
+      current.filter((effect) => effect.id !== id)
+    );
+  }, []);
 
   // Movimentação do drone
   const moveLeft = useCallback(() => {
@@ -98,18 +122,18 @@ function PositionGameClient() {
     );
   }, [isShooting, missionCompleted]);
 
-  // Disparo da bomba
+  // Disparar bomba
   const fire = useCallback(() => {
     if (isShooting || missionCompleted) return;
 
     setShot({
-      id: Date.now(),
+      id: crypto.randomUUID(),
       position: dronePosition,
       phase: "falling",
     });
   }, [isShooting, missionCompleted, dronePosition]);
 
-  // Remover um Zip após sua animação de derrota
+  // Remover Zip após a animação de derrota
   const removeZip = useCallback((id: number) => {
     setZips((current) =>
       current.filter((zip) => zip.id !== id)
@@ -120,6 +144,11 @@ function PositionGameClient() {
   const finishBombFall = () => {
     if (!shot || shot.phase !== "falling") return;
 
+    // Impedir que o mesmo impacto seja processado duas vezes
+    if (processedShots.current.has(shot.id)) return;
+
+    processedShots.current.add(shot.id);
+
     const target = zips.find(
       (zip) =>
         zip.position === shot.position &&
@@ -127,6 +156,25 @@ function PositionGameClient() {
     );
 
     if (target) {
+      // Registrar XP e Lattecoins
+      grantReward({
+        id: `position:${shot.id}`,
+        xp: POSITION_REWARDS.xpPerZip,
+        lattecoins: POSITION_REWARDS.lattecoinsPerZip,
+      });
+
+      // Exibir animação de recompensa
+      setRewardEffects((current) => [
+        ...current,
+        {
+          id: shot.id,
+          position: target.position,
+          xp: POSITION_REWARDS.xpPerZip,
+          lattecoins: POSITION_REWARDS.lattecoinsPerZip,
+        },
+      ]);
+
+      // Marcar inimigo como derrotado
       setZips((current) =>
         current.map((zip) =>
           zip.id === target.id
@@ -135,10 +183,11 @@ function PositionGameClient() {
         )
       );
 
+      // Atualizar progresso
       setDefeatedCount((current) => current + 1);
     }
 
-    // Exibir a explosão
+    // Iniciar explosão
     setShot({
       ...shot,
       phase: "exploding",
@@ -150,7 +199,6 @@ function PositionGameClient() {
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target;
 
-      // Ignorar atalhos durante digitação
       if (
         target instanceof HTMLElement &&
         (target.isContentEditable ||
@@ -172,7 +220,6 @@ function PositionGameClient() {
       if (event.code === "Space") {
         event.preventDefault();
 
-        // Evitar disparos repetidos
         if (event.repeat) return;
 
         fire();
@@ -199,13 +246,13 @@ function PositionGameClient() {
 
   // Avançar para a próxima rodada
   useEffect(() => {
-    // Aguardar todos os Zips desaparecerem
+    // Aguardar todos os inimigos desaparecerem
     if (zips.length !== 0) return;
 
-    // Aguardar a explosão terminar
+    // Aguardar o término da explosão
     if (shot !== null) return;
 
-    // Não avançar após concluir a missão
+    // Não criar inimigos após a conclusão
     if (missionCompleted || defeatedCount >= TOTAL_ZIPS) {
       return;
     }
@@ -213,14 +260,14 @@ function PositionGameClient() {
     const timer = window.setTimeout(() => {
       const nextRound = round + 1;
 
-      // Primeiras rodadas: 1, 2 e 3 Zips
-      // Demais rodadas: 1 a 5 Zips
+      // Primeiras rodadas: 1, 2 e 3 inimigos
+      // Rodadas seguintes: 1 a 5 inimigos
       const quantity =
         nextRound <= 3
           ? nextRound
           : getRandomInt(1, 5);
 
-      // Não ultrapassar o total de 20 Zips
+      // Respeitar o limite de 20 inimigos
       const remaining = TOTAL_ZIPS - defeatedCount;
       const finalQuantity = Math.min(quantity, remaining);
 
@@ -340,6 +387,18 @@ function PositionGameClient() {
           />
         ))}
 
+        {/* Animações de recompensa */}
+        {rewardEffects.map((effect) => (
+          <RewardPopup
+            key={effect.id}
+            id={effect.id}
+            position={effect.position}
+            xp={effect.xp}
+            lattecoins={effect.lattecoins}
+            onFinish={removeRewardEffect}
+          />
+        ))}
+
         {/* Explosão */}
         {shot?.phase === "exploding" && (
           <div
@@ -390,10 +449,11 @@ export default function PositionGame() {
     getServerSnapshot
   );
 
-  // Evitar gerar posições aleatórias durante SSR
+  // Gerar posições aleatórias somente no navegador
   if (!mounted) return null;
 
   return <PositionGameClient />;
 }
+
 
 

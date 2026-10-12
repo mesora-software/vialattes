@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import HudValue from "@/components/dashboard/HudValue";
 import PositionGame from "@/components/missions/position/PositionGame";
+import { usePlayerWallet } from "@/hooks/usePlayerWallet";
 
 export default function MissionPage() {
+  const wallet = usePlayerWallet();
+
   return (
     <main className="relative flex min-h-screen w-full max-w-full flex-col overflow-x-clip bg-black">
       {/* Background */}
@@ -29,13 +34,13 @@ export default function MissionPage() {
             <HudValue
               icon="/images/assets/ui/xp.svg"
               alt="Experiência"
-              value={0}
+              value={wallet.xp}
             />
 
             <HudValue
               icon="/images/assets/ui/lattecoin.svg"
               alt="Lattecoins"
-              value={0}
+              value={wallet.lattecoins}
             />
           </div>
 
@@ -70,3 +75,4 @@ export default function MissionPage() {
     </main>
   );
 }
+

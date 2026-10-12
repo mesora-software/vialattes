@@ -1,11 +1,27 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import Image from "next/image";
+
 import AimPanel from "./AimPanel";
 import DraggablePanel from "./DraggablePanel";
 import Drone from "./Drone";
 import PositionAxis from "./PositionAxis";
+import ZipEnemy from "./ZipEnemy";
+
+// Tipos
+type Zip = {
+  id: number;
+  position: number;
+  status: "armed" | "defeated";
+  animationDelay: number;
+  animationDuration: number;
+};
 
 type Shot = {
   id: number;
@@ -13,52 +29,128 @@ type Shot = {
   phase: "falling" | "exploding";
 };
 
-const FALL_DURATION = 900;
+// Configurações
+const TOTAL_ZIPS = 20;
 const EXPLOSION_DURATION = 500;
+const NEXT_ROUND_DELAY = 500;
 
-export default function PositionGame() {
+// Utilitários
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function createZips(count: number): Zip[] {
+  const positions = Array.from(
+    { length: 21 },
+    (_, index) => index - 10
+  );
+
+  // Embaralhar as coordenadas sem repetições
+  for (let i = positions.length - 1; i > 0; i--) {
+    const j = getRandomInt(0, i);
+
+    [positions[i], positions[j]] = [
+      positions[j],
+      positions[i],
+    ];
+  }
+
+  return positions.slice(0, count).map((position, index) => ({
+    id: index,
+    position,
+    status: "armed",
+    animationDelay: -(Math.random() * 4),
+    animationDuration: 1.5 + Math.random() * 2,
+  }));
+}
+
+// Detectar renderização no navegador
+const subscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+// Componente principal do jogo
+function PositionGameClient() {
+  // Estados
   const [dronePosition, setDronePosition] = useState(0);
-  const [zipDefeated, setZipDefeated] = useState(false);
+  const [zips, setZips] = useState<Zip[]>(() => createZips(1));
+  const [defeatedCount, setDefeatedCount] = useState(0);
+  const [round, setRound] = useState(1);
   const [shot, setShot] = useState<Shot | null>(null);
+  const [missionCompleted, setMissionCompleted] = useState(false);
 
-  const zipPosition = 5;
   const isShooting = shot !== null;
 
-  // Movimentação horizontal
+  // Movimentação do drone
   const moveLeft = useCallback(() => {
-    if (isShooting) return;
+    if (isShooting || missionCompleted) return;
 
     setDronePosition((current) =>
       Math.max(-10, current - 1)
     );
-  }, [isShooting]);
+  }, [isShooting, missionCompleted]);
 
   const moveRight = useCallback(() => {
-    if (isShooting) return;
+    if (isShooting || missionCompleted) return;
 
     setDronePosition((current) =>
       Math.min(10, current + 1)
     );
-  }, [isShooting]);
+  }, [isShooting, missionCompleted]);
 
-  // Disparo
+  // Disparo da bomba
   const fire = useCallback(() => {
-    if (isShooting) return;
+    if (isShooting || missionCompleted) return;
 
     setShot({
       id: Date.now(),
       position: dronePosition,
       phase: "falling",
     });
-  }, [isShooting, dronePosition]);
+  }, [isShooting, missionCompleted, dronePosition]);
 
-  
+  // Remover um Zip após sua animação de derrota
+  const removeZip = useCallback((id: number) => {
+    setZips((current) =>
+      current.filter((zip) => zip.id !== id)
+    );
+  }, []);
+
+  // Finalizar a queda da bomba
+  const finishBombFall = () => {
+    if (!shot || shot.phase !== "falling") return;
+
+    const target = zips.find(
+      (zip) =>
+        zip.position === shot.position &&
+        zip.status === "armed"
+    );
+
+    if (target) {
+      setZips((current) =>
+        current.map((zip) =>
+          zip.id === target.id
+            ? { ...zip, status: "defeated" }
+            : zip
+        )
+      );
+
+      setDefeatedCount((current) => current + 1);
+    }
+
+    // Exibir a explosão
+    setShot({
+      ...shot,
+      phase: "exploding",
+    });
+  };
+
   // Controles do teclado
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Evita atalhos enquanto o usuário digita em um campo
       const target = event.target;
 
+      // Ignorar atalhos durante digitação
       if (
         target instanceof HTMLElement &&
         (target.isContentEditable ||
@@ -80,7 +172,7 @@ export default function PositionGame() {
       if (event.code === "Space") {
         event.preventDefault();
 
-        // Evita disparos repetidos ao segurar a tecla
+        // Evitar disparos repetidos
         if (event.repeat) return;
 
         fire();
@@ -94,37 +186,93 @@ export default function PositionGame() {
     };
   }, [moveLeft, moveRight, fire]);
 
-
-  // Controlar queda e explosão
+  // Finalizar a explosão
   useEffect(() => {
-    if (!shot) return;
+    if (!shot || shot.phase !== "exploding") return;
 
-    if (shot.phase === "falling") {
-      const timer = window.setTimeout(() => {
-        if (shot.position === zipPosition) {
-          setZipDefeated(true);
-        }
+    const timer = window.setTimeout(() => {
+      setShot(null);
+    }, EXPLOSION_DURATION);
 
-        setShot({
-          ...shot,
-          phase: "exploding",
-        });
-      }, FALL_DURATION);
-
-      return () => window.clearTimeout(timer);
-    }
-
-    if (shot.phase === "exploding") {
-      const timer = window.setTimeout(() => {
-        setShot(null);
-      }, EXPLOSION_DURATION);
-
-      return () => window.clearTimeout(timer);
-    }
+    return () => window.clearTimeout(timer);
   }, [shot]);
+
+  // Avançar para a próxima rodada
+  useEffect(() => {
+    // Aguardar todos os Zips desaparecerem
+    if (zips.length !== 0) return;
+
+    // Aguardar a explosão terminar
+    if (shot !== null) return;
+
+    // Não avançar após concluir a missão
+    if (missionCompleted || defeatedCount >= TOTAL_ZIPS) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      const nextRound = round + 1;
+
+      // Primeiras rodadas: 1, 2 e 3 Zips
+      // Demais rodadas: 1 a 5 Zips
+      const quantity =
+        nextRound <= 3
+          ? nextRound
+          : getRandomInt(1, 5);
+
+      // Não ultrapassar o total de 20 Zips
+      const remaining = TOTAL_ZIPS - defeatedCount;
+      const finalQuantity = Math.min(quantity, remaining);
+
+      setRound(nextRound);
+      setZips(createZips(finalQuantity));
+    }, NEXT_ROUND_DELAY);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    zips.length,
+    shot,
+    defeatedCount,
+    round,
+    missionCompleted,
+  ]);
+
+  // Verificar conclusão da missão
+  useEffect(() => {
+    if (
+      defeatedCount < TOTAL_ZIPS ||
+      zips.length !== 0 ||
+      shot !== null ||
+      missionCompleted
+    ) {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setMissionCompleted(true);
+    }, 300);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    defeatedCount,
+    zips.length,
+    shot,
+    missionCompleted,
+  ]);
 
   return (
     <div className="relative flex min-h-90 min-w-0 flex-1 flex-col">
+
+      {/* Progresso da missão */}
+      <div className="relative z-10 text-center text-white">
+        <p className="text-lg font-bold">
+          Zips derrotados: {defeatedCount}/{TOTAL_ZIPS}
+        </p>
+
+        <p className="text-sm">
+          Rodada {round}
+        </p>
+      </div>
 
       {/* Área do drone */}
       <div className="relative flex-1">
@@ -136,7 +284,7 @@ export default function PositionGame() {
             onMoveLeft={moveLeft}
             onMoveRight={moveRight}
             onFire={fire}
-            isShooting={isShooting}
+            isShooting={isShooting || missionCompleted}
           />
         </DraggablePanel>
 
@@ -158,6 +306,11 @@ export default function PositionGame() {
                 width: "40px",
                 height: "40px",
               }}
+              onAnimationEnd={(event) => {
+                if (event.target === event.currentTarget) {
+                  finishBombFall();
+                }
+              }}
             >
               <Image
                 src="/images/missions/position/bomb.svg"
@@ -171,25 +324,21 @@ export default function PositionGame() {
         )}
       </div>
 
-      {/* Eixo X e inimigo */}
+      {/* Eixo X e inimigos */}
       <div className="relative mx-7.5 mb-8 translate-y-7.5">
 
-        {/* Zip */}
-        {!zipDefeated && (
-          <div
-            className="absolute bottom-7.5 -translate-x-1/2"
-            style={{
-              left: `${((zipPosition + 10) / 20) * 100}%`,
-            }}
-          >
-            <Image
-              src="/images/assets/enemies/zip-armed.svg"
-              alt="Inimigo Zip"
-              width={70}
-              height={70}
-            />
-          </div>
-        )}
+        {/* Zips */}
+        {zips.map((zip) => (
+          <ZipEnemy
+            key={`${round}-${zip.id}`}
+            id={zip.id}
+            position={zip.position}
+            status={zip.status}
+            animationDelay={zip.animationDelay}
+            animationDuration={zip.animationDuration}
+            onRemove={removeZip}
+          />
+        ))}
 
         {/* Explosão */}
         {shot?.phase === "exploding" && (
@@ -211,9 +360,40 @@ export default function PositionGame() {
           </div>
         )}
 
+        {/* Eixo de coordenadas */}
         <PositionAxis />
       </div>
+
+      {/* Tela de conclusão */}
+      {missionCompleted && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/75">
+          <div className="rounded-xl border border-green-400 bg-gray-950 p-10 text-center text-white">
+            <h2 className="mb-4 text-3xl font-bold text-green-400">
+              Missão concluída!
+            </h2>
+
+            <p className="text-lg">
+              Você derrotou {TOTAL_ZIPS} Zips!
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+// Componente exportado para o Next.js
+export default function PositionGame() {
+  const mounted = useSyncExternalStore(
+    subscribe,
+    getClientSnapshot,
+    getServerSnapshot
+  );
+
+  // Evitar gerar posições aleatórias durante SSR
+  if (!mounted) return null;
+
+  return <PositionGameClient />;
+}
+
 

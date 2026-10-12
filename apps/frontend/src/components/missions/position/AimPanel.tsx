@@ -8,6 +8,7 @@ interface AimPanelProps {
   onMoveLeft: () => void;
   onMoveRight: () => void;
   onFire: () => void;
+  isShooting: boolean;
 }
 
 export default function AimPanel({
@@ -15,6 +16,7 @@ export default function AimPanel({
   onMoveLeft,
   onMoveRight,
   onFire,
+  isShooting,
 }: AimPanelProps) {
   const assets = "/images/missions/position";
   const [isOpen, setIsOpen] = useState(true);
@@ -83,7 +85,7 @@ export default function AimPanel({
         <button
           type="button"
           onClick={onMoveLeft}
-          disabled={position <= -10}
+          disabled={isShooting || position <= -10}
           aria-label="Mover drone para esquerda"
           className="absolute z-20 left-[51%] top-[61%] w-[12%] cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
@@ -101,7 +103,7 @@ export default function AimPanel({
         <button
           type="button"
           onClick={onMoveRight}
-          disabled={position >= 10}
+          disabled={isShooting || position >= 10}
           aria-label="Mover drone para direita"
           className="absolute z-20 left-[65%] top-[61%] w-[12%] cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
@@ -119,6 +121,7 @@ export default function AimPanel({
         <button
           type="button"
           onClick={onFire}
+          disabled={isShooting}
           aria-label="Disparar bomba"
           className="absolute z-10 left-[20%] top-[60%] w-[59%] cursor-pointer transition-transform hover:scale-[1.03] active:scale-95"
         >

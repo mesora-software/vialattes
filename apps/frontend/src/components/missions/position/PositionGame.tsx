@@ -316,7 +316,7 @@ function PositionGameClient() {
 
       {/* Progresso da missão */}
       <div className="relative z-10 text-center text-white">
-        <p className="text-lg font-bold">
+        <p className="text-lg font-bold text-[#fdd501]">
           Zips derrotados: {defeatedCount}/{TOTAL_ZIPS}
         </p>
 

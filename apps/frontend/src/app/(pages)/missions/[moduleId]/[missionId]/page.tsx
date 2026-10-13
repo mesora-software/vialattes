@@ -13,7 +13,7 @@ export default function MissionPage() {
     <main className="relative flex min-h-screen w-full max-w-full flex-col overflow-x-clip bg-black">
       {/* Background */}
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-position-[center_100%] bg-no-repeat opacity-90"
+        className="pointer-events-none absolute inset-0 bg-cover bg-position-[center_100%] bg-no-repeat opacity-60"
         style={{
           backgroundImage:
             "url('/images/missions/position/background.png')",
@@ -49,6 +49,10 @@ export default function MissionPage() {
           <Link
             href="/dashboard"
             className="text-xl font-bold text-[#fdd501] -translate-y-8 hover:underline"
+            style={{
+              fontFamily: '"Posey", cursive',
+              WebkitTextStroke: "0.3px #000000"
+            }}
           >
             ← Sair da missão
           </Link>
@@ -57,15 +61,21 @@ export default function MissionPage() {
         {/* Identificação da missão */}
         <section className="mt-8 text-start font-bold">
           <h1
-            className="text-3xl text-[#fdd501]"
-            style={{ fontFamily: '"Posey", cursive' }}
+            className="text-3xl font-bold text-[#fdd501]"
+            style={{
+              fontFamily: '"Posey", cursive',
+              WebkitTextStroke: "0.3px #000000"
+            }}
           >
             Cinemática • Posição
           </h1>
 
           <p
             className="mt-3 text-lg font-bold text-[#faf8f1]"
-            style={{ fontFamily: '"Posey", cursive' }}
+            style={{
+              fontFamily: '"Posey", cursive',
+              WebkitTextStroke: "0.3px #000000"
+            }}
           >
             Determine a posição de cada Zip e acerte o disparo.
           </p>

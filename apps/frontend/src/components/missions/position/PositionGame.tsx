@@ -8,6 +8,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import AimPanel from "./AimPanel";
 import DraggablePanel from "./DraggablePanel";
@@ -46,6 +47,8 @@ type RewardEffect = {
 const TOTAL_ZIPS = POSITION_REWARDS.totalZips;
 const EXPLOSION_DURATION = 500;
 const NEXT_ROUND_DELAY = 500;
+const TOTAL_XP = TOTAL_ZIPS * POSITION_REWARDS.xpPerZip;
+const TOTAL_LATTECOINS = TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
 
 // Utilitários
 function getRandomInt(min: number, max: number) {
@@ -429,19 +432,81 @@ function PositionGameClient() {
         <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/75 p-4">
           <GamePanel
             className="w-full max-w-md shadow-2xl"
-            contentClassName="flex-col gap-4 px-8 py-10 text-center"
+            contentClassName="flex-col gap-5 px-8 py-10 text-center"
           >
+            {/* Título */}
             <h2 className="text-3xl font-bold text-[#fdd501]">
               Missão concluída!
             </h2>
 
-            <p className="text-lg text-[#fdd501]">
+            {/* Progresso */}
+            <p className="text-lg text-white">
               Você derrotou {TOTAL_ZIPS} Zips!
             </p>
+
+            {/* Recompensas */}
+            <div className="flex w-full flex-col items-center gap-3">
+              <h3 className="text-xl text-[#fdd501]">
+                Recompensas obtidas
+              </h3>
+
+              <div className="flex items-center justify-center gap-8">
+                {/* XP */}
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/images/assets/ui/xp.svg"
+                    alt="Experiência"
+                    width={30}
+                    height={30}
+                  />
+
+                  <span className="text-xl text-[#fdd501]">
+                    +{TOTAL_XP.toLocaleString("pt-BR")}
+                  </span>
+                </div>
+
+                {/* Lattecoins */}
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/images/assets/ui/lattecoin.svg"
+                    alt="Lattecoins"
+                    width={30}
+                    height={30}
+                  />
+
+                  <span className="text-xl text-[#fdd501]">
+                    +{TOTAL_LATTECOINS.toLocaleString("pt-BR")}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Voltar ao Dashboard */}
+            <Link
+              href="/dashboard"
+              className="
+                mt-3
+                cursor-pointer
+                rounded-lg
+                border-2
+                border-[#fdd501]
+                bg-[#402e6a]
+                px-6
+                py-3
+                text-lg
+                font-bold
+                text-[#fdd501]
+                transition-all
+                duration-200
+                hover:scale-105
+                hover:bg-[#5a4388]
+              "
+            >
+              Voltar ao Dashboard
+            </Link>
           </GamePanel>
         </div>
       )}
-
     </div>
   );
 }

@@ -15,6 +15,7 @@ import Drone from "./Drone";
 import PositionAxis from "./PositionAxis";
 import ZipEnemy from "./ZipEnemy";
 import RewardPopup from "./RewardPopup";
+import GamePanel from "@/components/ui/GamePanel";
 
 import { POSITION_REWARDS } from "@/lib/rewards/reward-config";
 import { grantReward } from "@/lib/rewards/reward-storage";
@@ -422,21 +423,25 @@ function PositionGameClient() {
         {/* Eixo de coordenadas */}
         <PositionAxis />
       </div>
-
+  
       {/* Tela de conclusão */}
       {missionCompleted && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/75">
-          <div className="rounded-xl border border-green-400 bg-gray-950 p-10 text-center text-white">
-            <h2 className="mb-4 text-3xl font-bold text-green-400">
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/75 p-4">
+          <GamePanel
+            className="w-full max-w-md shadow-2xl"
+            contentClassName="flex-col gap-4 px-8 py-10 text-center"
+          >
+            <h2 className="text-3xl font-bold text-[#fdd501]">
               Missão concluída!
             </h2>
 
-            <p className="text-lg">
+            <p className="text-lg text-[#fdd501]">
               Você derrotou {TOTAL_ZIPS} Zips!
             </p>
-          </div>
+          </GamePanel>
         </div>
       )}
+
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import HudValue from "@/components/dashboard/HudValue";
+import HudValue from "@/components/ui/HudValue";
 import ModuleCard from "@/components/dashboard/ModuleCard";
 import DashboardAction from "@/components/dashboard/DashboardAction";
 import ModulePath from "@/components/dashboard/ModulePath";

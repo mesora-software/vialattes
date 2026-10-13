@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import HudValue from "@/components/dashboard/HudValue";
+import HudValue from "@/components/ui/HudValue";
 import PositionGame from "@/components/missions/position/PositionGame";
 import { usePlayerWallet } from "@/hooks/usePlayerWallet";
 
@@ -30,6 +30,7 @@ export default function MissionPage() {
             height={90}
           />
 
+          {/* XP */ }
           <div className="flex items-center gap-10 -translate-y-8">
             <HudValue
               icon="/images/assets/ui/xp.svg"
@@ -37,6 +38,7 @@ export default function MissionPage() {
               value={wallet.xp}
             />
 
+            {/* Lattecoins */ }
             <HudValue
               icon="/images/assets/ui/lattecoin.svg"
               alt="Lattecoins"

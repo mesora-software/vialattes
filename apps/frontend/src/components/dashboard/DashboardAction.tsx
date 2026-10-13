@@ -9,6 +9,16 @@ interface DashboardActionProps {
   height?: number;
 }
 
+/**
+ * DashboardAction
+ *
+ * Renders an interactive action button for dashboard features.
+ * Handles action-specific presentation and user interactions.
+ *
+ * Unlike GamePanel, which provides reusable visual styling,
+ * this component is designed for dashboard-specific actions.
+ */
+
 export default function DashboardAction({
   name,
   image,

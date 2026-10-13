@@ -1,4 +1,5 @@
 import Image from "next/image";
+import GamePanel from "@/components/ui/GamePanel";
 
 interface HudValueProps {
   icon: string;
@@ -22,45 +23,15 @@ export default function HudValue({
         className="relative z-20 object-contain"
       />
 
-      {/* Moldura do visor */}
-      <div
-        className="
-          -ml-6
-          rounded-r-lg
-          rounded-l-xl
-          p-0.5
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
-        }}
+      {/* Visor */}
+      <GamePanel
+        className="-ml-6"
+        contentClassName="h-6 min-w-10 px-8 text-xl"
       >
-        {/* Interior do visor */}
-        <div
-          className="
-            flex
-            h-6
-            min-w-10
-            items-center
-            justify-center
-            rounded-r-lg
-            rounded-l-lg
-
-            bg-[#402e6a]/90
-            px-8
-          "
-        >
-          <span
-            className="text-xl font-bold text-[#fdd501]"
-            style={{
-              fontFamily: '"Comic Octo", cursive',
-            }}
-          >
-            {value}
-          </span>
-        </div>
-      </div>
+        {value}
+      </GamePanel>
     </div>
   );
 }
+
 

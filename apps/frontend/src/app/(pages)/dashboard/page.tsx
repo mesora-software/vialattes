@@ -7,6 +7,7 @@ import ModuleCard from "@/components/dashboard/ModuleCard";
 import DashboardAction from "@/components/dashboard/DashboardAction";
 import ModulePath from "@/components/dashboard/ModulePath";
 import { usePlayerWallet } from "@/hooks/usePlayerWallet";
+import GamePanel from "@/components/ui/GamePanel";
 
 const modules = [
   {
@@ -107,7 +108,7 @@ export default function Dashboard() {
             />
 
           </div>
-   
+          
           {/* Login */}
           <div className="flex w-25 shrink-0 justify-end -translate-4">
             <div className="group relative">
@@ -138,43 +139,16 @@ export default function Dashboard() {
                   translate-x-15
                   z-50
                   mt-2
-                  rounded-r-lg
-                  rounded-l-xl
-                  p-0.5
                   opacity-0
                   transition-opacity
                   duration-200
                   group-hover:opacity-100
                   group-focus-within:opacity-100
                 "
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
-                }}
               >
-                {/* Interior do aviso */}
-                <div
-                  className="
-                    flex
-                    items-center
-                    justify-center
-                    whitespace-nowrap
-                    rounded-r-lg
-                    rounded-l-lg
-                    bg-[#402e6a]/90
-                    px-4
-                    py-2
-                  "
-                >
-                  <span
-                    className="text-base font-bold text-[#fdd501]"
-                    style={{
-                      fontFamily: '"Comic Octo", cursive',
-                    }}
-                  >
-                    Login disponível em breve!
-                  </span>
-                </div>
+                <GamePanel contentClassName="whitespace-nowrap px-4 py-2 text-base">
+                  Login disponível em breve!
+                </GamePanel>
               </div>
             </div>
           </div>

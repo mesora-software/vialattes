@@ -107,23 +107,80 @@ export default function Dashboard() {
             />
 
           </div>
-
+   
           {/* Login */}
           <div className="flex w-25 shrink-0 justify-end -translate-4">
-            <button type="button">
-              <Image
-                src="/images/assets/ui/login.svg"
-                alt="Login"
-                width={80}
-                height={80}
-                className="object-contain transition-transform duration-200 hover:scale-105"
-              />
-            </button>
+            <div className="group relative">
+              <button
+                type="button"
+                className="cursor-pointer"
+                aria-label="Login disponível em breve"
+                aria-describedby="login-tooltip"
+              >
+                <Image
+                  src="/images/assets/ui/login.svg"
+                  alt="Login"
+                  width={80}
+                  height={80}
+                  className="object-contain transition-transform duration-200 group-hover:scale-105"
+                />
+              </button>
+
+              {/* Aviso de indisponibilidade */}
+              <div
+                id="login-tooltip"
+                role="tooltip"
+                className="
+                  pointer-events-none
+                  absolute
+                  top-full
+                  right-0
+                  translate-x-15
+                  z-50
+                  mt-2
+                  rounded-r-lg
+                  rounded-l-xl
+                  p-0.5
+                  opacity-0
+                  transition-opacity
+                  duration-200
+                  group-hover:opacity-100
+                  group-focus-within:opacity-100
+                "
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
+                }}
+              >
+                {/* Interior do aviso */}
+                <div
+                  className="
+                    flex
+                    items-center
+                    justify-center
+                    whitespace-nowrap
+                    rounded-r-lg
+                    rounded-l-lg
+                    bg-[#402e6a]/90
+                    px-4
+                    py-2
+                  "
+                >
+                  <span
+                    className="text-base font-bold text-[#fdd501]"
+                    style={{
+                      fontFamily: '"Comic Octo", cursive',
+                    }}
+                  >
+                    Login disponível em breve!
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
         </header>
-
-        
+       
         {/* MAIN */}
         <section className="flex flex-1 items-center justify-center">
 

@@ -1,14 +1,12 @@
+"use client";
+
 import Image from "next/image";
 
 import HudValue from "@/components/dashboard/HudValue";
 import ModuleCard from "@/components/dashboard/ModuleCard";
 import DashboardAction from "@/components/dashboard/DashboardAction";
 import ModulePath from "@/components/dashboard/ModulePath";
-
-const player = {
-  xp: 0,
-  lattecoins: 0,
-};
+import { usePlayerWallet } from "@/hooks/usePlayerWallet";
 
 const modules = [
   {
@@ -56,6 +54,7 @@ const modules = [
 ];
 
 export default function Dashboard() {
+  const wallet = usePlayerWallet();
   return (
     <main className="relative min-h-screen overflow-hidden bg-black">
 
@@ -97,14 +96,14 @@ export default function Dashboard() {
 
             <HudValue
               icon="/images/assets/ui/xp.svg"
-              value={player.xp}
               alt="Experiência"
+              value={wallet.xp}
             />
 
             <HudValue
               icon="/images/assets/ui/lattecoin.svg"
-              value={player.lattecoins}
               alt="Lattecoins"
+              value={wallet.lattecoins}
             />
 
           </div>

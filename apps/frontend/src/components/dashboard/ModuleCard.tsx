@@ -45,6 +45,7 @@ export default function ModuleCard({
                 alt="Estrela vazia"
                 width={20}
                 height={20}
+                loading="eager"
                 style={{
                   transform: `translateY(${offsetY}px)`,
                 }}
@@ -59,6 +60,7 @@ export default function ModuleCard({
           alt={name}
           width={100}
           height={100}
+          loading="eager"
           className="object-contain"
         />
 
@@ -79,6 +81,7 @@ export default function ModuleCard({
             alt="Módulo bloqueado"
             width={55}
             height={55}
+            loading="eager"
             className="drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]"
           />
         </div>

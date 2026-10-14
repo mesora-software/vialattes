@@ -37,6 +37,7 @@ export default function DashboardAction({
         alt={name}
         width={width}
         height={height}
+        loading="eager"
         className="relative z-20 object-contain"
       />
 

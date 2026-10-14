@@ -1,5 +1,4 @@
 "use client";
-
 import {
   useCallback,
   useEffect,
@@ -9,7 +8,6 @@ import {
 } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
 import AimPanel from "./AimPanel";
 import DraggablePanel from "./DraggablePanel";
 import Drone from "./Drone";
@@ -17,10 +15,8 @@ import PositionAxis from "./PositionAxis";
 import ZipEnemy from "./ZipEnemy";
 import RewardPopup from "./RewardPopup";
 import GamePanel from "@/components/ui/GamePanel";
-
 import { POSITION_REWARDS } from "@/lib/rewards/reward-config";
 import { grantReward } from "@/lib/rewards/reward-storage";
-
 // Tipos
 type Zip = {
   id: number;
@@ -29,48 +25,40 @@ type Zip = {
   animationDelay: number;
   animationDuration: number;
 };
-
 type Shot = {
   id: string;
   position: number;
   phase: "falling" | "exploding";
 };
-
 type RewardEffect = {
   id: string;
   position: number;
   xp: number;
   lattecoins: number;
 };
-
 // Configurações
 const TOTAL_ZIPS = POSITION_REWARDS.totalZips;
 const EXPLOSION_DURATION = 500;
 const NEXT_ROUND_DELAY = 500;
 const TOTAL_XP = TOTAL_ZIPS * POSITION_REWARDS.xpPerZip;
 const TOTAL_LATTECOINS = TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
-
 // Utilitários
 function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
 function createZips(count: number): Zip[] {
   const positions = Array.from(
     { length: 21 },
     (_, index) => index - 10
   );
-
   // Embaralhar coordenadas sem repetições
   for (let i = positions.length - 1; i > 0; i--) {
     const j = getRandomInt(0, i);
-
     [positions[i], positions[j]] = [
       positions[j],
       positions[i],
     ];
   }
-
   return positions.slice(0, count).map((position, index) => ({
     id: index,
     position,
@@ -79,12 +67,10 @@ function createZips(count: number): Zip[] {
     animationDuration: 1.5 + Math.random() * 2,
   }));
 }
-
 // Detectar renderização no navegador
 const subscribe = () => () => {};
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
-
 // Lógica principal da missão
 function PositionGameClient() {
   // Estados
@@ -94,71 +80,64 @@ function PositionGameClient() {
   const [round, setRound] = useState(1);
   const [shot, setShot] = useState<Shot | null>(null);
   const [missionCompleted, setMissionCompleted] = useState(false);
-
+  const [bombDistance, setBombDistance] = useState(0);
   const [rewardEffects, setRewardEffects] = useState<RewardEffect[]>([]);
-
   // Evitar processamento duplicado de impactos
   const processedShots = useRef<Set<string>>(new Set());
-
+  const bombAreaRef = useRef<HTMLDivElement>(null);
   const isShooting = shot !== null;
-
   // Remover animações de recompensa concluídas
   const removeRewardEffect = useCallback((id: string) => {
     setRewardEffects((current) =>
       current.filter((effect) => effect.id !== id)
     );
   }, []);
-
   // Movimentação do drone
   const moveLeft = useCallback(() => {
     if (isShooting || missionCompleted) return;
-
     setDronePosition((current) =>
       Math.max(-10, current - 1)
     );
   }, [isShooting, missionCompleted]);
-
   const moveRight = useCallback(() => {
     if (isShooting || missionCompleted) return;
-
     setDronePosition((current) =>
       Math.min(10, current + 1)
     );
   }, [isShooting, missionCompleted]);
-
   // Disparar bomba
   const fire = useCallback(() => {
     if (isShooting || missionCompleted) return;
-
+    const area = bombAreaRef.current;
+    if (!area) return;
+    const BOMB_SIZE = 40;
+    const AXIS_OFFSET = 30;
+    setBombDistance(
+      area.getBoundingClientRect().height - BOMB_SIZE + AXIS_OFFSET
+    );
     setShot({
       id: crypto.randomUUID(),
       position: dronePosition,
       phase: "falling",
     });
   }, [isShooting, missionCompleted, dronePosition]);
-
   // Remover Zip após a animação de derrota
   const removeZip = useCallback((id: number) => {
     setZips((current) =>
       current.filter((zip) => zip.id !== id)
     );
   }, []);
-
   // Finalizar a queda da bomba
   const finishBombFall = () => {
     if (!shot || shot.phase !== "falling") return;
-
     // Impedir que o mesmo impacto seja processado duas vezes
     if (processedShots.current.has(shot.id)) return;
-
     processedShots.current.add(shot.id);
-
     const target = zips.find(
       (zip) =>
         zip.position === shot.position &&
         zip.status === "armed"
     );
-
     if (target) {
       // Registrar XP e Lattecoins
       grantReward({
@@ -166,7 +145,6 @@ function PositionGameClient() {
         xp: POSITION_REWARDS.xpPerZip,
         lattecoins: POSITION_REWARDS.lattecoinsPerZip,
       });
-
       // Exibir animação de recompensa
       setRewardEffects((current) => [
         ...current,
@@ -177,7 +155,6 @@ function PositionGameClient() {
           lattecoins: POSITION_REWARDS.lattecoinsPerZip,
         },
       ]);
-
       // Marcar inimigo como derrotado
       setZips((current) =>
         current.map((zip) =>
@@ -186,23 +163,19 @@ function PositionGameClient() {
             : zip
         )
       );
-
       // Atualizar progresso
       setDefeatedCount((current) => current + 1);
     }
-
     // Iniciar explosão
     setShot({
       ...shot,
       phase: "exploding",
     });
   };
-
   // Controles do teclado
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target;
-
       if (
         target instanceof HTMLElement &&
         (target.isContentEditable ||
@@ -210,75 +183,57 @@ function PositionGameClient() {
       ) {
         return;
       }
-
       if (event.key === "ArrowLeft") {
         event.preventDefault();
         moveLeft();
       }
-
       if (event.key === "ArrowRight") {
         event.preventDefault();
         moveRight();
       }
-
       if (event.code === "Space") {
         event.preventDefault();
-
         if (event.repeat) return;
-
         fire();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [moveLeft, moveRight, fire]);
-
-  // Finalizar a explosão
+  // Encerrar a explosão após sua duração
   useEffect(() => {
-    if (!shot || shot.phase !== "exploding") return;
-
+    if (shot?.phase !== "exploding") return;
     const timer = window.setTimeout(() => {
       setShot(null);
     }, EXPLOSION_DURATION);
-
     return () => window.clearTimeout(timer);
   }, [shot]);
-
   // Avançar para a próxima rodada
   useEffect(() => {
     // Aguardar todos os inimigos desaparecerem
     if (zips.length !== 0) return;
-
     // Aguardar o término da explosão
     if (shot !== null) return;
-
     // Não criar inimigos após a conclusão
     if (missionCompleted || defeatedCount >= TOTAL_ZIPS) {
       return;
     }
-
     const timer = window.setTimeout(() => {
       const nextRound = round + 1;
-
       // Primeiras rodadas: 1, 2 e 3 inimigos
       // Rodadas seguintes: 1 a 5 inimigos
       const quantity =
         nextRound <= 3
           ? nextRound
           : getRandomInt(1, 5);
-
       // Respeitar o limite de 20 inimigos
       const remaining = TOTAL_ZIPS - defeatedCount;
       const finalQuantity = Math.min(quantity, remaining);
-
       setRound(nextRound);
       setZips(createZips(finalQuantity));
     }, NEXT_ROUND_DELAY);
-
     return () => window.clearTimeout(timer);
   }, [
     zips.length,
@@ -287,7 +242,6 @@ function PositionGameClient() {
     round,
     missionCompleted,
   ]);
-
   // Verificar conclusão da missão
   useEffect(() => {
     if (
@@ -298,11 +252,9 @@ function PositionGameClient() {
     ) {
       return;
     }
-
     const timer = window.setTimeout(() => {
       setMissionCompleted(true);
     }, 300);
-
     return () => window.clearTimeout(timer);
   }, [
     defeatedCount,
@@ -311,23 +263,30 @@ function PositionGameClient() {
     missionCompleted,
   ]);
 
+  // Preparar a imagem da explosão antecipadamente
+  useEffect(() => {
+    const explosionImage = new window.Image();
+
+    explosionImage.src = "/images/missions/position/explosion.gif";
+
+    explosionImage.decode().catch(() => {
+      // O navegador poderá utilizar a imagem normalmente.
+    });
+  }, []);
+
   return (
     <div className="relative flex min-h-90 min-w-0 flex-1 flex-col">
-
       {/* Progresso da missão */}
       <div className="relative z-10 text-center text-white">
         <p className="text-lg font-bold text-[#fdd501]">
           Zips derrotados: {defeatedCount}/{TOTAL_ZIPS}
         </p>
-
         <p className="text-sm">
           Rodada {round}
         </p>
       </div>
-
       {/* Área do drone */}
       <div className="relative flex-1">
-
         {/* Painel de mira */}
         <DraggablePanel>
           <AimPanel
@@ -338,29 +297,30 @@ function PositionGameClient() {
             isShooting={isShooting || missionCompleted}
           />
         </DraggablePanel>
-
         {/* Drone */}
         <div className="pointer-events-none absolute inset-x-7.5 inset-y-0">
           <Drone position={dronePosition} />
         </div>
-
-        {/* Bomba em queda */}
-        {shot?.phase === "falling" && (
-          <div
-            key={shot.id}
-            className="pointer-events-none absolute inset-x-7.5 top-12.5 bottom-0"
-          >
+        {/* Área de queda da bomba */}
+        <div
+          ref={bombAreaRef}
+          className="pointer-events-none absolute inset-x-7.5 top-12.5 bottom-0"
+        >
+          {/* Bomba em queda */}
+          {shot?.phase === "falling" && (
             <div
-              className="absolute top-0 z-20 -translate-x-1/2 animate-[bomb-fall_900ms_linear_forwards]"
+              key={shot.id}
+              className="absolute top-0 z-20 animate-[bomb-fall_900ms_linear_forwards]"
               style={{
                 left: `${((shot.position + 10) / 20) * 100}%`,
                 width: "40px",
                 height: "40px",
-              }}
+                marginLeft: "-20px",
+                "--bomb-distance": `${bombDistance}px`,
+              } as React.CSSProperties}
               onAnimationEnd={(event) => {
-                if (event.target === event.currentTarget) {
-                  finishBombFall();
-                }
+                if (event.target !== event.currentTarget) return;
+                finishBombFall();
               }}
             >
               <Image
@@ -371,13 +331,12 @@ function PositionGameClient() {
                 className="block h-full w-full object-contain"
               />
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-
       {/* Eixo X e inimigos */}
-      <div className="relative mx-7.5 mb-8 translate-y-7.5">
-
+      <div 
+        className="relative mx-7.5 mb-8 translate-y-7.5">
         {/* Zips */}
         {zips.map((zip) => (
           <ZipEnemy
@@ -390,7 +349,6 @@ function PositionGameClient() {
             onRemove={removeZip}
           />
         ))}
-
         {/* Animações de recompensa */}
         {rewardEffects.map((effect) => (
           <RewardPopup
@@ -406,27 +364,25 @@ function PositionGameClient() {
         {/* Explosão */}
         {shot?.phase === "exploding" && (
           <div
+            key={shot.id}
             className="pointer-events-none absolute bottom-7.5 z-20 -translate-x-1/2"
             style={{
               left: `${((shot.position + 10) / 20) * 100}%`,
               width: "100px",
               height: "100px",
+              backgroundImage:
+                "url('/images/missions/position/explosion-spritesheet.png')",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "1000px 100px",
+              animation: "explosion-sprite 500ms steps(10, end) forwards",
             }}
-          >
-            <Image
-              src="/images/missions/position/explosion.svg"
-              alt="Explosão"
-              width={100}
-              height={100}
-              className="block h-full w-full object-contain"
-            />
-          </div>
+          />
         )}
+
 
         {/* Eixo de coordenadas */}
         <PositionAxis />
       </div>
-  
       {/* Tela de conclusão */}
       {missionCompleted && (
         <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/75 p-4">
@@ -438,18 +394,15 @@ function PositionGameClient() {
             <h2 className="text-3xl font-bold text-[#fdd501]">
               Missão concluída!
             </h2>
-
             {/* Progresso */}
             <p className="text-lg text-white">
               Você derrotou {TOTAL_ZIPS} Zips!
             </p>
-
             {/* Recompensas */}
             <div className="flex w-full flex-col items-center gap-3">
               <h3 className="text-xl text-[#fdd501]">
                 Recompensas obtidas
               </h3>
-
               <div className="flex items-center justify-center gap-8">
                 {/* XP */}
                 <div className="flex items-center gap-2">
@@ -459,12 +412,10 @@ function PositionGameClient() {
                     width={30}
                     height={30}
                   />
-
                   <span className="text-xl text-[#fdd501]">
                     +{TOTAL_XP.toLocaleString("pt-BR")}
                   </span>
                 </div>
-
                 {/* Lattecoins */}
                 <div className="flex items-center gap-2">
                   <Image
@@ -473,14 +424,12 @@ function PositionGameClient() {
                     width={30}
                     height={30}
                   />
-
                   <span className="text-xl text-[#fdd501]">
                     +{TOTAL_LATTECOINS.toLocaleString("pt-BR")}
                   </span>
                 </div>
               </div>
             </div>
-
             {/* Voltar ao Dashboard */}
             <Link
               href="/dashboard"
@@ -510,7 +459,6 @@ function PositionGameClient() {
     </div>
   );
 }
-
 // Componente exportado para o Next.js
 export default function PositionGame() {
   const mounted = useSyncExternalStore(
@@ -518,10 +466,8 @@ export default function PositionGame() {
     getClientSnapshot,
     getServerSnapshot
   );
-
   // Gerar posições aleatórias somente no navegador
   if (!mounted) return null;
-
   return <PositionGameClient />;
 }
 

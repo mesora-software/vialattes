@@ -24,11 +24,11 @@ body {
 /* Queda da bomba */
 @keyframes bomb-fall {
   from {
-    top: 0%;
+    transform: translateY(0);
   }
 
   to {
-    top: 100%;
+    transform: translateY(var(--bomb-distance));
   }
 }
 
@@ -65,6 +65,16 @@ body {
   100% {
     opacity: 0;
     transform: translateY(-45px) scale(1);
+  }
+}
+
+@keyframes explosion-sprite {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -1000px 0;
   }
 }
 

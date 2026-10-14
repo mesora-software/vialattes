@@ -40,6 +40,8 @@ type RewardEffect = {
 const TOTAL_ZIPS = POSITION_REWARDS.totalZips;
 const EXPLOSION_DURATION = 500;
 const NEXT_ROUND_DELAY = 500;
+const BOMB_SIZE = 40;
+const AXIS_OFFSET = 30; //compensa o deslocamento vertical do contêiner do eixo X.
 const TOTAL_XP = TOTAL_ZIPS * POSITION_REWARDS.xpPerZip;
 const TOTAL_LATTECOINS = TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
 // Utilitários
@@ -110,8 +112,6 @@ function PositionGameClient() {
     if (isShooting || missionCompleted) return;
     const area = bombAreaRef.current;
     if (!area) return;
-    const BOMB_SIZE = 40;
-    const AXIS_OFFSET = 30;
     setBombDistance(
       area.getBoundingClientRect().height - BOMB_SIZE + AXIS_OFFSET
     );
@@ -263,17 +263,6 @@ function PositionGameClient() {
     missionCompleted,
   ]);
 
-  // Preparar a imagem da explosão antecipadamente
-  useEffect(() => {
-    const explosionImage = new window.Image();
-
-    explosionImage.src = "/images/missions/position/explosion.gif";
-
-    explosionImage.decode().catch(() => {
-      // O navegador poderá utilizar a imagem normalmente.
-    });
-  }, []);
-
   return (
     <div className="relative flex min-h-90 min-w-0 flex-1 flex-col">
       {/* Progresso da missão */}
@@ -335,8 +324,7 @@ function PositionGameClient() {
         </div>
       </div>
       {/* Eixo X e inimigos */}
-      <div 
-        className="relative mx-7.5 mb-8 translate-y-7.5">
+      <div className="relative mx-7.5 mb-8 translate-y-7.5">
         {/* Zips */}
         {zips.map((zip) => (
           <ZipEnemy
@@ -374,7 +362,7 @@ function PositionGameClient() {
                 "url('/images/missions/position/explosion-spritesheet.png')",
               backgroundRepeat: "no-repeat",
               backgroundSize: "1000px 100px",
-              animation: "explosion-sprite 500ms steps(10, end) forwards",
+              animation: `explosion-sprite ${EXPLOSION_DURATION}ms steps(10, end) forwards`,
             }}
           />
         )}

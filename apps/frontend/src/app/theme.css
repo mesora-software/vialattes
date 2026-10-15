@@ -1,0 +1,95 @@
+/* ========================================
+   Vialattes — Design Tokens
+======================================== */
+
+/* Fontes */
+@theme inline {
+  --font-heading: var(--font-fredoka);
+  --font-body: var(--font-geist);
+}
+
+/* Cores e sombras */
+@theme {
+  /* Cores principais */
+  --color-primary: #8b35d9;
+  --color-primary-dark: #5900c2;
+  --color-secondary: #d7ff36;
+
+  /* Fundos */
+  --color-background: #09112d;
+  --color-surface: #101a3c;
+  --color-surface-light: #273e72;
+
+  /* Textos */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b1bff0;
+
+  /* Estados */
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #fdd501;
+
+  /* Home */
+  --color-hero-outline: #32006e;
+  --color-hero-gradient-top: #f3ff8c;
+  --color-hero-gradient-bottom: #9acb00;
+
+  /* Sombras */
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
+  --shadow-glow-purple: 0 0 20px rgba(177, 100, 255, 0.35);
+}
+
+/* ========================================
+   Componentes da Home
+======================================== */
+
+@layer components {
+
+  /* Título principal */
+  .hero-title {
+    -webkit-text-stroke: 6px var(--color-hero-outline);
+    paint-order: stroke fill;
+    text-shadow: -2px 4px 4px #000000;
+  }
+
+  /* Palavra "Divertida!" em SVG */
+  .hero-title-svg {
+    stroke: var(--color-hero-outline);
+    stroke-width: 10px;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    filter: drop-shadow(-2px 4px 1px #000000);
+  }
+
+  /* Links da navegação */
+  .home-nav-link {
+    position: relative;
+    font-weight: 600;
+    transition: text-shadow 300ms ease-out;
+  }
+
+  .home-nav-link:hover {
+    text-shadow: 0 0 2px var(--color-secondary);
+  }
+
+  /* Sublinhado animado */
+  .home-nav-underline {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 9999px;
+    background-color: var(--color-secondary);
+
+    transform: scaleX(0);
+    transform-origin: center;
+
+    transition: transform 300ms ease-out;
+  }
+
+  /* Ativado pelo hover no link */
+  .group:hover .home-nav-underline {
+    transform: scaleX(1);
+  }
+}

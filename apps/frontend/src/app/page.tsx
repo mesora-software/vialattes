@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { fredoka } from "./layout";
 
 const features = [
   {
@@ -27,7 +26,7 @@ const features = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#09112d] text-white">
+    <main className="min-h-screen overflow-x-hidden bg-background text-white">
       {/* Área principal com background */}
       <div className="relative isolate flex min-h-screen flex-col">
         {/* Background do header, hero e recursos */}
@@ -51,8 +50,8 @@ export default function Home() {
                   flex h-30 w-full
                   items-center justify-between
                   gap-4
-                  border-b border-[#d7ff36]/40
-                  bg-linear-to-b from-[#08122f]/90 via-[#14244b]q70 to-[#14244b]/20
+                  border-b border-secondary/40
+                  bg-linear-to-b from-[#08122f]/90 via-[#14244b]/70 to-[#14244b]/20
                   px-5
                   backdrop-blur-sm
                   md:px-10
@@ -60,7 +59,7 @@ export default function Home() {
           <Link
            href="/"
            aria-label="Página inicial do Vialattes"
-           className="relative flex h-25 w-70 shrink-0 itens-center justify-center"
+           className="relative flex h-25 w-70 shrink-0 items-center justify-center"
           >
             <Image
               src="/images/home/vialattes-logo.svg"
@@ -73,17 +72,17 @@ export default function Home() {
           </Link>
 
           <nav aria-label="Navegação principal" className="flex items-center gap-5 md:gap-8">
-            <Link href="/" className="group relative hidden font-semibold transition-[text-shadow] duration-300 ease-out hover:[text-shadow:0_0_2px_#d7ff36] sm:inline">
+            <Link href="/" className="group home-nav-link hidden sm:inline">
               Início
-              <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-center scale-x-0 rounded-full bg-[#d7ff36] transition-transform duration-300 ease-out group-hover:scale-x-100" />
+              <span className="home-nav-underline" />
             </Link>
-            <Link href="#sobre" className="group relative hidden font-semibold transition-[text-shadow] duration-300 ease-out hover:[text-shadow:0_0_2px_#d7ff36] md:inline">
+            <Link href="#sobre" className="group home-nav-link hidden md:inline">
               Sobre
-              <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-center scale-x-0 rounded-full bg-[#d7ff36] transition-transform duration-300 ease-out group-hover:scale-x-100" />
+              <span className="home-nav-underline" />
             </Link>
-            <Link href="#recursos" className="group relative hidden font-semibold transition-[text-shadow] duration-300 ease-out hover:[text-shadow:0_0_2px_#d7ff36] md:inline">
+            <Link href="#recursos" className="group home-nav-link hidden md:inline">
               Recursos
-              <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-center scale-x-0 rounded-full bg-[#d7ff36] transition-transform duration-300 ease-out group-hover:scale-x-100" />
+              <span className="home-nav-underline" />
             </Link>
             <Link
               href="/dashboard"
@@ -99,23 +98,19 @@ export default function Home() {
           <div className="max-w-155">
             <h1 
               className={`
-              ${fredoka.className}
+              font-heading hero-title
                 text-5xl leading-[1.05] font-bold
                 tracking-wide
                 sm:text-6xl lg:text-7xl
               `}
-              style={{
-                WebkitTextStroke: "6px #32006e",
-                paintOrder: "stroke fill",
-                textShadow: "-2px 4px 4px #000000",
-              }}
+
             >
               Estude Física
               <span className="block">de forma</span>
             </h1>
               <svg
                 viewBox="0 0 600 155"
-                className={`mt-1 w-full max-w-150 overflow-visible ${fredoka.className}`}
+                className="mt-1 w-full max-w-150 overflow-visible font-heading"
                 role="img"
                 aria-label="divertida!"
               >
@@ -130,25 +125,20 @@ export default function Home() {
                     gradientUnits="userSpaceOnUse"
                     x1="0" y1="15" x2="0" y2="115"
                   >
-                    <stop offset="0%" stopColor="#f3ff8c" />
-                    <stop offset="45%" stopColor="#d7ff36" />
-                    <stop offset="100%" stopColor="#9acb00" />
+                    <stop offset="0%" stopColor="var(--color-hero-gradient-top)" />
+                    <stop offset="45%" stopColor="var(--color-secondary)" />
+                    <stop offset="100%" stopColor="var(--color-hero-gradient-bottom)" />
                   </linearGradient>
                 </defs>
 
                 <text
                   fill="url(#divertida-gradient)"
-                  stroke="#32006e"
-                  strokeWidth="10"
-                  strokeLinejoin="round"
-                  paintOrder="stroke fill"
+                  className="hero-title-svg"
                   fontSize="100"
                   fontWeight="700"
                   letterSpacing="3"
                   textAnchor="middle"
-                  style={{
-                    filter: "drop-shadow(-2px 4px 1px #000000)",
-                  }}           
+           
                 >
                   <textPath 
                     href="#divertida-curve"
@@ -159,15 +149,14 @@ export default function Home() {
                 </text>
               </svg>
 
-            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [-webkit-text-stroke: 30px_#5900c2]
-              [text-shadow:3px_4px_8px_#000000,0_0_8px_#172b72] sm:text-xl">
+            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [text-shadow:3px_4px_8px_#000000,0_0_8px_#172b72] sm:text-xl">
               No <strong>Vialattes</strong>, você aprende conceitos de Física através de missões,
               jogos e desafios em um universo cheio de descobertas.
             </p>
 
             <Link
               href="/dashboard"
-              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-[#d7ff36] bg-linear-to-b from-[#a83cff] to-[#5900c2] px-7 py-4 text-lg font-extrabold shadow-[0_0_20px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
+              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-secondary bg-linear-to-b from-[#a83cff] to-primary-dark px-7 py-4 text-lg font-extrabold shadow-[0_0_20px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
             >
               <span aria-hidden="true">🚀</span>
               Testar Gratuitamente
@@ -219,7 +208,7 @@ export default function Home() {
             {features.map((feature) => (
               <article
                 key={feature.title}
-                className="flex items-center gap-4 rounded-2xl border border-[#b1bff0]/35 bg-linear-to-br from-[#273e72]/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-5md"
+                className="flex items-center gap-4 rounded-2xl border border-text-secondary/35 bg-linear-to-br from-surface-light/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-card backdrop-blur-md"
               >
                 <span aria-hidden="true" className="shrink-0 text-4xl">{feature.icon}</span>
                 <div>
@@ -233,9 +222,9 @@ export default function Home() {
       </div>
 
       {/* Sobre */}
-      <section id="sobre" className="scroll-mt-8 bg-[#101a3c] px-6 py-18 text-center">
+      <section id="sobre" className="scroll-mt-8 bg-surface px-6 py-18 text-center">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-3xl font-extrabold text-[#d7ff36] sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-secondary sm:text-4xl">
             Aprender pode ser uma aventura!
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-white/85">
@@ -245,7 +234,7 @@ export default function Home() {
           </p>
           <Link
             href="/dashboard"
-            className="mt-8 inline-block rounded-full bg-[#d7ff36] px-8 py-3 font-bold text-[#211048] transition-transform hover:scale-105"
+            className="mt-8 inline-block rounded-full bg-secondary px-8 py-3 font-bold text-[#211048] transition-transform hover:scale-105"
           >
             Começar a explorar →
           </Link>

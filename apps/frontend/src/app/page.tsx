@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { fredoka } from "./layout";
 
 const features = [
   {
@@ -50,7 +51,7 @@ export default function Home() {
                   flex h-30 w-full
                   items-center justify-between
                   gap-4
-                  border-b border-white/15
+                  border-b border-[#d7ff36]/40
                   bg-linear-to-b from-[#08122f]/90 via-[#14244b]q70 to-[#14244b]/20
                   px-5
                   backdrop-blur-sm
@@ -59,7 +60,7 @@ export default function Home() {
           <Link
            href="/"
            aria-label="Página inicial do Vialattes"
-           className="relative flex h-28 w-70 shrink-0 itens-center justify-center"
+           className="relative flex h-25 w-70 shrink-0 itens-center justify-center"
           >
             <Image
               src="/images/home/vialattes-logo.svg"
@@ -96,13 +97,70 @@ export default function Home() {
         {/* Apresentação */}
         <section className="relative z-10 mx-auto flex w-full max-w-350 flex-1 items-center px-6 py-12 md:px-12">
           <div className="max-w-155">
-            <h1 className="text-5xl leading-[1.05] font-black tracking-tight drop-shadow-[0_4px_3px_#08143a] sm:text-6xl lg:text-7xl">
+            <h1 
+              className={`
+              ${fredoka.className}
+                text-5xl leading-[1.05] font-bold
+                tracking-wide
+                sm:text-6xl lg:text-7xl
+              `}
+              style={{
+                WebkitTextStroke: "6px #32006e",
+                paintOrder: "stroke fill",
+                textShadow: "-2px 4px 4px #000000",
+              }}
+            >
               Estude Física
               <span className="block">de forma</span>
-              <span className="block text-[#d7ff36]">divertida!</span>
             </h1>
+              <svg
+                viewBox="0 0 600 155"
+                className={`mt-1 w-full max-w-150 overflow-visible ${fredoka.className}`}
+                role="img"
+                aria-label="divertida!"
+              >
+                <defs>
+                  <path
+                    id="divertida-curve"
+                    d="M 0 85 H 600"
+                  />
 
-            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white drop-shadow-md sm:text-xl">
+                  <linearGradient
+                    id="divertida-gradient"
+                    gradientUnits="userSpaceOnUse"
+                    x1="0" y1="15" x2="0" y2="115"
+                  >
+                    <stop offset="0%" stopColor="#f3ff8c" />
+                    <stop offset="45%" stopColor="#d7ff36" />
+                    <stop offset="100%" stopColor="#9acb00" />
+                  </linearGradient>
+                </defs>
+
+                <text
+                  fill="url(#divertida-gradient)"
+                  stroke="#32006e"
+                  strokeWidth="10"
+                  strokeLinejoin="round"
+                  paintOrder="stroke fill"
+                  fontSize="100"
+                  fontWeight="700"
+                  letterSpacing="3"
+                  textAnchor="middle"
+                  style={{
+                    filter: "drop-shadow(-2px 4px 1px #000000)",
+                  }}           
+                >
+                  <textPath 
+                    href="#divertida-curve"
+                    startOffset="40%"
+                  >
+                    Divertida!
+                  </textPath>
+                </text>
+              </svg>
+
+            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [-webkit-text-stroke: 30px_#5900c2]
+              [text-shadow:3px_4px_8px_#000000,0_0_8px_#172b72] sm:text-xl">
               No <strong>Vialattes</strong>, você aprende conceitos de Física através de missões,
               jogos e desafios em um universo cheio de descobertas.
             </p>

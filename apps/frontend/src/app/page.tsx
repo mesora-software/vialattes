@@ -219,7 +219,7 @@ export default function Home() {
             {features.map((feature) => (
               <article
                 key={feature.title}
-                className="flex items-center gap-4 rounded-2xl border border-[#b1bff0]/35 bg-linear-to-br from-[#273e72]/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-md"
+                className="flex items-center gap-4 rounded-2xl border border-[#b1bff0]/35 bg-linear-to-br from-[#273e72]/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-5md"
               >
                 <span aria-hidden="true" className="shrink-0 text-4xl">{feature.icon}</span>
                 <div>

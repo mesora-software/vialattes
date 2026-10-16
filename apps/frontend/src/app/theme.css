@@ -9,11 +9,17 @@
 }
 
 /* Cores e sombras */
-@theme {
+@theme static {
   /* Cores principais */
-  --color-primary: #8b35d9;
-  --color-primary-dark: #5900c2;
-  --color-secondary: #d7ff36;
+  --color-primary: #563297;
+  --color-primary-light: #8b35d9;
+  --color-primary-dark: #402e6a;
+  --color-secondary: #a4c719;
+  --color-secondary-light: #bfe43a;
+  --color-secondary-dark: #509624;
+  --color-tertiary: #fdd501;
+  --color-tertiary-light: #f0d95f;
+  --color-tertiary-dark: #f37200;
 
   /* Fundos */
   --color-background: #09112d;
@@ -25,9 +31,9 @@
   --color-text-secondary: #b1bff0;
 
   /* Estados */
-  --color-success: #22c55e;
-  --color-error: #ef4444;
-  --color-warning: #fdd501;
+  --color-success: #509624;
+  --color-error: #ff1616;
+  --color-warning: #f37200;
 
   /* Home */
   --color-hero-outline: #32006e;

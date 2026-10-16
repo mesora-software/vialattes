@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fredoka, geist } from "@/lib/fonts/fonts";
+import { fredoka, geist, changaOne } from "@/lib/fonts/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="pt-BR"
     >
-      <body className={`${fredoka.variable} ${geist.variable} min-h-full flex flex-col`}>
+      <body className={`${fredoka.variable} ${geist.variable} ${changaOne.variable} min-h-full flex flex-col`}>
         {children}
       </body>
     </html>

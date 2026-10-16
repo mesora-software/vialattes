@@ -19,7 +19,7 @@ export default function ModulePath() {
             S 1150 150, 1200 150
          "
          fill="none"
-         stroke="#cb6ce6"
+         stroke="#ff66c4"
          strokeWidth="4"
          strokeDasharray="10 10"
          strokeLinecap="round"

@@ -6,6 +6,7 @@
 @theme inline {
   --font-heading: var(--font-fredoka);
   --font-body: var(--font-geist);
+  --font-game: var(--font-changa-one);
 }
 
 /* Cores e sombras */
@@ -28,7 +29,8 @@
 
   /* Textos */
   --color-text-primary: #ffffff;
-  --color-text-secondary: #b1bff0;
+  --color-text-secondary: #000000;
+  --color-text-tertiary: #fdd501;
 
   /* Estados */
   --color-success: #509624;
@@ -39,6 +41,9 @@
   --color-hero-outline: #32006e;
   --color-hero-gradient-top: #f3ff8c;
   --color-hero-gradient-bottom: #9acb00;
+
+  /* Dashboard Path */
+  --color-path-dashboard: #ff66c4;
 
   /* Sombras */
   --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);

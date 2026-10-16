@@ -15,12 +15,14 @@ const colors = [
    { name: "Surface Light", token: "surface-light" },
    { name: "Text Primary", token: "text-primary" },
    { name: "Text Secondary", token: "text-secondary" },
+   { name: "Text Tertiary", token: "text-tertiary" },
    { name: "Success", token: "success" },
    { name: "Error", token: "error" },
    { name: "Warning", token: "warning" },
    { name: "Hero Outline", token: "hero-outline" },
    { name: "Hero Gradient Top", token: "hero-gradient-top" },
    { name: "Hero Gradient Bottom", token: "hero-gradient-bottom" },
+   { name: "Path dashboard", token: "path-dashboard" },
    { name: "Shadow Card", token: "shadow-card" },
    { name: "Shadow Glow Purple", token: "shadow-glow-purple" }  
 ];
@@ -28,7 +30,7 @@ const colors = [
 export default function ColorPalette() {
   return (
     <section>
-      <h2 className="mb-6 font-heading text-3xl font-bold">
+      <h2 className="mb-6 p-6 font-heading text-3xl font-bold">
         01. Paleta de cores
       </h2>
 
@@ -49,7 +51,7 @@ export default function ColorPalette() {
               <h3 className="font-bold">{name}</h3>
 
               <p
-                className="font-mono text-sm text-text-secondary"
+                className="font-mono text-sm text-text-tertiary"
                 ref={(element) => {
                   if (!element) return;
 

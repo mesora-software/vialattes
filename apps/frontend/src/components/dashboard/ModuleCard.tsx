@@ -66,9 +66,7 @@ export default function ModuleCard({
 
         {/* Nome do módulo */}
         <span
-          className="-mt-2 text-center text-xl font-extrabold text-[#fdd501]"
-          style={{ fontFamily: '"Comic Octo", cursive' }}
-        >
+          className="-mt-2 font-game text-center text-xl text-tertiary">
           {name}
         </span>
       </div>

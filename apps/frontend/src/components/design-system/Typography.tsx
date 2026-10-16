@@ -1,179 +1,269 @@
+
+const fontFamilies = [
+  {
+    name: "Fredoka",
+    token: "font-heading",
+    role: "Títulos e destaques",
+    description:
+      "Fonte expressiva utilizada em títulos, chamadas e elementos de destaque.",
+    sample: "Estude Física!",
+    className: "font-heading",
+    colorClass: "text-secondary-light",
+  },
+  {
+    name: "Geist",
+    token: "font-body",
+    role: "Textos e interfaces",
+    description:
+      "Fonte para leitura, descrições, instruções e elementos da interface.",
+    sample: "Explore um universo de descobertas.",
+    className: "font-body",
+    colorClass: "text-text-primary",
+  },
+  {
+    name: "Changa One",
+    token: "font-game",
+    role: "Elementos do jogo",
+    description:
+      "Fonte de destaque para missões, recompensas e indicadores do HUD.",
+    sample: "Missão Concluída!",
+    className: "font-game",
+    colorClass: "text-tertiary",
+  },
+];
+
+const textHierarchy = [
+  {
+    label: "H1",
+    size: "48px",
+    classes: "font-heading text-5xl font-bold",
+    sample: "Título principal",
+  },
+  {
+    label: "H2",
+    size: "36px",
+    classes: "font-heading text-4xl font-bold",
+    sample: "Título de seção",
+  },
+  {
+    label: "H3",
+    size: "24px",
+    classes: "font-heading text-2xl font-semibold",
+    sample: "Subtítulo",
+  },
+  {
+    label: "Body",
+    size: "16px",
+    classes: "font-body text-base",
+    sample: "Texto padrão utilizado na interface do Vialattes.",
+  },
+  {
+    label: "Small",
+    size: "14px",
+    classes: "font-body text-sm",
+    sample: "Informações secundárias e descrições auxiliares.",
+  },
+];
+
 export default function Typography() {
   return (
-    <section>
-      <h2 className="mb-2 p-6 font-heading text-3xl font-bold">
-        02. Tipografia
-      </h2>
+    <section
+      id="typography"
+      aria-labelledby="typography-title"
+      className="space-y-8"
+    >
+      {/* Cabeçalho */}
+      <header className="space-y-2">
+        <p className="font-body text-xs font-semibold tracking-[0.2em] text-secondary-light uppercase">
+          Design System / 02
+        </p>
 
-      <div className="space-y-10 rounded-xl bg-surface p-8">
+        <h2
+          id="typography-title"
+          className="font-heading text-3xl font-bold text-text-primary sm:text-4xl"
+        >
+          Tipografia
+        </h2>
 
-        {/* Fonte para títulos */}
-        <div>
-          <p className="mb-4 text-sm text-text-tertiary">
-            Fredoka — font-heading
-          </p>
+        <p className="max-w-2xl font-body text-sm leading-relaxed text-text-primarary sm:text-base">
+          Famílias tipográficas, tamanhos e exemplos utilizados na
+          interface do Vialattes.
+        </p>
+      </header>
 
-          <h3 className="font-heading text-5xl font-bold text-secondary">
-            Estude Física!
-          </h3>
+      {/* Famílias tipográficas */}
+      <div className="space-y-4">
+        <h3 className="font-heading text-xl font-semibold">
+          Famílias tipográficas
+        </h3>
 
-          <p className="mt-3 font-mono text-xs text-text-tertiary">
-            font-heading text-5xl font-bold
-          </p>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {fontFamilies.map((font) => (
+            <article
+              key={font.token}
+              className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface"
+            >
+              <div className="flex min-h-48 flex-col justify-center gap-5 bg-surface-light/40 p-6">
+                <span className="w-fit rounded-full border border-white/15 bg-primary-light px-3 py-1 font-mono text-xs text-text-primary">
+                  {font.token}
+                </span>
+
+                <p
+                  className={`${font.className} ${font.colorClass} text-3xl leading-tight wrap-break-word sm:text-4xl`}
+                >
+                  {font.sample}
+                </p>
+              </div>
+
+              <div className="flex flex-1 flex-col gap-3 p-6">
+                <div>
+                  <h4 className="font-body text-xl font-bold">
+                    {font.name}
+                  </h4>
+
+                  <p className="mt-1 font-body text-sm text-text-tertiary">
+                    {font.role}
+                  </p>
+                </div>
+
+                <p className="font-body text-sm leading-relaxed text-text-primary">
+                  {font.description}
+                </p>
+
+                <div className="mt-auto border-t border-white/10 pt-4">
+                  <code className="font-mono text-xs text-secondary">
+                    {font.token}
+                  </code>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
+      </div>
 
-        <div className="border-t border-white/10" />
+      {/* Hierarquia tipográfica */}
+      <div className="space-y-4">
+        <h3 className="font-heading text-xl font-semibold">
+          Hierarquia tipográfica
+        </h3>
 
-        {/* Fonte para textos */}
-        <div>
-          <p className="mb-4 text-sm text-text-tertiary">
-            Geist — font-body
-          </p>
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface">
+          {textHierarchy.map((item, index) => (
+            <div
+              key={item.label}
+              className={`grid gap-4 p-5 sm:grid-cols-[110px_minmax(0,1fr)] sm:items-center sm:p-6 ${
+                index > 0 ? "border-t border-white/10" : ""
+              }`}
+            >
+              <div className="space-y-1">
+                <p className="font-body text-sm font-semibold text-secondary-light">
+                  {item.label}
+                </p>
 
-          <p className="font-body text-lg leading-relaxed">
-            Aprenda Física através de missões interativas,
-            jogos e desafios em um universo cheio de descobertas.
-          </p>
+                <p className="font-mono text-xs text-text-tertiary">
+                  {item.size}
+                </p>
+              </div>
 
-          <p className="mt-3 font-mono text-xs text-text-tertiary">
-            font-body text-lg
-          </p>
+              <div className="min-w-0 space-y-3">
+                <p
+                  className={`${item.classes} leading-tight text-text-primary wrap-break-word`}
+                >
+                  {item.sample}
+                </p>
+
+                <code className="block font-mono text-xs leading-relaxed text-text-tertiary wrap-break-word">
+                  {item.classes}
+                </code>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
 
-        <div className="border-t border-white/10" />
+      {/* Aplicação no jogo */}
+      <div className="space-y-4">
+        <h3 className="font-heading text-xl font-semibold">
+          Aplicação no jogo
+        </h3>
 
-        {/* Hierarquia tipográfica */}
-        <div>
-          <h3 className="mb-6 font-heading text-xl font-bold">
-            Hierarquia tipográfica
-          </h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          {/* Exemplo de recompensa */}
+          <article className="rounded-2xl border border-white/10 bg-surface p-6">
+            <p className="mb-6 font-body text-xs font-semibold tracking-widest text-text-primary uppercase">
+              Recompensas
+            </p>
 
-          <div className="space-y-6">
-            <div>
-              <p className="mb-2 text-xs text-text-tertiary">
-                H1 — 48px
+            <div className="flex min-h-40 flex-col items-center justify-center gap-3 text-center">
+              <p className="font-game text-4xl text-tertiary sm:text-5xl">
+                Missão Concluída!
               </p>
-              <h1 className="font-heading text-5xl font-bold">
-                Título principal
-              </h1>
-            </div>
 
-            <div>
-              <p className="mb-2 text-xs text-text-tertiary">
-                H2 — 36px
+              <p className="font-game text-3xl text-secondary-light">
+                +150 XP
               </p>
-              <h2 className="font-heading text-4xl font-bold">
-                Título de seção
-              </h2>
-            </div>
 
-            <div>
-              <p className="mb-2 text-xs text-text-tertiary">
-                H3 — 24px
-              </p>
-              <h3 className="font-heading text-2xl font-semibold">
-                Subtítulo
-              </h3>
-            </div>
-
-            <div>
-              <p className="mb-2 text-xs text-text-tertiary">
-                Body — 16px
-              </p>
-              <p className="font-body text-base">
-                Texto padrão utilizado na interface do Vialattes.
+              <p className="font-game text-xl text-text-primary">
+                +25 Lattecoins
               </p>
             </div>
 
-            <div>
-              <p className="mb-2 text-xs text-text-tertiary">
-                Small — 14px
-              </p>
-              <p className="font-body text-sm">
-                Texto auxiliar para descrições e informações secundárias.
-              </p>
+            <p className="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-secondary">
+              font-game
+            </p>
+          </article>
+
+          {/* Exemplo de HUD */}
+          <article className="rounded-2xl border border-white/10 bg-surface p-6">
+            <p className="mb-6 font-body text-xs font-semibold tracking-widest text-text-primary uppercase">
+              HUD / Dashboard
+            </p>
+
+            <div className="flex min-h-40 flex-col items-center justify-center gap-4">
+              <div className="rounded-xl border border-primary-light/40 bg-primary-dark px-6 py-3 text-center">
+                <p className="font-game text-2xl text-tertiary">
+                  1588 XP
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-primary-light/40 bg-primary-dark px-6 py-3 text-center">
+                <p className="font-game text-xl text-text-primary">
+                  Recruta
+                </p>
+              </div>
             </div>
+
+            <p className="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-secondary">
+              font-game
+            </p>
+          </article>
+        </div>
+      </div>
+
+      {/* Caracteres disponíveis */}
+      <div className="space-y-4">
+        <h3 className="font-heading text-xl font-semibold">
+          Amostra de caracteres
+        </h3>
+
+        <div className="space-y-4 rounded-2xl border border-white/10 bg-surface p-6">
+          <p className="font-body text-sm text-text-tertiary">
+            Changa One / font-game
+          </p>
+
+          <div className="space-y-3 font-game text-xl leading-relaxed text-text-primary sm:text-2xl">
+            <p className="break-all">
+              ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </p>
+            <p className="break-all">
+              abcdefghijklmnopqrstuvwxyz
+            </p>
+            <p>0123456789</p>
+            <p>Á É Í Ó Ú Ã Õ Ç</p>
           </div>
         </div>
       </div>
-
-      <div className="border-t border-white/10" />
-
-      {/* Fonte utilizada no jogo */}
-      <div>
-        <p className="mb-4 text-sm text-text-tertiary">
-          Changa One — font-game
-        </p>
-
-        <div className="space-y-3 font-game">
-          <h3 className="text-4xl text-tertiary">
-            Missão Concluída!
-          </h3>
-
-          <p className="text-2xl text-secondary-light">
-            +150 XP
-          </p>
-
-          <p className="text-xl">
-            Recruta • 250 Lattecoins
-          </p>
-
-          <p className="text-lg">
-            ABCDEFGHIJKLMNOPQRSTUVWXYZ
-          </p>
-
-          <p className="text-lg">
-            abcdefghijklmnopqrstuvwxyz
-          </p>
-
-          <p className="text-lg">
-            0123456789
-          </p>
-        </div>
-
-        <p className="mt-4 font-mono text-xs text-text-tertiary">
-          font-game
-        </p>
-      </div>
-
-      <div className="border-t border-white/10" />
-
-      <div>
-        <p className="mb-4 text-sm text-text-tertiary">
-          Isometra — font-game
-        </p>
-
-        <div className="space-y-4 font-game">
-          <h3 className="text-4xl text-tertiary">
-            Missão Concluída!
-          </h3>
-
-          <p className="text-2xl text-tertiary-light">
-            Cinemática
-          </p>
-
-          <p className="text-xl">
-            +150 XP • 250 Lattecoins
-          </p>
-
-          <p className="text-lg">
-            ABCDEFGHIJKLMNOPQRSTUVWXYZ
-          </p>
-
-          <p className="text-lg">
-            abcdefghijklmnopqrstuvwxyz
-          </p>
-
-          <p className="text-lg">
-            0123456789
-          </p>
-        </div>
-
-        <p className="mt-4 font-mono text-xs text-text-tertiary">
-          font-game
-        </p>
-      </div>
     </section>
-
   );
 }
+

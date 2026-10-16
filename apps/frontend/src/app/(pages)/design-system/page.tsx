@@ -8,9 +8,9 @@ export default function DesignSystemPage() {
   }
 
   return (
-    <>
+    <div className="mx-auto max-w-6xl space-y-16">
       <ColorPalette />
       <Typography />
-    </>  
+    </div>  
   );
 }

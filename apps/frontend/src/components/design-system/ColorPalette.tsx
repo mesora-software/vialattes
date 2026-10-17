@@ -1,6 +1,7 @@
 "use client";
 
 import { cardStyles } from "./styles";
+import TitleGradient from "../ui/gradients/TitleGradient";
 
 const colors = [
   { name: "Primary", token: "primary" },
@@ -22,45 +23,66 @@ const colors = [
   { name: "Error", token: "error" },
   { name: "Warning", token: "warning" },
   { name: "Hero Outline", token: "hero-outline" },
-  { name: "Hero Gradient Top", token: "hero-gradient-top" },
-  { name: "Hero Gradient Bottom", token: "hero-gradient-bottom" },
+  { name: "Vialattes Gradiente 01", token: "vialattes-gradient-one" },
+  { name: "Vialattes Gradiente 02", token: "vialattes-gradient-two" },
   { name: "Path dashboard", token: "path-dashboard" },
 ];
 
-type Gradient = {
-  name: string;
-  className: string;
-  description: string;
-  direction: string;
-  stops: string[];
-};
+type Gradient =
+  | {
+      name: string;
+      type: "css";
+      className: string;
+      description: string;
+      direction: string;
+      stops: string[];
+    }
+  | {
+      name: string;
+      type: "svg";
+      description: string;
+      direction: string;
+      stops: string[];
+      component: "hero-title";
+    };
 
 const gradients: Gradient[] = [
   {
     name: "Blue Gradient",
+    type: "css",
     className: "bg-blue-gradient",
     description:
-      "Gradiente vertical utilizado no cabeçalho da página inicial.",
+      "Gradiente vertical utilizado no background do Header da página inicial.",
     direction: "Vertical · Top → Bottom",
     stops: [
-      "background / 90%",
+      "surface-dark / 90%",
       "surface / 50%",
       "surface-light / 20%",
     ],
   },
-
   {
     name: "Purple Gradient",
+    type: "css",
     className: "bg-purple-gradient",
     description:
-      "Gradiente vertical utilizado no botão de destaque do cabeçalho da página inicial.",
+      "Gradiente vertical utilizado no botão de destaque do cabeçalho da página home.",
+    direction: "Vertical · Top → Bottom",
+    stops: ["primary-light", "primary", "primary-dark"],
+  },
+  {
+    name: "Vialattes Gradient",
+    type: "svg",
+    component: "hero-title",
+    description:
+      "Gradiente SVG utilizado na palavra Divertida! do título principal da Home.",
     direction: "Vertical · Top → Bottom",
     stops: [
-      "primary-light",
-      "primary",
-      "primary-dark",
+      "vialattes-gradient-one / 0%",
+      "secondary / 45%",
+      "vialattes-gradient-two / 100%",
     ],
   },
+  
 ];
 
 export default function ColorPalette() {
@@ -135,7 +157,7 @@ export default function ColorPalette() {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
           {gradients.map((gradient) => (
             <article
-              key={gradient.className}
+              key={gradient.name}
               className="overflow-hidden rounded-xl border"
               style={{
                 backgroundColor: cardStyles.background,
@@ -144,25 +166,49 @@ export default function ColorPalette() {
             >
               {/* Prévia do gradiente */}
               <div
-                className="relative h-56 overflow-hidden"
+                className="relative flex h-56 items-center justify-center overflow-hidden"
                 style={{
-                  backgroundColor: cardStyles.surface,
+                  backgroundColor:
+                    gradient.type === "svg"
+                      ? "var(--color-surface-light)"
+                      : cardStyles.surface,
                 }}
               >
-                <div
-                  className={`absolute inset-0 ${gradient.className}`}
-                />
+                {gradient.type === "css" ? (
+                  <>
+                    <div
+                      className={`absolute inset-0 ${gradient.className}`}
+                    />
 
-                <div className="relative flex h-full flex-col justify-between p-6">
-                  <span className="w-fit rounded-full bg-background/80 px-3 py-1 font-mono text-xs text-text-primary">
-                    Preview
-                  </span>
+                    <p className="relative font-heading text-2xl font-bold text-text-primary">
+                      Vialattes
+                    </p>
+                  </>
+                ) : gradient.component === "hero-title" ? (
+                  <svg
+                    viewBox="0 0 600 155"
+                    className="w-full max-w-100 overflow-visible font-heading"
+                    role="img"
+                    aria-label="Prévia do gradiente da palavra Divertida!"
+                  >
+                    <defs>
+                      <TitleGradient id="hero-title-gradient-preview" />
+                    </defs>
 
-                  <p className="font-heading text-2xl font-bold text-text-primary">
-                    Vialattes
-                  </p>
-                </div>
-              </div>
+                    <text
+                      x="300"
+                      y="105"
+                      fill="url(#hero-title-gradient-preview)"
+                      fontSize="95"
+                      fontWeight="700"
+                      textAnchor="middle"
+                      className="hero-title-svg"
+                    >
+                      Divertida!
+                    </text>
+                  </svg>
+                ) : null}
+              </div>                                
 
               {/* Informações */}
               <div className="space-y-4 p-4">
@@ -198,7 +244,9 @@ export default function ColorPalette() {
                   </span>
 
                   <code className="rounded-md bg-surface px-3 py-2 font-mono text-xs text-text-primary">
-                    {gradient.className}
+                    {gradient.type === "css"
+                      ? gradient.className
+                      : "TitleGradient"}
                   </code>
                 </div>
               </div>
@@ -209,3 +257,4 @@ export default function ColorPalette() {
     </section>
   );
 }
+

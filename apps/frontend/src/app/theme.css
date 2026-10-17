@@ -40,18 +40,18 @@
 
   /* Home */
   --color-hero-outline: #32006e;
-  --color-hero-gradient-top: #f3ff8c;
-  --color-hero-gradient-bottom: #9acb00;
+  --color-vialattes-gradient-one: #f3ff8c;
+  --color-vialattes-gradient-two: #9acb00;
 
   /* Dashboard Path */
   --color-path-dashboard: #ff66c4;
 
   /* Sombras */
-  --color-shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
-  --color-shadow-glow-purple: 0 0 20px rgba(177, 100, 255, 0.35);
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
+  --shadow-glow-purple: 0 0 20px rgba(177, 100, 255, 0.35);
 }
 
-/* Gradientes reutilizáveis */
+/* Gradientes de fundo */
 @layer components {
   .bg-blue-gradient {
     background-image: linear-gradient(
@@ -71,6 +71,32 @@
     );
   }
 
+  /* Gradiente de texto */
+  .text-vialattes-gradient {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-vialattes-gradient-one) 10%,
+      var(--color-secondary) 50%,
+      var(--color-vialattes-gradient-two) 100%
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Contorno e sombra do título */
+  .hero-title-highlight-outline {
+    color: var(--color-primary-dark);
+    -webkit-text-stroke: 10px var(--color-hero-outline);
+    filter: drop-shadow(-2px 4px 1px #000000);
+  }
+
+  /* Preenchimento do título */
+  .hero-title-highlight-fill {
+    position: relative;
+  }
+
 /* ========================================
    Componentes da Home
 ======================================== */
@@ -82,11 +108,9 @@
     text-shadow: -2px 4px 4px #000000;
   }
 
-  /* Palavra "Divertida!" em SVG */
-  .hero-title-svg {
-    stroke: var(--color-hero-outline);
-    stroke-width: 10px;
-    stroke-linejoin: round;
+  /* Palavra "Divertida!"  */
+  .hero-title-highlight {
+    -webkit-text-stroke: 6px var(--color-hero-outline);
     paint-order: stroke fill;
     filter: drop-shadow(-2px 4px 1px #000000);
   }

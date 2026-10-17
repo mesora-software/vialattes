@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import TitleGradient from "@/components/ui/gradients/TitleGradient";
 
 const features = [
   {
@@ -26,7 +27,7 @@ const features = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-background text-white">
+    <main className="min-h-screen overflow-x-hidden bg-surface-dark text-white">
       {/* Área principal com background */}
       <div className="relative isolate flex min-h-screen flex-col">
         {/* Background do header, hero e recursos */}
@@ -108,46 +109,30 @@ export default function Home() {
               Estude Física
               <span className="block">de forma</span>
             </h1>
-              <svg
-                viewBox="0 0 600 155"
-                className="mt-1 w-full max-w-150 overflow-visible font-heading"
-                role="img"
-                aria-label="divertida!"
+              <span
+                className="
+                  relative mt-1 block w-fit
+                  font-heading text-6xl font-bold
+                  tracking-wide
+                  sm:text-7xl lg:text-8xl
+                "
               >
-                <defs>
-                  <path
-                    id="divertida-curve"
-                    d="M 0 85 H 600"
-                  />
-
-                  <linearGradient
-                    id="divertida-gradient"
-                    gradientUnits="userSpaceOnUse"
-                    x1="0" y1="15" x2="0" y2="115"
-                  >
-                    <stop offset="0%" stopColor="var(--color-hero-gradient-top)" />
-                    <stop offset="45%" stopColor="var(--color-secondary)" />
-                    <stop offset="100%" stopColor="var(--color-hero-gradient-bottom)" />
-                  </linearGradient>
-                </defs>
-
-                <text
-                  fill="url(#divertida-gradient)"
-                  className="hero-title-svg"
-                  fontSize="100"
-                  fontWeight="700"
-                  letterSpacing="3"
-                  textAnchor="middle"
-           
+                {/* Camada inferior: contorno e sombra */}
+                <span
+                  aria-hidden="true"
+                  className="
+                    hero-title-highlight-outline
+                    absolute inset-0
+                  "
                 >
-                  <textPath 
-                    href="#divertida-curve"
-                    startOffset="40%"
-                  >
-                    Divertida!
-                  </textPath>
-                </text>
-              </svg>
+                  Divertida!
+                </span>
+
+                {/* Camada superior: preenchimento com gradiente */}
+                <span className="hero-title-highlight-fill text-vialattes-gradient">
+                  Divertida!
+                </span>
+              </span>
 
             <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [text-shadow:3px_4px_8px_#000000,0_0_8px_#172b72] sm:text-xl">
               No <strong>Vialattes</strong>, você aprende conceitos de Física através de missões,
@@ -249,4 +234,5 @@ export default function Home() {
     </main>
   );
 }
+
 

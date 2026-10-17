@@ -50,8 +50,8 @@ export default function Home() {
                   flex h-30 w-full
                   items-center justify-between
                   gap-4
-                  border-b border-secondary/40
-                  bg-linear-to-b from-[#08122f]/90 via-[#14244b]/70 to-[#14244b]/20
+                  border-b border-secondary/50
+                  bg-home-header-gradient
                   px-5
                   backdrop-blur-sm
                   md:px-10

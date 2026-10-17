@@ -15,17 +15,18 @@
   --color-primary: #563297;
   --color-primary-light: #8b35d9;
   --color-primary-dark: #402e6a;
+
   --color-secondary: #a4c719;
   --color-secondary-light: #bfe43a;
   --color-secondary-dark: #509624;
+
   --color-tertiary: #fdd501;
   --color-tertiary-light: #f0d95f;
   --color-tertiary-dark: #f37200;
 
-  /* Fundos */
-  --color-background: #09112d;
   --color-surface: #101a3c;
   --color-surface-light: #273e72;
+  --color-surface-dark: #09112d;
 
   /* Textos */
   --color-text-primary: #ffffff;
@@ -46,15 +47,24 @@
   --color-path-dashboard: #ff66c4;
 
   /* Sombras */
-  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
-  --shadow-glow-purple: 0 0 20px rgba(177, 100, 255, 0.35);
+  --color-shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
+  --color-shadow-glow-purple: 0 0 20px rgba(177, 100, 255, 0.35);
 }
+
+/* Gradientes reutilizáveis */
+@layer components {
+  .bg-home-header-gradient {
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-surface-dark) 90%, transparent),
+      color-mix(in srgb, var(--color-surface) 50%, transparent),
+      color-mix(in srgb, var(--color-surface-light) 20%, transparent)
+    );
+  }
 
 /* ========================================
    Componentes da Home
 ======================================== */
-
-@layer components {
 
   /* Título principal */
   .hero-title {

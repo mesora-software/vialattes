@@ -51,7 +51,7 @@ export default function Home() {
                   items-center justify-between
                   gap-4
                   border-b border-secondary/50
-                  bg-home-header-gradient
+                  bg-blue-gradient
                   px-5
                   backdrop-blur-sm
                   md:px-10
@@ -86,7 +86,7 @@ export default function Home() {
             </Link>
             <Link
               href="/dashboard"
-              className="rounded-full border border-[#b48aff] bg-linear-to-b from-[#a342f5] to-[#5200b7] px-4 py-3 text-center text-sm font-bold shadow-lg shadow-purple-950/50 transition-transform hover:scale-105 sm:px-6 sm:text-base"
+              className="rounded-full border border-[#b48aff] bg-purple-gradient px-4 py-3 text-center text-sm font-bold shadow-lg shadow-purple-950/50 transition-transform hover:scale-105 sm:px-6 sm:text-base"
             >
               Acessar Dashboard <span aria-hidden="true">→</span>
             </Link>
@@ -156,7 +156,7 @@ export default function Home() {
 
             <Link
               href="/dashboard"
-              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-secondary bg-linear-to-b from-[#a83cff] to-primary-dark px-7 py-4 text-lg font-extrabold shadow-[0_0_20px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
+              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-secondary bg-purple-gradient px-7 py-4 text-lg font-extrabold shadow-[0_0_20px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
             >
               <span aria-hidden="true">🚀</span>
               Testar Gratuitamente

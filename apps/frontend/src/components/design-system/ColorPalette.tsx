@@ -37,8 +37,8 @@ type Gradient = {
 
 const gradients: Gradient[] = [
   {
-    name: "Home Header",
-    className: "bg-home-header-gradient",
+    name: "Blue Gradient",
+    className: "bg-blue-gradient",
     description:
       "Gradiente vertical utilizado no cabeçalho da página inicial.",
     direction: "Vertical · Top → Bottom",
@@ -46,6 +46,19 @@ const gradients: Gradient[] = [
       "background / 90%",
       "surface / 50%",
       "surface-light / 20%",
+    ],
+  },
+
+  {
+    name: "Purple Gradient",
+    className: "bg-purple-gradient",
+    description:
+      "Gradiente vertical utilizado no botão de destaque do cabeçalho da página inicial.",
+    direction: "Vertical · Top → Bottom",
+    stops: [
+      "primary-light",
+      "primary",
+      "primary-dark",
     ],
   },
 ];

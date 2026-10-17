@@ -26,6 +26,7 @@ const colors = [
   { name: "Vialattes Gradiente 01", token: "vialattes-gradient-one" },
   { name: "Vialattes Gradiente 02", token: "vialattes-gradient-two" },
   { name: "Path dashboard", token: "path-dashboard" },
+  { name: "Border Acent", token: "border-accent" },
 ];
 
 type Gradient = {
@@ -61,6 +62,18 @@ const backgroundGradients: Gradient[] = [
       "primary-dark / 100%",
     ],
   },
+  {
+    name: "Green Gradient",
+    className: "bg-green-gradient",
+    description:
+      "Gradiente vertical utilizado no botão de sobre da página Home.",
+    direction: "Vertical · Top → Bottom",
+    stops: [
+      "vialattes-gradient-one / 10%",
+      "secondary / 50%",
+      "vialattes-gradient-two / 100%",
+    ],
+  },
 ];
 
 const textGradients: Gradient[] = [
@@ -71,8 +84,8 @@ const textGradients: Gradient[] = [
       "Gradiente de texto utilizado na palavra Divertida! do título principal da Home.",
     direction: "Vertical · Top → Bottom",
     stops: [
-      "vialattes-gradient-one / 0%",
-      "secondary / 45%",
+      "vialattes-gradient-one / 10%",
+      "secondary / 50%",
       "vialattes-gradient-two / 100%",
     ],
   },

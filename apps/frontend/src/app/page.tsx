@@ -53,7 +53,7 @@ export default function Home() {
                   border-b border-secondary/50
                   bg-blue-gradient
                   px-5
-                  backdrop-blur-sm
+                  backdrop-blur-[2px]
                   md:px-10
                 ">
           <Link
@@ -86,7 +86,7 @@ export default function Home() {
             </Link>
             <Link
               href="/dashboard"
-              className="rounded-full border border-[#b48aff] bg-purple-gradient px-4 py-3 text-center text-sm font-bold shadow-lg shadow-purple-950/50 transition-transform hover:scale-105 sm:px-6 sm:text-base"
+              className="rounded-full border border-border-accent bg-purple-gradient px-4 py-3 text-center text-sm font-bold shadow-lg shadow-purple-950/50 transition-transform hover:scale-105 sm:px-6 sm:text-base"
             >
               Acessar Dashboard <span aria-hidden="true">→</span>
             </Link>
@@ -192,7 +192,7 @@ export default function Home() {
             {features.map((feature) => (
               <article
                 key={feature.title}
-                className="flex items-center gap-4 rounded-2xl border border-text-secondary/35 bg-linear-to-br from-surface-light/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-card backdrop-blur-md"
+                className="flex items-center gap-4 rounded-2xl border border-text-secondary/35 bg-linear-to-br from-surface-light/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-card backdrop-blur-[2px]"
               >
                 <span aria-hidden="true" className="shrink-0 text-4xl">{feature.icon}</span>
                 <div>
@@ -218,7 +218,7 @@ export default function Home() {
           </p>
           <Link
             href="/dashboard"
-            className="mt-8 inline-block rounded-full bg-secondary px-8 py-3 font-bold text-[#211048] transition-transform hover:scale-105"
+            className="mt-8 inline-block rounded-full border border-border-accent bg-green-gradient px-8 py-3 font-bold text-primary-dark transition-transform hover:scale-105"
           >
             Começar a explorar →
           </Link>

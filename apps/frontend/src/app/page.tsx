@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import TitleGradient from "@/components/ui/gradients/TitleGradient";
 
 const features = [
   {

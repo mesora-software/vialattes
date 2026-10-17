@@ -1,7 +1,7 @@
 "use client";
 
 import { cardStyles } from "./styles";
-import TitleGradient from "../ui/gradients/TitleGradient";
+import GradientCard from "./GradientCard";
 
 const colors = [
   { name: "Primary", token: "primary" },
@@ -28,28 +28,17 @@ const colors = [
   { name: "Path dashboard", token: "path-dashboard" },
 ];
 
-type Gradient =
-  | {
-      name: string;
-      type: "css";
-      className: string;
-      description: string;
-      direction: string;
-      stops: string[];
-    }
-  | {
-      name: string;
-      type: "svg";
-      description: string;
-      direction: string;
-      stops: string[];
-      component: "hero-title";
-    };
+type Gradient = {
+  name: string;
+  className: string;
+  description: string;
+  direction: string;
+  stops: string[];
+};
 
-const gradients: Gradient[] = [
+const backgroundGradients: Gradient[] = [
   {
     name: "Blue Gradient",
-    type: "css",
     className: "bg-blue-gradient",
     description:
       "Gradiente vertical utilizado no background do Header da página inicial.",
@@ -62,19 +51,24 @@ const gradients: Gradient[] = [
   },
   {
     name: "Purple Gradient",
-    type: "css",
     className: "bg-purple-gradient",
     description:
-      "Gradiente vertical utilizado no botão de destaque do cabeçalho da página home.",
+      "Gradiente vertical utilizado nos botões de destaque da Home.",
     direction: "Vertical · Top → Bottom",
-    stops: ["primary-light", "primary", "primary-dark"],
+    stops: [
+      "primary-light / 0%",
+      "primary / 50%",
+      "primary-dark / 100%",
+    ],
   },
+];
+
+const textGradients: Gradient[] = [
   {
     name: "Vialattes Gradient",
-    type: "svg",
-    component: "hero-title",
+    className: "text-vialattes-gradient",
     description:
-      "Gradiente SVG utilizado na palavra Divertida! do título principal da Home.",
+      "Gradiente de texto utilizado na palavra Divertida! do título principal da Home.",
     direction: "Vertical · Top → Bottom",
     stops: [
       "vialattes-gradient-one / 0%",
@@ -82,7 +76,6 @@ const gradients: Gradient[] = [
       "vialattes-gradient-two / 100%",
     ],
   },
-  
 ];
 
 export default function ColorPalette() {
@@ -141,119 +134,57 @@ export default function ColorPalette() {
         ))}
       </div>
 
-      {/* Gradientes */}
-      <div className="space-y-4">
-        <div>
-          <h3 className="font-heading text-xl font-semibold text-primary-dark">
-            Gradientes
-          </h3>
+        {/* Gradientes */}
+        <div className="space-y-10">
 
-          <p className="mt-2 font-body text-sm text-surface-dark">
-            Combinações de cores reutilizáveis para fundos e componentes
-            da interface.
-          </p>
+          {/* Gradientes de Fundo */}
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-heading text-xl font-semibold text-primary-dark">
+                Gradientes de Fundo
+              </h3>
+
+              <p className="mt-2 font-body text-sm text-surface-dark">
+                Combinações de cores reutilizáveis para fundos e componentes
+                da interface.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {backgroundGradients.map((gradient) => (
+                <GradientCard
+                  key={gradient.className}
+                  gradient={gradient}
+                  type="background"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Gradientes de Texto */}
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-heading text-xl font-semibold text-primary-dark">
+                Gradientes de Texto
+              </h3>
+
+              <p className="mt-2 font-body text-sm text-surface-dark">
+                Gradientes utilizados em títulos e elementos tipográficos
+                da interface.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {textGradients.map((gradient) => (
+                <GradientCard
+                  key={gradient.className}
+                  gradient={gradient}
+                  type="text"
+                />
+              ))}
+            </div>
+          </div>
         </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {gradients.map((gradient) => (
-            <article
-              key={gradient.name}
-              className="overflow-hidden rounded-xl border"
-              style={{
-                backgroundColor: cardStyles.background,
-                borderColor: cardStyles.border,
-              }}
-            >
-              {/* Prévia do gradiente */}
-              <div
-                className="relative flex h-56 items-center justify-center overflow-hidden"
-                style={{
-                  backgroundColor:
-                    gradient.type === "svg"
-                      ? "var(--color-surface-light)"
-                      : cardStyles.surface,
-                }}
-              >
-                {gradient.type === "css" ? (
-                  <>
-                    <div
-                      className={`absolute inset-0 ${gradient.className}`}
-                    />
-
-                    <p className="relative font-heading text-2xl font-bold text-text-primary">
-                      Vialattes
-                    </p>
-                  </>
-                ) : gradient.component === "hero-title" ? (
-                  <svg
-                    viewBox="0 0 600 155"
-                    className="w-full max-w-100 overflow-visible font-heading"
-                    role="img"
-                    aria-label="Prévia do gradiente da palavra Divertida!"
-                  >
-                    <defs>
-                      <TitleGradient id="hero-title-gradient-preview" />
-                    </defs>
-
-                    <text
-                      x="300"
-                      y="105"
-                      fill="url(#hero-title-gradient-preview)"
-                      fontSize="95"
-                      fontWeight="700"
-                      textAnchor="middle"
-                      className="hero-title-svg"
-                    >
-                      Divertida!
-                    </text>
-                  </svg>
-                ) : null}
-              </div>                                
-
-              {/* Informações */}
-              <div className="space-y-4 p-4">
-                <div>
-                  <h4 className="font-body text-lg font-bold text-surface-dark">
-                    {gradient.name}
-                  </h4>
-
-                  <p className="mt-1 font-body text-sm text-primary-dark">
-                    {gradient.description}
-                  </p>
-                </div>
-
-                {/* Cores utilizadas */}
-                <div className="flex flex-wrap gap-2">
-                  {gradient.stops.map((stop) => (
-                    <span
-                      key={stop}
-                      className="rounded-full bg-surface px-3 py-1 font-mono text-xs text-text-primary"
-                    >
-                      {stop}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Direção e classe CSS */}
-                <div
-                  className="flex flex-wrap items-center justify-between gap-3 border-t pt-4"
-                  style={{ borderColor: cardStyles.border }}
-                >
-                  <span className="font-body text-xs text-primary-dark">
-                    {gradient.direction}
-                  </span>
-
-                  <code className="rounded-md bg-surface px-3 py-2 font-mono text-xs text-text-primary">
-                    {gradient.type === "css"
-                      ? gradient.className
-                      : "TitleGradient"}
-                  </code>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

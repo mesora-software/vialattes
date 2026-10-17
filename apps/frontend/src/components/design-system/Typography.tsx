@@ -1,3 +1,4 @@
+import { cardStyles } from "./styles";
 
 const fontFamilies = [
   {
@@ -70,22 +71,22 @@ export default function Typography() {
     <section
       id="typography"
       aria-labelledby="typography-title"
-      className="space-y-8"
+      className="space-y-10"
     >
       {/* Cabeçalho */}
       <header className="space-y-2">
-        <p className="font-body text-xs font-semibold tracking-[0.2em] text-secondary-light uppercase">
+        <p className="font-body text-xs font-semibold tracking-[0.2em] text-primary-dark uppercase">
           Design System / 02
         </p>
 
         <h2
           id="typography-title"
-          className="font-heading text-3xl font-bold text-text-primary sm:text-4xl"
+          className="font-heading text-3xl font-bold text-surface-dark sm:text-4xl"
         >
           Tipografia
         </h2>
 
-        <p className="max-w-2xl font-body text-sm leading-relaxed text-text-primarary sm:text-base">
+        <p className="max-w-2xl font-body text-sm leading-relaxed text-surface-dark sm:text-base">
           Famílias tipográficas, tamanhos e exemplos utilizados na
           interface do Vialattes.
         </p>
@@ -93,7 +94,7 @@ export default function Typography() {
 
       {/* Famílias tipográficas */}
       <div className="space-y-4">
-        <h3 className="font-heading text-xl font-semibold">
+        <h3 className="font-heading text-xl font-semibold text-primary-dark">
           Famílias tipográficas
         </h3>
 
@@ -101,10 +102,15 @@ export default function Typography() {
           {fontFamilies.map((font) => (
             <article
               key={font.token}
-              className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface"
+              className="flex min-w-0 flex-col overflow-hidden rounded-xl border"
+              style={{
+                backgroundColor: cardStyles.background,
+                borderColor: cardStyles.border,
+              }}
             >
-              <div className="flex min-h-48 flex-col justify-center gap-5 bg-surface-light/40 p-6">
-                <span className="w-fit rounded-full border border-white/15 bg-primary-light px-3 py-1 font-mono text-xs text-text-primary">
+              {/* Prévia da fonte */}
+              <div className="flex min-h-48 flex-col justify-center gap-5 bg-surface-light p-6">
+                <span className="w-fit rounded-full bg-primary-dark px-3 py-1 font-mono text-xs text-text-primary">
                   {font.token}
                 </span>
 
@@ -115,23 +121,27 @@ export default function Typography() {
                 </p>
               </div>
 
-              <div className="flex flex-1 flex-col gap-3 p-6">
+              {/* Informações */}
+              <div className="flex flex-1 flex-col gap-3 p-4">
                 <div>
-                  <h4 className="font-body text-xl font-bold">
+                  <h4 className="font-body text-xl font-bold text-surface-dark">
                     {font.name}
                   </h4>
 
-                  <p className="mt-1 font-body text-sm text-text-tertiary">
+                  <p className="mt-1 font-body text-sm text-primary-dark">
                     {font.role}
                   </p>
                 </div>
 
-                <p className="font-body text-sm leading-relaxed text-text-primary">
+                <p className="font-body text-sm leading-relaxed text-surface-dark">
                   {font.description}
                 </p>
 
-                <div className="mt-auto border-t border-white/10 pt-4">
-                  <code className="font-mono text-xs text-secondary">
+                <div
+                  className="mt-auto border-t pt-4"
+                  style={{ borderColor: cardStyles.border }}
+                >
+                  <code className="font-mono text-xs text-tertiary-dark">
                     {font.token}
                   </code>
                 </div>
@@ -143,36 +153,46 @@ export default function Typography() {
 
       {/* Hierarquia tipográfica */}
       <div className="space-y-4">
-        <h3 className="font-heading text-xl font-semibold">
+        <h3 className="font-heading text-xl font-semibold text-primary-dark">
           Hierarquia tipográfica
         </h3>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface">
+        <div
+          className="overflow-hidden rounded-xl border"
+          style={{
+            backgroundColor: cardStyles.background,
+            borderColor: cardStyles.border,
+          }}
+        >
           {textHierarchy.map((item, index) => (
             <div
               key={item.label}
-              className={`grid gap-4 p-5 sm:grid-cols-[110px_minmax(0,1fr)] sm:items-center sm:p-6 ${
-                index > 0 ? "border-t border-white/10" : ""
-              }`}
+              className="grid gap-4 p-5 sm:grid-cols-[110px_minmax(0,1fr)] sm:items-center sm:p-6"
+              style={{
+                borderTop:
+                  index > 0
+                    ? `1px solid ${cardStyles.border}`
+                    : undefined,
+              }}
             >
               <div className="space-y-1">
-                <p className="font-body text-sm font-semibold text-secondary-light">
+                <p className="font-body text-sm font-semibold text-primary-dark">
                   {item.label}
                 </p>
 
-                <p className="font-mono text-xs text-text-tertiary">
+                <p className="font-mono text-xs text-surface-dark">
                   {item.size}
                 </p>
               </div>
 
               <div className="min-w-0 space-y-3">
                 <p
-                  className={`${item.classes} leading-tight text-text-primary wrap-break-word`}
+                  className={`${item.classes} leading-tight text-surface-dark wrap-break-word`}
                 >
                   {item.sample}
                 </p>
 
-                <code className="block font-mono text-xs leading-relaxed text-text-tertiary wrap-break-word">
+                <code className="block font-mono text-xs leading-relaxed text-primary-dark wrap-break-word">
                   {item.classes}
                 </code>
               </div>
@@ -183,18 +203,30 @@ export default function Typography() {
 
       {/* Aplicação no jogo */}
       <div className="space-y-4">
-        <h3 className="font-heading text-xl font-semibold">
+        <h3 className="font-heading text-xl font-semibold text-primary-dark">
           Aplicação no jogo
         </h3>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {/* Exemplo de recompensa */}
-          <article className="rounded-2xl border border-white/10 bg-surface p-6">
-            <p className="mb-6 font-body text-xs font-semibold tracking-widest text-text-primary uppercase">
-              Recompensas
-            </p>
+          {/* Recompensas */}
+          <article
+            className="overflow-hidden rounded-xl border"
+            style={{
+              backgroundColor: cardStyles.background,
+              borderColor: cardStyles.border,
+            }}
+          >
+            <div className="p-4">
+              <h4 className="font-body text-lg font-bold text-surface-dark">
+                Recompensas
+              </h4>
 
-            <div className="flex min-h-40 flex-col items-center justify-center gap-3 text-center">
+              <p className="mt-1 font-body text-sm text-primary-dark">
+                Tipografia utilizada nas mensagens de conclusão de missões.
+              </p>
+            </div>
+
+            <div className="flex min-h-56 flex-col items-center justify-center gap-3 bg-surface px-4 py-8 text-center">
               <p className="font-game text-4xl text-tertiary sm:text-5xl">
                 Missão Concluída!
               </p>
@@ -208,18 +240,32 @@ export default function Typography() {
               </p>
             </div>
 
-            <p className="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-secondary">
-              font-game
-            </p>
+            <div className="p-4">
+              <code className="font-mono text-xs text-tertiary-dark">
+                font-game
+              </code>
+            </div>
           </article>
 
-          {/* Exemplo de HUD */}
-          <article className="rounded-2xl border border-white/10 bg-surface p-6">
-            <p className="mb-6 font-body text-xs font-semibold tracking-widest text-text-primary uppercase">
-              HUD / Dashboard
-            </p>
+          {/* HUD */}
+          <article
+            className="overflow-hidden rounded-xl border"
+            style={{
+              backgroundColor: cardStyles.background,
+              borderColor: cardStyles.border,
+            }}
+          >
+            <div className="p-4">
+              <h4 className="font-body text-lg font-bold text-surface-dark">
+                HUD / Dashboard
+              </h4>
 
-            <div className="flex min-h-40 flex-col items-center justify-center gap-4">
+              <p className="mt-1 font-body text-sm text-primary-dark">
+                Indicadores de progresso e patente do jogador.
+              </p>
+            </div>
+
+            <div className="flex min-h-56 flex-col items-center justify-center gap-4 bg-surface px-4 py-8">
               <div className="rounded-xl border border-primary-light/40 bg-primary-dark px-6 py-3 text-center">
                 <p className="font-game text-2xl text-tertiary">
                   1588 XP
@@ -233,37 +279,55 @@ export default function Typography() {
               </div>
             </div>
 
-            <p className="mt-6 border-t border-white/10 pt-4 font-mono text-xs text-secondary">
-              font-game
-            </p>
+            <div className="p-4">
+              <code className="font-mono text-xs text-tertiary-dark">
+                font-game
+              </code>
+            </div>
           </article>
         </div>
       </div>
 
       {/* Caracteres disponíveis */}
       <div className="space-y-4">
-        <h3 className="font-heading text-xl font-semibold">
+        <h3 className="font-heading text-xl font-semibold text-primary-dark">
           Amostra de caracteres
         </h3>
 
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-surface p-6">
-          <p className="font-body text-sm text-text-tertiary">
-            Changa One / font-game
-          </p>
+        <article
+          className="overflow-hidden rounded-xl border"
+          style={{
+            backgroundColor: cardStyles.background,
+            borderColor: cardStyles.border,
+          }}
+        >
+          <div className="p-4">
+            <h4 className="font-body text-lg font-bold text-surface-dark">
+              Changa One
+            </h4>
 
-          <div className="space-y-3 font-game text-xl leading-relaxed text-text-primary sm:text-2xl">
+            <p className="mt-1 font-mono text-xs text-primary-dark">
+              font-game
+            </p>
+          </div>
+
+          <div className="space-y-3 bg-surface-light p-6 font-game text-xl leading-relaxed text-text-primary sm:text-2xl">
             <p className="break-all">
               ABCDEFGHIJKLMNOPQRSTUVWXYZ
             </p>
+
             <p className="break-all">
               abcdefghijklmnopqrstuvwxyz
             </p>
+
             <p>0123456789</p>
+
             <p>Á É Í Ó Ú Ã Õ Ç</p>
           </div>
-        </div>
+        </article>
       </div>
     </section>
   );
 }
+
 

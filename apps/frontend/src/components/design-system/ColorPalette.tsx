@@ -1,5 +1,6 @@
-
 "use client";
+
+import { cardStyles } from "./styles";
 
 const colors = [
   { name: "Primary", token: "primary" },
@@ -48,12 +49,6 @@ const gradients: Gradient[] = [
     ],
   },
 ];
-
-const cardStyles = {
-  background: "#e8e1db",
-  surface: "#d4b4a3",
-  border: "#c7937b",
-};
 
 export default function ColorPalette() {
   return (

@@ -41,7 +41,7 @@ export default function Home() {
           />
 
           {/* Degradê transparente */}
-          <div className="absolute inset-0 bg-linear-to-r from-[#091735]/85 via-[#17254b]/45 to-[#07112b]/10" />
+          <div className="absolute inset-0 bg-linear-to-r from-[#091735]/95 via-[#17254b]/30 to-[#07112b]/1" />
         </div>
 
         {/* Cabeçalho */}
@@ -103,7 +103,6 @@ export default function Home() {
                 tracking-wide
                 sm:text-6xl lg:text-7xl
               `}
-
             >
               Estude Física
               <span className="block">de forma</span>
@@ -133,14 +132,14 @@ export default function Home() {
                 </span>
               </span>
 
-            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [text-shadow:3px_4px_8px_#000000,0_0_8px_#172b72] sm:text-xl">
+            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [text-shadow:-2px_2px_2px_#000000,0_0_4px_#172b72] sm:text-xl">
               No <strong>Vialattes</strong>, você aprende conceitos de Física através de missões,
               jogos e desafios em um universo cheio de descobertas.
             </p>
 
             <Link
               href="/dashboard"
-              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-secondary bg-purple-gradient px-7 py-4 text-lg font-extrabold shadow-[0_0_20px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
+              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-secondary bg-purple-gradient px-7 py-4 text-lg font-extrabold shadow-[0_0_10px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
             >
               <span aria-hidden="true">🚀</span>
               Testar Gratuitamente
@@ -149,7 +148,7 @@ export default function Home() {
 
             {/* Indicadores */}
             <div className="mt-7 flex flex-wrap gap-3 text-sm font-medium text-white">
-              <span className="flex items-center gap-2 rounded-full bg-[#14264e]/55 px-3 py-2 backdrop-blur-sm">
+              <span className="flex items-center gap-2 rounded-full bg-surface/55 px-3 py-2 backdrop-blur-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d68aff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
@@ -159,7 +158,7 @@ export default function Home() {
                 Sem cadastro
               </span>
 
-              <span className="flex items-center gap-2 rounded-full bg-[#14264e]/55 px-3 py-2 backdrop-blur-sm">
+              <span className="flex items-center gap-2 rounded-full bg-surface/55 px-3 py-2 backdrop-blur-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8abaff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M6 12h4m-2-2v4" />
                   <path d="M15 13h.01M18 10h.01" />
@@ -168,7 +167,7 @@ export default function Home() {
                 Missões e desafios
               </span>
 
-              <span className="flex items-center gap-2 rounded-full bg-[#14264e]/55 px-3 py-2 backdrop-blur-sm">
+              <span className="flex items-center gap-2 rounded-full bg-surface/55 px-3 py-2 backdrop-blur-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#55d5ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 20V12h4v8" />
                   <path d="M10 20V7h4v13" />
@@ -186,18 +185,16 @@ export default function Home() {
           aria-labelledby="recursos-title"
           className="relative z-10 mx-auto w-full max-w-350 scroll-mt-8 px-5 pb-10 md:px-10"
         >
-          <h2 id="recursos-title" className="sr-only">Recursos do Vialattes</h2>
-
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {features.map((feature) => (
               <article
                 key={feature.title}
-                className="flex items-center gap-4 rounded-2xl border border-text-secondary/35 bg-linear-to-br from-surface-light/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-card backdrop-blur-[2px]"
+                className="flex items-center gap-4 rounded-2xl border border-secondary/35 bg-linear-to-br from-surface-light/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-card backdrop-blur-[2px]"
               >
                 <span aria-hidden="true" className="shrink-0 text-4xl">{feature.icon}</span>
                 <div>
                   <h3 className="text-base font-bold">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/85">{feature.description}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-text-primary/85">{feature.description}</p>
                 </div>
               </article>
             ))}
@@ -208,17 +205,17 @@ export default function Home() {
       {/* Sobre */}
       <section id="sobre" className="scroll-mt-8 bg-surface px-6 py-18 text-center">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-3xl font-extrabold text-secondary sm:text-4xl">
-            Aprender pode ser uma aventura!
+          <h2 className="text-3xl font-extrabold sm:text-4xl text-vialattes-gradient">
+              Aprender pode ser uma aventura!    
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-white/85">
+          <p className="mt-6 text-lg leading-relaxed text-text-primaryprimary/85">
             O Vialattes é uma plataforma educacional gamificada desenvolvida para complementar
             o estudo de Física. Explore módulos, complete missões interativas e conquiste
             recompensas enquanto desenvolve seus conhecimentos.
           </p>
           <Link
             href="/dashboard"
-            className="mt-8 inline-block rounded-full border border-border-accent bg-green-gradient px-8 py-3 font-bold text-primary-dark transition-transform hover:scale-105"
+            className="mt-8 inline-block rounded-full border border-border-accent bg-green-gradient px-8 py-3 font-extrabold text-primary-dark transition-transform hover:scale-105"
           >
             Começar a explorar →
           </Link>
@@ -226,7 +223,7 @@ export default function Home() {
       </section>
 
       {/* Rodapé */}
-      <footer className="border-t border-white/10 bg-[#090f26] px-6 py-6 text-center text-sm text-white/65">
+      <footer className="border-t border-secondary/30 bg-surface-dark px-6 py-6 text-center text-sm text-text-primary/65">
         <p>Vialattes — Uma experiência de aprendizagem gamificada.</p>
         <p className="mt-2">Desenvolvido por Mesora Software.</p>
       </footer>

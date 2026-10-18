@@ -43,13 +43,12 @@
   --color-vialattes-gradient-one: #f3ff8c;
   --color-vialattes-gradient-two: #9acb00;
 
-  /* Dashboard Path */
+  /* Extra colors */
   --color-path-dashboard: #ff66c4;
   --color-border-accent: #b48aff;
 
   /* Sombras */
   --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
-  --shadow-glow-purple: 0 0 20px rgba(177, 100, 255, 0.35);
 }
 
 /* Gradientes de fundo */

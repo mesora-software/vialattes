@@ -13,7 +13,7 @@ export default function HudValue({
   alt,
 }: HudValueProps) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center select-none">
       {/* Ícone */}
       <Image
         src={icon}

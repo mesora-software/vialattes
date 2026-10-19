@@ -32,7 +32,7 @@ export default function ModuleCard({
         }`}
       >
         {/* Estrelas */}
-        <div className="mb-2 flex h-11.25 items-center justify-center gap-1">
+        <div className="mb-2 flex h-11.25 items-center justify-center gap-1 select-none">
           {Array.from({ length: stars }).map((_, index) => {
             const center = (stars - 1) / 2;
             const distance = Math.abs(index - center);
@@ -92,7 +92,7 @@ export default function ModuleCard({
     return (
       <Link
         href={missionHref}
-        className="flex flex-col items-center transition-transform duration-200 hover:scale-105"
+        className="flex flex-col items-center transition-transform duration-200 hover:scale-105 select-none"
       >
         {cardContent}
       </Link>
@@ -102,7 +102,7 @@ export default function ModuleCard({
   // Módulos bloqueados: sem navegação
   return (
     <div
-      className="flex flex-col items-center cursor-not-allowed"
+      className="flex flex-col items-center cursor-not-allowed select-none"
       aria-label={`${name} - módulo indisponível`}
     >
       {cardContent}

@@ -29,7 +29,7 @@ export default function DashboardAction({
   return (
     <Link
       href={href}
-      className="flex items-center transition-transform duration-200 hover:scale-105"
+      className="flex items-center transition-transform duration-200 hover:scale-105 select-none"
     >
       {/* Ícone */}
       <Image
@@ -64,7 +64,6 @@ export default function DashboardAction({
             justify-center
             rounded-r-lg
             rounded-l-lg
-
             bg-primary/90
             px-6
           "

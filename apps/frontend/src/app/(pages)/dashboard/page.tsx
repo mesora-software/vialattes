@@ -82,7 +82,7 @@ export default function Dashboard() {
         <header className="flex items-center">
 
           {/* Patente */}
-          <div className="w-30 shrink-0 -translate-4">
+          <div className="w-30 shrink-0 -translate-4 select-none">
             <Image
               src="/images/assets/patents/recruit.svg"
               alt="Recruta"
@@ -110,7 +110,7 @@ export default function Dashboard() {
           </div>
           
           {/* Login */}
-          <div className="flex w-25 shrink-0 justify-end -translate-4">
+          <div className="flex w-25 shrink-0 justify-end -translate-4 select-none">
             <div className="group relative">
               <button
                 type="button"
@@ -146,8 +146,8 @@ export default function Dashboard() {
                   group-focus-within:opacity-100
                 "
               >
-                <GamePanel contentClassName="whitespace-nowrap px-4 py-2 text-base">
-                  Login disponível em breve!
+                <GamePanel contentClassName="whitespace-nowrap px-2 py-2 font-heading text-white">
+                    Login disponível em breve!
                 </GamePanel>
               </div>
             </div>

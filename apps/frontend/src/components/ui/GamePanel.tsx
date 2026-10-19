@@ -36,6 +36,7 @@ export default function GamePanel({
           bg-primary/90
           font-game
           text-text-tertiary
+          select-none
           ${contentClassName}
         `}        
       >

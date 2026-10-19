@@ -264,10 +264,10 @@ function PositionGameClient() {
   ]);
 
   return (
-    <div className="relative flex min-h-90 min-w-0 flex-1 flex-col">
+    <div className="relative flex min-h-90 min-w-0 flex-1 flex-col select-none">
       {/* Progresso da missão */}
-      <div className="relative z-10 text-center text-white">
-        <p className="text-lg font-bold text-[#fdd501]">
+      <div className="relative z-10 text-center text-text-primary">
+        <p className="text-lg font-game text-tertiary [-webkit-text-stroke:0.8px_black]">
           Zips derrotados: {defeatedCount}/{TOTAL_ZIPS}
         </p>
         <p className="text-sm">
@@ -379,16 +379,16 @@ function PositionGameClient() {
             contentClassName="flex-col gap-5 px-8 py-10 text-center"
           >
             {/* Título */}
-            <h2 className="text-3xl font-bold text-[#fdd501]">
+            <h2 className="text-3xl font-bold text-tertiary">
               Missão concluída!
             </h2>
             {/* Progresso */}
-            <p className="text-lg text-white">
+            <p className="text-lg text-text-primary">
               Você derrotou {TOTAL_ZIPS} Zips!
             </p>
             {/* Recompensas */}
             <div className="flex w-full flex-col items-center gap-3">
-              <h3 className="text-xl text-[#fdd501]">
+              <h3 className="text-xl text-tertiary">
                 Recompensas obtidas
               </h3>
               <div className="flex items-center justify-center gap-8">
@@ -400,7 +400,7 @@ function PositionGameClient() {
                     width={30}
                     height={30}
                   />
-                  <span className="text-xl text-[#fdd501]">
+                  <span className="text-xl text-tertiary">
                     +{TOTAL_XP.toLocaleString("pt-BR")}
                   </span>
                 </div>
@@ -412,7 +412,7 @@ function PositionGameClient() {
                     width={30}
                     height={30}
                   />
-                  <span className="text-xl text-[#fdd501]">
+                  <span className="text-xl text-tertiary">
                     +{TOTAL_LATTECOINS.toLocaleString("pt-BR")}
                   </span>
                 </div>
@@ -426,17 +426,17 @@ function PositionGameClient() {
                 cursor-pointer
                 rounded-lg
                 border-2
-                border-[#fdd501]
-                bg-[#402e6a]
+                border-tertiary
+                bg-primary-dark
                 px-6
                 py-3
                 text-lg
                 font-bold
-                text-[#fdd501]
+                text-tertiary
                 transition-all
                 duration-200
                 hover:scale-105
-                hover:bg-[#5a4388]
+                hover:bg-primary
               "
             >
               Voltar ao Dashboard

@@ -22,7 +22,7 @@ export default function MissionPage() {
 
       <div className="relative z-10 mx-20 my-2.5 flex min-w-0 flex-1 flex-col">
         {/* Header */}
-        <header className="flex items-center justify-between">
+        <header className="flex items-center justify-between select-none">
           <Image
             src="/images/assets/patents/recruit.svg"
             alt="Recruta"
@@ -48,34 +48,22 @@ export default function MissionPage() {
 
           <Link
             href="/dashboard"
-            className="text-xl font-bold text-[#fdd501] -translate-y-8 hover:underline"
-            style={{
-              fontFamily: '"Posey", cursive',
-              WebkitTextStroke: "0.3px #000000"
-            }}
+            className="text-xl font-game text-tertiary -translate-y-8 hover:underline hover:scale-105"
           >
             ← Sair da missão
           </Link>
         </header>
 
         {/* Identificação da missão */}
-        <section className="mt-8 text-start font-bold">
+        <section className="mt-8 text-start select-none">
           <h1
-            className="text-3xl font-bold text-[#fdd501]"
-            style={{
-              fontFamily: '"Posey", cursive',
-              WebkitTextStroke: "0.3px #000000"
-            }}
+            className="text-4xl font-game text-tertiary [-webkit-text-stroke:1.5px_black]"
           >
             Cinemática • Posição
           </h1>
 
           <p
-            className="mt-3 text-lg font-bold text-[#faf8f1]"
-            style={{
-              fontFamily: '"Posey", cursive',
-              WebkitTextStroke: "0.3px #000000"
-            }}
+            className="mt-2 text-xl font-body text-text-primary"
           >
             Determine a posição de cada Zip e acerte o disparo.
           </p>

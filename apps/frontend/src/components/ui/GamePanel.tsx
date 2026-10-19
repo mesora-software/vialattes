@@ -33,7 +33,7 @@ export default function GamePanel({
           justify-center
           rounded-r-lg
           rounded-l-lg
-          bg-primary/90
+          bg-primary/85
           font-game
           text-text-tertiary
           select-none

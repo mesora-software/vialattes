@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import GamePanel from "@/components/ui/GamePanel";
 
 interface DashboardActionProps {
   name: string;
@@ -13,10 +14,10 @@ interface DashboardActionProps {
  * DashboardAction
  *
  * Renders an interactive action button for dashboard features.
- * Handles action-specific presentation and user interactions.
+ * Reuses GamePanel for consistent panel styling.
  *
- * Unlike GamePanel, which provides reusable visual styling,
- * this component is designed for dashboard-specific actions.
+ * Handles dashboard-specific icons, navigation, labels,
+ * and hover interactions.
  */
 
 export default function DashboardAction({
@@ -29,7 +30,7 @@ export default function DashboardAction({
   return (
     <Link
       href={href}
-      className="flex items-center transition-transform duration-200 hover:scale-105 select-none"
+      className="flex items-center select-none transition-transform duration-200 hover:scale-105"
     >
       {/* Ícone */}
       <Image
@@ -41,43 +42,15 @@ export default function DashboardAction({
         className="relative z-20 object-contain"
       />
 
-      {/* Moldura do visor */}
-      <div
-        className="
-          -ml-6
-          rounded-r-lg
-          rounded-l-xl
-          p-0.5
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
-        }}
+      {/* Visor */}
+      <GamePanel
+        className="-ml-6"
+        contentClassName="h-9 min-w-20 px-6"
       >
-        {/* Interior do visor */}
-        <div
-          className="
-            flex
-            h-9
-            min-w-20
-            items-center
-            justify-center
-            rounded-r-lg
-            rounded-l-lg
-            bg-primary/90
-            px-6
-          "
-        >
-          <span
-            className="text-xl font-extrabold text-text-tertiary"
-            style={{
-              fontFamily: '"Comic Octo", cursive',
-            }}
-          >
-            {name}
-          </span>
-        </div>
-      </div>
+        <span className="font-heading text-xl">
+          {name}
+        </span>
+      </GamePanel>
     </Link>
   );
 }

@@ -49,7 +49,10 @@
 
   /* Extra colors */
   --color-path-dashboard: #ff66c4;
-  --color-border-accent: #b48aff;
+  --color-border-accent: #b48aff; /*Button border
+    /* Game Panel Border */
+  --color-game-panel-center: #f8f8f8;
+  --color-game-panel-edge: #7458a9;
 
   /* Sombras */
   --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.25);
@@ -81,6 +84,15 @@
       var(--color-vialattes-gradient-one) 10%,
       var(--color-secondary) 50%,
       var(--color-vialattes-gradient-two) 100%
+    );
+  }
+
+  /* Game Panel Border Gradient */
+  .bg-game-panel-border-gradient {
+    background-image: radial-gradient(
+      circle at 50% 50%,
+      var(--color-game-panel-center),
+      var(--color-game-panel-edge)
     );
   }
 

@@ -24,11 +24,7 @@ export default function GamePanel({
 }: GamePanelProps) {
   return (
     <div
-      className={`rounded-r-lg rounded-l-xl p-0.5 ${className}`}
-      style={{
-        background:
-          "radial-gradient(circle at 50% 50%, #f8f8f8, #7458a9)",
-      }}
+      className={`rounded-r-lg rounded-l-xl bg-game-panel-border-gradient p-0.5 ${className}`}
     >
       <div
         className={`
@@ -37,14 +33,11 @@ export default function GamePanel({
           justify-center
           rounded-r-lg
           rounded-l-lg
-          bg-[#402e6a]/90
-          font-bold
-          text-[#fdd501]
+          bg-primary/90
+          font-game
+          text-text-tertiary
           ${contentClassName}
-        `}
-        style={{
-          fontFamily: '"Comic Octo", cursive',
-        }}
+        `}        
       >
         {children}
       </div>

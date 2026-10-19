@@ -30,6 +30,8 @@ const colors = [
   { name: "Vialattes Gradiente 02", token: "vialattes-gradient-two" },
   { name: "Path dashboard", token: "path-dashboard" },
   { name: "Border Acent", token: "border-accent" },
+  { name: "Game Panel Border Center", token: "game-panel-center" },
+  { name: "Game panel Border Edge", token: "game-panel-edge" },
 ];
 
 type Gradient = {
@@ -75,6 +77,17 @@ const backgroundGradients: Gradient[] = [
       "vialattes-gradient-one / 10%",
       "secondary / 50%",
       "vialattes-gradient-two / 100%",
+    ],
+  },
+  {
+    name: "Game Panel Border Gradient",
+    className: "bg-game-panel-border-gradient",
+    description:
+      "Gradiente radial utilizado nas bordas dos painéis do HUD, incluíndo os indicadores de XP e lattecoins.",
+    direction: "Radial · Center → Edges",
+    stops: [
+      "game-panel-center / 0%",
+      "game-panel-edge / 100%",
     ],
   },
 ];

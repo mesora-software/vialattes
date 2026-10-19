@@ -65,12 +65,12 @@ export default function DashboardAction({
             rounded-r-lg
             rounded-l-lg
 
-            bg-[#402e6a]/90
+            bg-primary/90
             px-6
           "
         >
           <span
-            className="text-xl font-extrabold text-[#fdd501]"
+            className="text-xl font-extrabold text-text-tertiary"
             style={{
               fontFamily: '"Comic Octo", cursive',
             }}

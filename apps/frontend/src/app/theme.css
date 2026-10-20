@@ -140,35 +140,37 @@
     filter: drop-shadow(-2px 4px 1px #000000);
   }
 
-  /* Links da navegação */
-  .home-nav-link {
+  /* Links com sublinhado animado */
+  .animated-underline-link {
     position: relative;
     font-weight: 600;
     transition: text-shadow 300ms ease-out;
   }
 
-  .home-nav-link:hover {
-    text-shadow: 0 0 2px var(--color-secondary);
-  }
+  /* Efeito nas letras */
+    .animated-underline-link:hover,
+    .animated-underline-link:focus-visible {
+      text-shadow: 0 0.8px currentColor;
+    }
 
   /* Sublinhado animado */
-  .home-nav-underline {
+  .animated-underline {
     position: absolute;
     bottom: -4px;
     left: 0;
     width: 100%;
     height: 2px;
     border-radius: 9999px;
-    background-color: var(--color-secondary);
+    background-color: var(--underline-color, var(--color-secondary-light));
 
     transform: scaleX(0);
     transform-origin: center;
-
     transition: transform 300ms ease-out;
   }
 
-  /* Ativado pelo hover no link */
-  .group:hover .home-nav-underline {
-    transform: scaleX(1);
+  /* Ativação so sublinhado */
+    .animated-underline-link:hover .animated-underline,
+    .animated-underline-link:focus-visible .animated-underline {
+      transform: scaleX(1);
   }
 }

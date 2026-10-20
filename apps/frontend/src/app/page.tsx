@@ -1,3 +1,4 @@
+import AnimatedUnderlineLink from "@/components/ui/AnimatedUnderlineLink";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -71,19 +72,28 @@ export default function Home() {
             />
           </Link>
 
-          <nav aria-label="Navegação principal" className="flex items-center gap-5 md:gap-8">
-            <Link href="/" className="group home-nav-link hidden sm:inline">
-              Início
-              <span className="home-nav-underline" />
-            </Link>
-            <Link href="#sobre" className="group home-nav-link hidden md:inline">
-              Sobre
-              <span className="home-nav-underline" />
-            </Link>
-            <Link href="#recursos" className="group home-nav-link hidden md:inline">
-              Recursos
-              <span className="home-nav-underline" />
-            </Link>
+          <nav 
+            aria-label="Navegação principal"
+            className="flex items-center gap-5 md:gap-8"
+          >
+            <AnimatedUnderlineLink
+              href="/"
+              className="hidden sm:inline-flex">
+                Início  
+            </AnimatedUnderlineLink>
+
+            <AnimatedUnderlineLink 
+              href="#sobre"
+              className="hidden md:inline-flex">
+                Sobre 
+            </AnimatedUnderlineLink>
+
+            <AnimatedUnderlineLink 
+              href="#recursos" 
+              className="hidden md:inline-flex">
+                Recursos
+            </AnimatedUnderlineLink>
+
             <Link
               href="/dashboard"
               className="rounded-full border border-border-accent bg-purple-gradient px-4 py-3 text-center text-sm font-bold shadow-lg shadow-purple-950/50 transition-transform hover:scale-105 sm:px-6 sm:text-base"

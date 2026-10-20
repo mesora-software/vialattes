@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+//import Link from "next/link";
 import HudValue from "@/components/ui/HudValue";
 import PositionGame from "@/components/missions/position/PositionGame";
+import AnimatedUnderlineLink from "@/components/ui/AnimatedUnderlineLink";
 import { usePlayerWallet } from "@/hooks/usePlayerWallet";
 
 export default function MissionPage() {
@@ -46,12 +47,18 @@ export default function MissionPage() {
             />
           </div>
 
-          <Link
+          <AnimatedUnderlineLink
             href="/dashboard"
-            className="text-xl font-game text-tertiary -translate-y-8 hover:underline hover:scale-105"
+            className="font-heading text-tertiary -translate-y-8 hover:scale-103"
+            underlineClassName="[--underline-color:var(--color-tertiary)]"
           >
-            ← Sair da missão
-          </Link>
+            <span className="text-2xl">
+              ← 
+            </span>
+            <span className="text-xl pl-2 [-webkit-text-stroke:0.1px_black] ">
+              Sair da missão
+            </span>
+          </AnimatedUnderlineLink>
         </header>
 
         {/* Identificação da missão */}

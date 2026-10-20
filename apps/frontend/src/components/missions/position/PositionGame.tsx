@@ -7,16 +7,16 @@ import {
   useSyncExternalStore,
 } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import AimPanel from "./AimPanel";
 import DraggablePanel from "./DraggablePanel";
 import Drone from "./Drone";
 import PositionAxis from "./PositionAxis";
 import ZipEnemy from "./ZipEnemy";
 import RewardPopup from "./RewardPopup";
-import GamePanel from "@/components/ui/GamePanel";
 import { POSITION_REWARDS } from "@/lib/rewards/reward-config";
 import { grantReward } from "@/lib/rewards/reward-storage";
+import MissionComplete from "../MissionComplete";
+
 // Tipos
 type Zip = {
   id: number;
@@ -44,6 +44,9 @@ const BOMB_SIZE = 40;
 const AXIS_OFFSET = 30; //compensa o deslocamento vertical do contêiner do eixo X.
 const TOTAL_XP = TOTAL_ZIPS * POSITION_REWARDS.xpPerZip;
 const TOTAL_LATTECOINS = TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
+
+const PREVIEW_MISSION_COMPLETE = true;
+
 // Utilitários
 function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -84,6 +87,11 @@ function PositionGameClient() {
   const [missionCompleted, setMissionCompleted] = useState(false);
   const [bombDistance, setBombDistance] = useState(0);
   const [rewardEffects, setRewardEffects] = useState<RewardEffect[]>([]);
+
+  // Compartilha a condição de conclusão entre o modal e os controles.
+  const showMissionComplete =
+    missionCompleted ||
+    (process.env.NODE_ENV === "development" && PREVIEW_MISSION_COMPLETE);
   // Evitar processamento duplicado de impactos
   const processedShots = useRef<Set<string>>(new Set());
   const bombAreaRef = useRef<HTMLDivElement>(null);
@@ -96,20 +104,20 @@ function PositionGameClient() {
   }, []);
   // Movimentação do drone
   const moveLeft = useCallback(() => {
-    if (isShooting || missionCompleted) return;
+    if (isShooting || showMissionComplete) return;
     setDronePosition((current) =>
       Math.max(-10, current - 1)
     );
-  }, [isShooting, missionCompleted]);
+  }, [isShooting, showMissionComplete]);
   const moveRight = useCallback(() => {
-    if (isShooting || missionCompleted) return;
+    if (isShooting || showMissionComplete) return;
     setDronePosition((current) =>
       Math.min(10, current + 1)
     );
-  }, [isShooting, missionCompleted]);
+  }, [isShooting, showMissionComplete]);
   // Disparar bomba
   const fire = useCallback(() => {
-    if (isShooting || missionCompleted) return;
+    if (isShooting || showMissionComplete) return;
     const area = bombAreaRef.current;
     if (!area) return;
     setBombDistance(
@@ -120,7 +128,7 @@ function PositionGameClient() {
       position: dronePosition,
       phase: "falling",
     });
-  }, [isShooting, missionCompleted, dronePosition]);
+  }, [isShooting, showMissionComplete, dronePosition]);
   // Remover Zip após a animação de derrota
   const removeZip = useCallback((id: number) => {
     setZips((current) =>
@@ -174,6 +182,8 @@ function PositionGameClient() {
   };
   // Controles do teclado
   useEffect(() => {
+    if (showMissionComplete) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target;
       if (
@@ -201,7 +211,7 @@ function PositionGameClient() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [moveLeft, moveRight, fire]);
+  }, [moveLeft, moveRight, fire, showMissionComplete]);
   // Encerrar a explosão após sua duração
   useEffect(() => {
     if (shot?.phase !== "exploding") return;
@@ -276,16 +286,20 @@ function PositionGameClient() {
       </div>
       {/* Área do drone */}
       <div className="relative flex-1">
+
         {/* Painel de mira */}
-        <DraggablePanel>
-          <AimPanel
-            position={dronePosition}
-            onMoveLeft={moveLeft}
-            onMoveRight={moveRight}
-            onFire={fire}
-            isShooting={isShooting || missionCompleted}
-          />
-        </DraggablePanel>
+        {!showMissionComplete && (
+          <DraggablePanel>
+            <AimPanel
+              position={dronePosition}
+              onMoveLeft={moveLeft}
+              onMoveRight={moveRight}
+              onFire={fire}
+              isShooting={isShooting || showMissionComplete}
+            />
+          </DraggablePanel>
+        )}
+        
         {/* Drone */}
         <div className="pointer-events-none absolute inset-x-7.5 inset-y-0">
           <Drone position={dronePosition} />
@@ -367,82 +381,18 @@ function PositionGameClient() {
           />
         )}
 
-
         {/* Eixo de coordenadas */}
         <PositionAxis />
       </div>
+
       {/* Tela de conclusão */}
-      {missionCompleted && (
-        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/75 p-4">
-          <GamePanel
-            className="w-full max-w-md shadow-2xl"
-            contentClassName="flex-col gap-5 px-8 py-10 text-center"
-          >
-            {/* Título */}
-            <h2 className="text-3xl font-bold text-tertiary">
-              Missão concluída!
-            </h2>
-            {/* Progresso */}
-            <p className="text-lg text-text-primary">
-              Você derrotou {TOTAL_ZIPS} Zips!
-            </p>
-            {/* Recompensas */}
-            <div className="flex w-full flex-col items-center gap-3">
-              <h3 className="text-xl text-tertiary">
-                Recompensas obtidas
-              </h3>
-              <div className="flex items-center justify-center gap-8">
-                {/* XP */}
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/images/assets/ui/xp.svg"
-                    alt="Experiência"
-                    width={30}
-                    height={30}
-                  />
-                  <span className="text-xl text-tertiary">
-                    +{TOTAL_XP.toLocaleString("pt-BR")}
-                  </span>
-                </div>
-                {/* Lattecoins */}
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/images/assets/ui/lattecoin.svg"
-                    alt="Lattecoins"
-                    width={30}
-                    height={30}
-                  />
-                  <span className="text-xl text-tertiary">
-                    +{TOTAL_LATTECOINS.toLocaleString("pt-BR")}
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* Voltar ao Dashboard */}
-            <Link
-              href="/dashboard"
-              className="
-                mt-3
-                cursor-pointer
-                rounded-lg
-                border-2
-                border-tertiary
-                bg-primary-dark
-                px-6
-                py-3
-                text-lg
-                font-bold
-                text-tertiary
-                transition-all
-                duration-200
-                hover:scale-105
-                hover:bg-primary
-              "
-            >
-              Voltar ao Dashboard
-            </Link>
-          </GamePanel>
-        </div>
+      {showMissionComplete && (
+        <MissionComplete
+          defeatedEnemies={TOTAL_ZIPS}
+          xp={TOTAL_XP}
+          lattecoins={TOTAL_LATTECOINS}
+          nextMissionHref="#"
+        /> 
       )}
     </div>
   );
@@ -458,6 +408,3 @@ export default function PositionGame() {
   if (!mounted) return null;
   return <PositionGameClient />;
 }
-
-
-

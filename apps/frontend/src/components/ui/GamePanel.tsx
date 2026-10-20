@@ -11,8 +11,7 @@ interface GamePanelProps {
  *
  * Reusable visual container for the Vialattes interface.
  * Provides the shared gradient border, purple background,
- * and Comic Octo typography.
- *
+ * 
  * Used by HUD displays, tooltips, and informational panels.
  * Does not handle navigation or user interactions.
  */

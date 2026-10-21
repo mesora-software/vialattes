@@ -1,12 +1,104 @@
+
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import GamePanel from "@/components/ui/GamePanel";
 
 interface MissionCompleteProps {
   defeatedEnemies: number;
   xp: number;
   lattecoins: number;
   nextMissionHref?: string;
+}
+
+interface RewardDisplayProps {
+  title: string;
+  icon: string;
+  value: number;
+  className: string;
+  iconClassName?: string;
+}
+
+interface NavigationButtonProps {
+  href?: string;
+  image: string;
+  label: string;
+  className?: string;
+}
+
+const ASSETS = "/images/assets/ui/mission-complete";
+
+function RewardDisplay({
+  title,
+  icon,
+  value,
+  className,
+  iconClassName = "",
+}: RewardDisplayProps) {
+  return (
+    <div
+      className={`absolute flex h-[12%] w-[34%] flex-col items-center justify-center gap-1 ${className}`}
+    >
+      <span className="text-xs text-text-primary sm:text-xl">
+        {title}
+      </span>
+
+      <div className="flex items-center justify-center gap-2">
+        <Image
+          src={icon}
+          alt=""
+          width={40}
+          height={40}
+          className={`size-6 shrink-0 object-contain sm:size-8 ${iconClassName}`}
+        />
+
+        <span className="text-lg whitespace-nowrap text-tertiary sm:text-3xl">
+          +{value.toLocaleString("pt-BR")}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function NavigationButton({
+  href,
+  image,
+  label,
+  className = "",
+}: NavigationButtonProps) {
+  const imageElement = (
+    <Image
+      src={`${ASSETS}/${image}`}
+      alt=""
+      width={1085}
+      height={365}
+      className="h-auto w-full"
+    />
+  );
+
+  const baseClassName = `block w-[37%] shrink-0 ${className}`;
+
+  if (!href || href === "#") {
+    return (
+      <div
+        role="img"
+        aria-label={`${label} — indisponível`}
+        className={`${baseClassName} cursor-not-allowed opacity-70`}
+      >
+        {imageElement}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      aria-label={label}
+      className={`${baseClassName} transition-transform duration-200 hover:scale-105 focus-visible:scale-105 focus-visible:outline-2 focus-visible:outline-tertiary`}
+    >
+      {imageElement}
+    </Link>
+  );
 }
 
 export default function MissionComplete({
@@ -20,180 +112,109 @@ export default function MissionComplete({
       role="dialog"
       aria-modal="true"
       aria-labelledby="mission-complete-title"
-      className="
-        fixed inset-0 z-100
-        flex items-center justify-center
-        overflow-y-auto
-        bg-surface-dark/95
-        p-4 md:p-8
-      "
+      className="fixed inset-0 z-100 overflow-y-auto bg-black"
     >
-      <div
-        className="
-          relative flex w-full max-w-6xl
-          flex-col items-center justify-center
-          gap-4 lg:flex-row lg:gap-0
-        "
-      >
-        {/* Personagem */}
-        <div
-          className="
-            relative z-20
-            flex w-full items-center justify-center
-            lg:w-2/5
-          "
-        >
-          <Image
-            src="/images/assets/leonard/leonard-mission-complete.png"
-            alt="Professor Leonardo Lattes comemorando a vitória"
-            width={500}
-            height={650}
-            className="
-              h-auto w-56 object-contain
-              drop-shadow-2xl
-              md:w-72 lg:w-full
-            "
-            priority
-          />
-        </div>
+      {/* Cenário do laboratório */}
+      <Image
+        src="/images/assets/backgrounds/laboratory.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
 
-        {/* Painel de conclusão */}
-        <GamePanel
-          className="
-            relative z-10
-            w-full max-w-2xl
-            shadow-2xl
-            lg:-ml-8 lg:w-3/5
-          "
-          contentClassName="
-            flex-col gap-6
-            px-5 py-8
-            text-center
-            md:px-10 md:py-12
-          "
-        >
-          {/* Medalha */}
-          <div className="text-5xl" aria-hidden="true">
-            ⭐
+      {/* Escurecimento do cenário */}
+      <div className="absolute inset-0 bg-black/80" />
+
+      {/* Conteúdo principal */}
+      <div className="relative z-10 flex min-h-full items-start justify-center px-4 py-8">
+        <div className="flex w-full max-w-300 flex-col items-center justify-center gap-2 md:flex-row md:gap-4">
+
+          {/* Prof. Leonardo Lattes */}
+          <div className="relative w-40 shrink-0 sm:w-56 md:w-[40%] md:translate-y-20">
+            <Image
+              src="/images/assets/characters/prof-lattes/leonard-mission-complete.png"
+              alt="Prof. Leonardo Lattes comemorando a vitória"
+              width={1060}
+              height={1060}
+              className="h-auto w-full object-contain drop-shadow-2xl"
+              priority
+            />
           </div>
 
-          {/* Título */}
-          <h2
-            id="mission-complete-title"
-            className="
-              font-heading
-              text-3xl font-bold
-              text-tertiary
-              md:text-5xl
-            "
-          >
-            Missão concluída!
-          </h2>
+          {/* Painel e botões */}
+          <div className="flex w-full max-w-150 flex-col items-center">
 
-          {/* Progresso */}
-          <p className="font-heading text-lg text-text-primary">
-            Você derrotou{" "}
-            <span className="font-game text-tertiary">
-              {defeatedEnemies}
-            </span>{" "}
-            Zips!
-          </p>
+            {/* Painel base */}
+            <div className="relative w-full">
+              <Image
+                src={`${ASSETS}/panel-base.svg`}
+                alt=""
+                width={810}
+                height={795}
+                className="h-auto w-full"
+                priority
+              />
 
-          {/* Recompensas */}
-          <div className="flex w-full flex-col gap-5">
-            <h3 className="font-heading text-xl text-tertiary">
-              Recompensas obtidas
-            </h3>
+              {/* Informações da missão */}
+              <div className="absolute inset-0 font-game">
 
-            <div className="grid grid-cols-2 gap-3">
-              {/* XP */}
-              <div
-                className="
-                  flex items-center justify-center gap-3
-                  rounded-xl border border-border-accent
-                  bg-surface-dark/80
-                  px-3 py-5
-                "
-              >
-                <Image
-                  src="/images/assets/ui/xp.svg"
-                  alt=""
-                  width={45}
-                  height={45}
+                <h2
+                  id="mission-complete-title"
+                  className="sr-only"
+                >
+                  Missão concluída!
+                </h2>
+
+                {/* Inimigos derrotados */}
+                <div className="absolute top-[38%] left-[15%] flex h-[11%] w-[70%] flex-col items-center justify-center">
+                  <p className="text-center text-2xl text-text-primary [-webkit-text-stroke:0.3px_black]">
+                    Zips derrotados
+                  </p>
+
+                  <span className="translate-y-4 text-lg text-tertiary sm:text-2xl">
+                    {defeatedEnemies}
+                  </span>
+                </div>
+
+                {/* Recompensas */}
+                <RewardDisplay
+                  title="Experiência"
+                  icon="/images/assets/ui/xp.svg"
+                  value={xp}
+                  className="top-[61%] left-[18%]"
+                  iconClassName="-translate-x-2 sm:size-10"
                 />
 
-                <span className="font-game text-2xl text-tertiary">
-                  +{xp.toLocaleString("pt-BR")}
-                </span>
-              </div>
-
-              {/* Lattecoins */}
-              <div
-                className="
-                  flex items-center justify-center gap-3
-                  rounded-xl border border-border-accent
-                  bg-surface-dark/80
-                  px-3 py-5
-                "
-              >
-                <Image
-                  src="/images/assets/ui/lattecoin.svg"
-                  alt=""
-                  width={45}
-                  height={45}
+                <RewardDisplay
+                  title="Lattecoins"
+                  icon="/images/assets/ui/lattecoin.svg"
+                  value={lattecoins}
+                  className="top-[61%] left-[48%]"
                 />
 
-                <span className="font-game text-2xl text-tertiary">
-                  +{lattecoins.toLocaleString("pt-BR")}
-                </span>
               </div>
             </div>
-          </div>
 
-          {/* Navegação */}
-          <div
-            className="
-              mt-4 flex w-full flex-col
-              gap-3 sm:flex-row
-            "
-          >
-            <Link
-              href="/dashboard"
-              className="
-                flex min-h-14 flex-1
-                items-center justify-center
-                rounded-xl border-2 border-border-accent
-                bg-purple-gradient
-                px-4 py-3
-                font-heading font-bold
-                text-text-primary
-                transition-transform duration-200
-                hover:scale-105
-              "
-            >
-              Voltar ao Dashboard
-            </Link>
+            {/* Navegação */}
+            <div className="relative z-20 -mt-[22%] flex w-full items-center justify-center gap-2">
 
-            {nextMissionHref && (
-              <Link
+              <NavigationButton
+                href="/dashboard"
+                image="btn-back-dashboard.svg"
+                label="Voltar ao Dashboard"
+              />
+
+              <NavigationButton
                 href={nextMissionHref}
-                className="
-                  flex min-h-14 flex-1
-                  items-center justify-center
-                  rounded-xl border-2 border-tertiary
-                  bg-tertiary
-                  px-4 py-3
-                  font-heading font-bold
-                  text-primary-dark
-                  transition-transform duration-200
-                  hover:scale-105
-                "
-              >
-                Próxima missão →
-              </Link>
-            )}
+                image="btn-next-mission.svg"
+                label="Ir para a próxima missão"
+              />
+
+            </div>
           </div>
-        </GamePanel>
+        </div>
       </div>
     </div>
   );

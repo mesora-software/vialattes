@@ -46,110 +46,200 @@ export default function Home() {
         </div>
 
         {/* Cabeçalho */}
-        <header className="
-                  relative z-20
-                  flex h-30 w-full
-                  items-center justify-between
-                  gap-4
-                  border-b border-secondary/50
-                  bg-blue-gradient
-                  px-5
-                  backdrop-blur-[2px]
-                  md:px-10
-                ">
-          <Link
-           href="/"
-           aria-label="Página inicial do Vialattes"
-           className="relative flex h-25 w-70 shrink-0 items-center justify-center"
+        <header
+          className="
+            relative z-20
+            w-full
+            border-b border-secondary/50
+            bg-blue-gradient
+            backdrop-blur-[2px]
+          "
+        >
+          {/* Contêiner alinhado ao Hero */}
+          <div
+            className="
+              mx-auto flex
+              h-20 w-full max-w-350
+              items-center justify-between
+              gap-2
+              px-6
+              sm:h-24 sm:gap-4 sm:px-8
+              md:h-30 md:px-12
+            "
           >
-            <Image
-              src="/images/home/vialattes-logo.svg"
-              alt="Vialattes"
-              fill
-              priority
-              sizes="180px"
-              className="object-contain"
-            />
-          </Link>
-
-          <nav 
-            aria-label="Navegação principal"
-            className="flex items-center gap-5 md:gap-8"
-          >
-            <AnimatedUnderlineLink
-              href="/"
-              className="hidden sm:inline-flex">
-                Início  
-            </AnimatedUnderlineLink>
-
-            <AnimatedUnderlineLink 
-              href="#sobre"
-              className="hidden md:inline-flex">
-                Sobre 
-            </AnimatedUnderlineLink>
-
-            <AnimatedUnderlineLink 
-              href="#recursos" 
-              className="hidden md:inline-flex">
-                Recursos
-            </AnimatedUnderlineLink>
-
+            {/* Logo */}
             <Link
-              href="/dashboard"
-              className="rounded-full border border-border-accent bg-purple-gradient px-4 py-3 text-center text-sm font-bold shadow-lg shadow-purple-950/50 transition-transform hover:scale-105 sm:px-6 sm:text-base"
+              href="/"
+              aria-label="Página inicial do Vialattes"
+              className="
+                relative flex
+                h-14 w-30
+                shrink-0 items-center
+                sm:h-18 sm:w-38
+                md:h-22 md:w-48
+                lg:w-70
+              "
             >
-              Acessar Dashboard <span aria-hidden="true">→</span>
+              <Image
+                src="/images/home/vialattes-logo.svg"
+                alt="Vialattes"
+                fill
+                priority
+                sizes="(max-width: 639px) 120px, (max-width: 767px) 152px, (max-width: 1023px) 192px, 280px"
+                className="object-contain object-left"
+              />
             </Link>
-          </nav>
+
+            {/* Navegação */}
+            <nav
+              aria-label="Navegação principal"
+              className="
+                flex min-w-0 items-center
+                gap-2 whitespace-nowrap
+                text-xs
+                sm:gap-3 sm:text-sm
+                lg:gap-8 lg:text-base
+              "
+            >
+              <AnimatedUnderlineLink
+                href="/"
+                className="hidden sm:inline-flex"
+              >
+                Início
+              </AnimatedUnderlineLink>
+
+              <AnimatedUnderlineLink
+                href="#sobre"
+                className="hidden lg:inline-flex"
+              >
+                Sobre
+              </AnimatedUnderlineLink>
+
+              <AnimatedUnderlineLink
+                href="#recursos"
+                className="hidden lg:inline-flex"
+              >
+                Recursos
+              </AnimatedUnderlineLink>
+
+              <Link
+                href="/dashboard"
+                className="
+                  inline-flex shrink-0
+                  items-center justify-center
+                  gap-1
+                  rounded-full
+                  border border-border-accent
+                  bg-purple-gradient
+                  px-3 py-2
+                  text-center text-xs font-bold
+                  shadow-lg shadow-purple-950/50
+                  transition-transform
+                  hover:scale-105
+                  sm:px-3 sm:py-2 sm:text-xs
+                  md:px-4 md:py-2.5 md:text-sm
+                  lg:px-6 lg:py-3 lg:text-base
+                "
+              >
+                <span className="sm:hidden">
+                  Dashboard
+                </span>
+
+                <span className="hidden sm:inline">
+                  Acessar Dashboard
+                </span>
+
+                <span aria-hidden="true">→</span>
+              </Link>
+            </nav>
+          </div>
         </header>
 
         {/* Apresentação */}
-        <section className="relative z-10 mx-auto flex w-full max-w-350 flex-1 items-center px-6 py-12 md:px-12">
-          <div className="max-w-155">
-            <h1 
-              className={`
-              font-heading hero-title
-                text-5xl leading-[1.05] font-bold
+        <section
+          className="
+            relative z-10
+            mx-auto flex w-full max-w-350
+            min-w-0 flex-1 items-center
+            px-6 py-12
+            sm:px-8
+            md:px-12
+          "
+        >
+          <div className="min-w-0 max-w-155">
+            <h1
+              className="
+                hero-title
+                font-heading
+                text-[clamp(2rem,8vw,3rem)]
+                leading-[1.05] font-bold
                 tracking-wide
-                sm:text-6xl lg:text-7xl
-              `}
+                sm:text-6xl
+                lg:text-7xl
+              "
             >
               Estude Física
               <span className="block">de forma</span>
             </h1>
+
+            <span
+              className="
+                relative mt-1 block w-fit
+                font-heading
+                text-6xl
+                font-bold
+                tracking-wide
+                sm:text-7xl
+                lg:text-8xl
+              "
+            >
+              {/* Camada inferior: contorno e sombra */}
               <span
+                aria-hidden="true"
                 className="
-                  relative mt-1 block w-fit
-                  font-heading text-6xl font-bold
-                  tracking-wide
-                  sm:text-7xl lg:text-8xl
+                  hero-title-highlight-outline
+                  absolute inset-0
                 "
               >
-                {/* Camada inferior: contorno e sombra */}
-                <span
-                  aria-hidden="true"
-                  className="
-                    hero-title-highlight-outline
-                    absolute inset-0
-                  "
-                >
-                  Divertida!
-                </span>
-
-                {/* Camada superior: preenchimento com gradiente */}
-                <span className="hero-title-highlight-fill text-vialattes-gradient">
-                  Divertida!
-                </span>
+                Divertida!
               </span>
 
-            <p className="mt-7 max-w-130 text-lg leading-relaxed text-white [text-shadow:-2px_2px_2px_#000000,0_0_4px_#172b72] sm:text-xl">
-              No <strong>Vialattes</strong>, você aprende conceitos de Física através de missões,
-              jogos e desafios em um universo cheio de descobertas.
+              {/* Camada superior: preenchimento com gradiente */}
+              <span className="hero-title-highlight-fill text-vialattes-gradient">
+                Divertida!
+              </span>
+            </span>
+
+            <p
+              className="
+                mt-7 max-w-130
+                text-lg leading-relaxed
+                text-white
+                [text-shadow:-2px_2px_2px_#000000,0_0_4px_#172b72]
+                sm:text-xl
+              "
+            >
+              No <strong>Vialattes</strong>, você aprende conceitos de Física
+              através de missões, jogos e desafios em um universo cheio de
+              descobertas.
             </p>
 
             <Link
               href="/dashboard"
-              className="mt-8 inline-flex items-center justify-center gap-3 rounded-full border-2 border-secondary bg-purple-gradient px-7 py-4 text-lg font-extrabold shadow-[0_0_10px_rgba(177,255,45,0.25)] transition-transform hover:scale-105 sm:text-xl"
+              className="
+                mt-8 inline-flex
+                max-w-full items-center justify-center
+                gap-2
+                rounded-full
+                border-2 border-secondary
+                bg-purple-gradient
+                px-4 py-3
+                text-center text-sm font-extrabold
+                shadow-[0_0_10px_rgba(177,255,45,0.25)]
+                transition-transform 
+                hover:scale-105
+                sm:gap-3 sm:px-7 sm:py-4 sm:text-xl
+              "
             >
               <span aria-hidden="true">🚀</span>
               Testar Gratuitamente
@@ -159,7 +249,18 @@ export default function Home() {
             {/* Indicadores */}
             <div className="mt-7 flex flex-wrap gap-3 text-sm font-medium text-white">
               <span className="flex items-center gap-2 rounded-full bg-surface/55 px-3 py-2 backdrop-blur-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d68aff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#d68aff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
                   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
                   <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -169,7 +270,18 @@ export default function Home() {
               </span>
 
               <span className="flex items-center gap-2 rounded-full bg-surface/55 px-3 py-2 backdrop-blur-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8abaff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#8abaff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
                   <path d="M6 12h4m-2-2v4" />
                   <path d="M15 13h.01M18 10h.01" />
                   <path d="M6.5 6h11a4 4 0 0 1 3.9 3.1l1.1 6a3 3 0 0 1-5 2.8L15 16H9l-2.5 1.9a3 3 0 0 1-5-2.8l1.1-6A4 4 0 0 1 6.5 6Z" />
@@ -178,7 +290,18 @@ export default function Home() {
               </span>
 
               <span className="flex items-center gap-2 rounded-full bg-surface/55 px-3 py-2 backdrop-blur-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#55d5ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#55d5ff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
                   <path d="M4 20V12h4v8" />
                   <path d="M10 20V7h4v13" />
                   <path d="M16 20V3h4v17" />
@@ -193,18 +316,46 @@ export default function Home() {
         <section
           id="recursos"
           aria-labelledby="recursos-title"
-          className="relative z-10 mx-auto w-full max-w-350 scroll-mt-8 px-5 pb-10 md:px-10"
+          className="
+            relative z-10
+            mx-auto w-full max-w-350
+            scroll-mt-8
+            px-5 pb-10
+            md:px-10
+          "
         >
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {features.map((feature) => (
               <article
                 key={feature.title}
-                className="flex items-center gap-4 rounded-2xl border border-secondary/35 bg-linear-to-br from-surface-light/75 via-[#090f2c]/85 to-[#090f2c]/85 p-5 shadow-card backdrop-blur-[2px]"
+                className="
+                  flex items-center gap-4
+                  rounded-2xl
+                  border border-secondary/35
+                  bg-linear-to-br
+                  from-surface-light/75
+                  via-[#090f2c]/85
+                  to-[#090f2c]/85
+                  p-5
+                  shadow-card
+                  backdrop-blur-[2px]
+                "
               >
-                <span aria-hidden="true" className="shrink-0 text-4xl">{feature.icon}</span>
+                <span
+                  aria-hidden="true"
+                  className="shrink-0 text-4xl"
+                >
+                  {feature.icon}
+                </span>
+
                 <div>
-                  <h3 className="text-base font-bold">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-text-primary/85">{feature.description}</p>
+                  <h3 className="text-base font-bold">
+                    {feature.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-relaxed text-text-primary/85">
+                    {feature.description}
+                  </p>
                 </div>
               </article>
             ))}
@@ -213,19 +364,34 @@ export default function Home() {
       </div>
 
       {/* Sobre */}
-      <section id="sobre" className="scroll-mt-8 bg-surface px-6 py-18 text-center">
+      <section
+        id="sobre"
+        className="scroll-mt-8 bg-surface px-6 py-18 text-center"
+      >
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-3xl font-extrabold sm:text-4xl text-vialattes-gradient">
-              Aprender pode ser uma aventura!    
+          <h2 className="text-vialattes-gradient text-3xl font-extrabold sm:text-4xl">
+            Aprender pode ser uma aventura!
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-text-primaryprimary/85">
-            O Vialattes é uma plataforma educacional gamificada desenvolvida para complementar
-            o estudo de Física. Explore módulos, complete missões interativas e conquiste
-            recompensas enquanto desenvolve seus conhecimentos.
+
+          <p className="mt-6 text-lg leading-relaxed text-text-primary/85">
+            O Vialattes é uma plataforma educacional gamificada desenvolvida
+            para complementar o estudo de Física. Explore módulos, complete
+            missões interativas e conquiste recompensas enquanto desenvolve
+            seus conhecimentos.
           </p>
+
           <Link
             href="/dashboard"
-            className="mt-8 inline-block rounded-full border border-border-accent bg-green-gradient px-8 py-3 font-extrabold text-primary-dark transition-transform hover:scale-105"
+            className="
+              mt-8 inline-block
+              rounded-full
+              border border-border-accent
+              bg-green-gradient
+              px-8 py-3
+              font-extrabold text-primary-dark
+              transition-transform
+              hover:scale-105
+            "
           >
             Começar a explorar →
           </Link>
@@ -234,11 +400,14 @@ export default function Home() {
 
       {/* Rodapé */}
       <footer className="border-t border-secondary/30 bg-surface-dark px-6 py-6 text-center text-sm text-text-primary/65">
-        <p>Vialattes — Uma experiência de aprendizagem gamificada.</p>
-        <p className="mt-2">Desenvolvido por Mesora Software.</p>
+        <p>
+          Vialattes — Uma experiência de aprendizagem gamificada.
+        </p>
+
+        <p className="mt-2">
+          Desenvolvido por Mesora Software.
+        </p>
       </footer>
     </main>
   );
 }
-
-

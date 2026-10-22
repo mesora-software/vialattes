@@ -1,6 +1,7 @@
-import AnimatedUnderlineLink from "@/components/ui/AnimatedUnderlineLink";
 import Image from "next/image";
 import Link from "next/link";
+
+import HomeHeader from "@/components/home/Homeheader";
 
 const features = [
   {
@@ -46,114 +47,7 @@ export default function Home() {
         </div>
 
         {/* Cabeçalho */}
-        <header
-          className="
-            relative z-20
-            w-full
-            border-b border-secondary/50
-            bg-blue-gradient
-            backdrop-blur-[2px]
-          "
-        >
-          {/* Contêiner alinhado ao Hero */}
-          <div
-            className="
-              mx-auto flex
-              h-20 w-full max-w-350
-              items-center justify-between
-              gap-2
-              px-6
-              sm:h-24 sm:gap-4 sm:px-8
-              md:h-30 md:px-12
-            "
-          >
-            {/* Logo */}
-            <Link
-              href="/"
-              aria-label="Página inicial do Vialattes"
-              className="
-                relative flex
-                h-14 w-30
-                shrink-0 items-center
-                sm:h-18 sm:w-38
-                md:h-22 md:w-48
-                lg:w-70
-              "
-            >
-              <Image
-                src="/images/home/vialattes-logo.svg"
-                alt="Vialattes"
-                fill
-                priority
-                sizes="(max-width: 639px) 120px, (max-width: 767px) 152px, (max-width: 1023px) 192px, 280px"
-                className="object-contain object-left"
-              />
-            </Link>
-
-            {/* Navegação */}
-            <nav
-              aria-label="Navegação principal"
-              className="
-                flex min-w-0 items-center
-                gap-2 whitespace-nowrap
-                text-xs
-                sm:gap-3 sm:text-sm
-                lg:gap-8 lg:text-base
-              "
-            >
-              <AnimatedUnderlineLink
-                href="/"
-                className="hidden sm:inline-flex"
-              >
-                Início
-              </AnimatedUnderlineLink>
-
-              <AnimatedUnderlineLink
-                href="#sobre"
-                className="hidden lg:inline-flex"
-              >
-                Sobre
-              </AnimatedUnderlineLink>
-
-              <AnimatedUnderlineLink
-                href="#recursos"
-                className="hidden lg:inline-flex"
-              >
-                Recursos
-              </AnimatedUnderlineLink>
-
-              <Link
-                href="/dashboard"
-                className="
-                  inline-flex shrink-0
-                  items-center justify-center
-                  gap-1
-                  rounded-full
-                  border border-border-accent
-                  bg-purple-gradient
-                  px-3 py-2
-                  text-center text-xs font-bold
-                  shadow-lg shadow-purple-950/50
-                  transition-transform
-                  hover:scale-105
-                  sm:px-3 sm:py-2 sm:text-xs
-                  md:px-4 md:py-2.5 md:text-sm
-                  lg:px-6 lg:py-3 lg:text-base
-                "
-              >
-                <span className="sm:hidden">
-                  Dashboard
-                </span>
-
-                <span className="hidden sm:inline">
-                  Acessar Dashboard
-                </span>
-
-                <span aria-hidden="true">→</span>
-              </Link>
-            </nav>
-          </div>
-        </header>
+        <HomeHeader />
 
         {/* Apresentação */}
         <section

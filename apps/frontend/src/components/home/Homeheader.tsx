@@ -44,7 +44,7 @@ export default function HomeHeader() {
         w-full
         border-b border-secondary/50
         bg-blue-gradient
-        backdrop-blur-[2px]
+        backdrop-blur-xs
       "
     >
       <div

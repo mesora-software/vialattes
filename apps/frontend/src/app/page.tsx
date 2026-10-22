@@ -31,16 +31,20 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden bg-surface-dark text-white">
       {/* Área principal com background */}
       <div className="relative isolate flex min-h-screen flex-col">
-        {/* Background do header, hero e recursos */}
+        {/* Background responsivo do header, hero e recursos */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/images/home/vialattes-hero.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[58%_center]"
-          />
+          <picture className="absolute inset-0 block">
+            <source
+              media="(max-width: 767px)"
+              srcSet="/images/home/vialattes-hero-mobile.png"
+            />
+
+            <img
+              src="/images/home/vialattes-hero.png"
+              alt=""
+              className="h-full w-full object-cover object-center"
+            />
+          </picture>
 
           {/* Degradê transparente */}
           <div className="absolute inset-0 bg-linear-to-r from-[#091735]/95 via-[#17254b]/30 to-[#07112b]/1" />

@@ -76,24 +76,42 @@ export default function Dashboard() {
         }}
       />
 
-      <div className="relative z-10 mx-20 my-8 flex min-h-[calc(100vh-64px)] flex-col">
+      <div 
+          className="
+            relative z-10
+            mx-auto flex min-h-screen w-full max-w-400 flex-col
+            px-4 py-5
+            sm:px-6 sm:py-6
+            lg:px-12 lg:py-8
+            xl:px-20
+          "
+      >
 
         {/* HEADER */}
-        <header className="flex items-center">
+        <header className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-2 sm:gap-4 lg:items-center">
 
           {/* Patente */}
-          <div className="w-30 shrink-0 -translate-4 select-none">
+          <div className="w-18 shrink-0 select-none sm:w-19 md:w-20 lg:w-23 lg:-translate-4">
             <Image
               src="/images/assets/patents/recruit.svg"
               alt="Recruta"
               width={100}
               height={100}
-              className="object-contain"
+              className="h-auto w-full object-contain"
             />
           </div>
 
           {/* XP + Lattecoins */}
-          <div className="flex flex-1 justify-center gap-8 -translate-y-10">
+          <div 
+            className="
+              flex min-w-0
+              items-start justify-center
+              gap-1
+              sm:gap-3
+              md:gap-6
+              lg:gap-8 lg:-translate-y-10
+            "
+          >
 
             <HudValue
               icon="/images/assets/ui/xp.svg"
@@ -110,7 +128,15 @@ export default function Dashboard() {
           </div>
           
           {/* Login */}
-          <div className="flex w-25 shrink-0 justify-end -translate-4 select-none">
+          <div 
+            className="
+              flex w-17 shrink-0
+              justify-end select-none
+              sm:w-18
+              md:w-20
+              lg:w-21 lg:-translate-4
+            "
+          >
             <div className="group relative">
               <button
                 type="button"
@@ -123,7 +149,7 @@ export default function Dashboard() {
                   alt="Login"
                   width={80}
                   height={80}
-                  className="object-contain transition-transform duration-200 group-hover:scale-105"
+                  className="h-auto w-full object-contain transition-transform duration-200 group-hover:scale-105"
                 />
               </button>
 
@@ -136,7 +162,6 @@ export default function Dashboard() {
                   absolute
                   top-full
                   right-0
-                  translate-x-15
                   z-50
                   mt-2
                   opacity-0
@@ -189,7 +214,20 @@ export default function Dashboard() {
         </section>
 
         {/* FOOTER */}
-        <footer className="flex items-center justify-center font-bold gap-50">
+        
+        <footer
+          className="
+            grid w-full
+            grid-cols-2
+            items-center justify-items-center
+            gap-x-4 gap-y-6
+            py-6 font-bold
+            lg:grid-cols-4
+            lg:gap-x-6
+            xl:gap-x-12
+            2xl:gap-x-20
+          "
+        >
 
           <DashboardAction
             name="Colônia"

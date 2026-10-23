@@ -3,52 +3,80 @@ import type { PathPoint } from "@/hooks/useModulePath";
 interface ModulePathProps {
   variant: "mobile" | "desktop";
   points?: PathPoint[];
+  startPoint?: PathPoint | null;
+  endPoint?: PathPoint | null;
   width?: number;
   height?: number;
+}
+
+// Gera uma curva suave conectando os pontos
+function createSmoothPath(points: PathPoint[]): string {
+  if (points.length < 2) return "";
+
+  let path = `M ${points[0].x} ${points[0].y}`;
+
+  for (let i = 1; i < points.length; i++) {
+    const previous = points[i - 1];
+    const current = points[i];
+
+    const distanceY = current.y - previous.y;
+
+    // Controla a suavidade da curva
+    const controlOffset = distanceY * 0.4;
+
+    const controlPoint1 = {
+      x: previous.x,
+      y: previous.y + controlOffset,
+    };
+
+    const controlPoint2 = {
+      x: current.x,
+      y: current.y - controlOffset,
+    };
+
+    path += `
+      C ${controlPoint1.x} ${controlPoint1.y},
+        ${controlPoint2.x} ${controlPoint2.y},
+        ${current.x} ${current.y}
+    `;
+  }
+
+  return path;
 }
 
 export default function ModulePath({
   variant,
   points = [],
+  startPoint = null,
+  endPoint = null,
   width = 0,
   height = 0,
 }: ModulePathProps) {
+
+  // ==========================================
+  // MOBILE E TABLET
+  // ==========================================
+
   if (variant === "mobile") {
-    if (points.length < 2 || width <= 0 || height <= 0) {
+    if (
+      points.length < 2 ||
+      !startPoint ||
+      !endPoint ||
+      width <= 0 ||
+      height <= 0
+    ) {
       return null;
     }
 
-    const firstPoint = points[0];
-    const lastPoint = points[points.length - 1];
+    // Conecta Header, módulos e Footer
+    const allPoints: PathPoint[] = [
+      startPoint,
+      ...points,
+      endPoint,
+    ];
 
-    const startPoint = {
-      x: width / 2,
-      y: 0,
-    };
-
-    const endPoint = {
-      x: width / 2,
-      y: height,
-    };
-
-    const allPoints = [startPoint, ...points, endPoint];
-
-    const pathData = allPoints.reduce((path, point, index) => {
-      if (index === 0) {
-        return `M ${point.x} ${point.y}`;
-      }
-
-      const previous = allPoints[index - 1];
-
-      const controlY = (previous.y + point.y) / 2;
-
-      return `
-        ${path}
-        C ${previous.x} ${controlY},
-          ${point.x} ${controlY},
-          ${point.x} ${point.y}
-      `;
-    }, "");
+    // Gera o caminho SVG
+    const pathData = createSmoothPath(allPoints);
 
     return (
       <svg
@@ -75,6 +103,10 @@ export default function ModulePath({
       </svg>
     );
   }
+
+  // ==========================================
+  // DESKTOP
+  // ==========================================
 
   return (
     <svg

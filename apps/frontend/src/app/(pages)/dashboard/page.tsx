@@ -69,7 +69,13 @@ export default function Dashboard() {
 
   const dashboardRef = useRef<HTMLDivElement>(null);
 
-  const { points, dimensions } = useModulePath(dashboardRef);
+  const {
+    points,
+    startPoint,
+    endPoint,
+    dimensions,
+  } = useModulePath(dashboardRef);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-black">
 
@@ -107,13 +113,16 @@ export default function Dashboard() {
           <ModulePath
             variant="mobile"
             points={points}
+            startPoint={startPoint}
+            endPoint={endPoint}
             width={dimensions.width}
             height={dimensions.height}
           />
         </div>
 
         {/* HEADER */}
-        <header 
+        <header
+          data-path-header
           className="
             relative z-10
             grid w-full grid-cols-[auto_minmax(0,1fr)_auto]
@@ -228,9 +237,9 @@ export default function Dashboard() {
                 relative z-10
                 grid grid-cols-1
                 items-center justify-items-center
-                gap-y-12
+                gap-y-10
                 py-10
-                sm:gap-y-16
+                sm:gap-y-14
                 lg:min-h-90
                 lg:grid-cols-6
                 lg:items-start
@@ -279,6 +288,7 @@ export default function Dashboard() {
 
         {/* FOOTER */}
         <footer
+          data-path-footer
           className="
             relative z-10
             grid w-full grid-cols-2

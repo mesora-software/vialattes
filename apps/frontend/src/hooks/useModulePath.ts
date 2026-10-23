@@ -7,9 +7,20 @@ export interface PathPoint {
   y: number;
 }
 
-export function useModulePath(containerRef: React.RefObject<HTMLElement | null>) {
+interface PathDimensions {
+  width: number;
+  height: number;
+}
+
+export function useModulePath(
+  containerRef: React.RefObject<HTMLElement | null>
+) {
   const [points, setPoints] = useState<PathPoint[]>([]);
-  const [dimensions, setDimensions] = useState({
+
+  const [startPoint, setStartPoint] = useState<PathPoint | null>(null);
+  const [endPoint, setEndPoint] = useState<PathPoint | null>(null);
+
+  const [dimensions, setDimensions] = useState<PathDimensions>({
     width: 0,
     height: 0,
   });
@@ -19,23 +30,49 @@ export function useModulePath(containerRef: React.RefObject<HTMLElement | null>)
 
     if (!container) return;
 
+    const moduleElements = container.querySelectorAll<HTMLElement>(
+      "[data-module-path]"
+    );
+
+    const header = container.querySelector<HTMLElement>(
+      "[data-path-header]"
+    );
+
+    const footer = container.querySelector<HTMLElement>(
+      "[data-path-footer]"
+    );
+
     const updatePath = () => {
       const containerRect = container.getBoundingClientRect();
 
-      const moduleElements = container.querySelectorAll<HTMLElement>(
-        "[data-module-path]"
-      );
-
-      const newPoints = Array.from(moduleElements).map((element) => {
+      const getCenter = (element: HTMLElement): PathPoint => {
         const rect = element.getBoundingClientRect();
 
         return {
           x: rect.left - containerRect.left + rect.width / 2,
           y: rect.top - containerRect.top + rect.height / 2,
         };
-      });
+      };
+
+      // Centros dos módulos
+      const newPoints = Array.from(moduleElements).map(getCenter);
+
+      // Entrada: centro horizontal do Header
+      const headerCenter = header
+        ? getCenter(header)
+        : { x: containerRect.width / 2, y: 0 };
+
+      // Saída: centro horizontal do Footer
+      const footerCenter = footer
+        ? getCenter(footer)
+        : {
+            x: containerRect.width / 2,
+            y: containerRect.height,
+          };
 
       setPoints(newPoints);
+      setStartPoint(headerCenter);
+      setEndPoint(footerCenter);
 
       setDimensions({
         width: containerRect.width,
@@ -49,11 +86,12 @@ export function useModulePath(containerRef: React.RefObject<HTMLElement | null>)
 
     observer.observe(container);
 
-    const moduleElements = container.querySelectorAll<HTMLElement>(
-      "[data-module-path]"
-    );
+    moduleElements.forEach((element) => {
+      observer.observe(element);
+    });
 
-    moduleElements.forEach((element) => observer.observe(element));
+    if (header) observer.observe(header);
+    if (footer) observer.observe(footer);
 
     window.addEventListener("resize", updatePath);
 
@@ -63,5 +101,10 @@ export function useModulePath(containerRef: React.RefObject<HTMLElement | null>)
     };
   }, [containerRef]);
 
-  return { points, dimensions };
+  return {
+    points,
+    startPoint,
+    endPoint,
+    dimensions,
+  };
 }

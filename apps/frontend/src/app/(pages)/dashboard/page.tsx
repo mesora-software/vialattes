@@ -15,42 +15,48 @@ const modules = [
     moduleId: "module01-cinematica",
     image: "/images/assets/game-modules/kinematics.svg",
     stars: 4,
-    position: "-translate-x-[40px] -translate-y-[50px]",
+    position: "lg:-translate-x-[40px] lg:-translate-y-[50px]",
+    mobilePosition: "-translate-x-[25%]",
   },
   {
     name: "Dinâmica",
     moduleId: "module02-dinamica",
     image: "/images/assets/game-modules/dynamic.svg",
     stars: 4,
-    position: "-translate-x-[60px] translate-y-[180px]",
+    position: "lg:-translate-x-[60px] lg:translate-y-[180px]",
+    mobilePosition: "translate-x-[25%]",
   },
   {
     name: "Energia Mecânica",
     moduleId: "module03-energia-mecanica",
     image: "/images/assets/game-modules/mechanical-energy.svg",
     stars: 4,
-    position: "-translate-x-[20px] -translate-y-[50px]",
+    position: "lg:-translate-x-[20px] lg:-translate-y-[50px]",
+    mobilePosition: "-translate-x-[25%]",
   },
   {
     name: "Estática",
     moduleId: "module04-estatica",
     image: "/images/assets/game-modules/static.svg",
     stars: 4,
-    position: "translate-x-[10px] translate-y-[190px]",
+    position: "lg:translate-x-[10px] lg:translate-y-[190px]",
+    mobilePosition: "translate-x-[25%]",
   },
   {
     name: "Termologia",
     moduleId: "module05-termologia",
     image: "/images/assets/game-modules/thermology.svg",
     stars: 4,
-    position: "translate-x-[40px] -translate-y-[50px]",
+    position: "lg:translate-x-[40px] lg:-translate-y-[50px]",
+    mobilePosition: "-translate-x-[25%]",
   },
   {
     name: "Eletromagnetismo",
     moduleId: "module06-eletromagnetismo",
     image: "/images/assets/game-modules/eletromagnetism.svg",
     stars: 4,
-    position: "translate-x-[40px] translate-y-[180px]",
+    position: "lg:translate-x-[40px] lg:translate-y-[180px]",
+    mobilePosition: "translate-x-[25%]",
   },
 ];
 
@@ -181,8 +187,7 @@ export default function Dashboard() {
         </header>
        
         {/* MAIN */}
-        <section className="flex flex-1 items-center justify-center">
-
+        <section className="flex flex-1 items-center justify-center py-12 lg:py-0">
           <div className="relative w-full">
 
             {/* Caminho pontilhado */}
@@ -191,12 +196,34 @@ export default function Dashboard() {
             </div>
 
             {/* Módulos */}
-            <div className="relative z-10 grid min-h-90 grid-cols-6 items-start gap-4">
-
+            <div
+              className="
+                relative z-10
+                grid grid-cols-1
+                items-center justify-items-center
+                gap-y-12
+                py-10
+                sm:gap-y-16
+                lg:min-h-90
+                lg:grid-cols-6
+                lg:items-start
+                lg:justify-items-stretch
+                lg:gap-4
+                lg:py-0
+              "
+            >
               {modules.map((module) => (
+              <div
+                key={module.moduleId}
+                className="w-full"
+              >
+                {/* Posicionamento mobile */}
                 <div
-                  key={module.moduleId}
-                  className={module.position}
+                  className={`
+                    flex justify-center
+                    lg:hidden
+                    ${module.mobilePosition}
+                  `}
                 >
                   <ModuleCard
                     name={module.name}
@@ -205,16 +232,23 @@ export default function Dashboard() {
                     stars={module.stars}
                   />
                 </div>
-              ))}
 
+                {/* Posicionamento desktop */}
+                <div className={`hidden lg:block ${module.position}`}>
+                  <ModuleCard
+                    name={module.name}
+                    moduleId={module.moduleId}
+                    image={module.image}
+                    stars={module.stars}
+                  />
+                </div>
+              </div>
+            ))}
             </div>
-
           </div>
-
         </section>
 
         {/* FOOTER */}
-        
         <footer
           className="
             grid w-full

@@ -2,12 +2,16 @@
 
 import Image from "next/image";
 
+import { usePlayerWallet } from "@/hooks/usePlayerWallet";
+import { useModulePath } from "@/hooks/useModulePath";
+import { useRef } from "react";
+
 import HudValue from "@/components/ui/HudValue";
 import ModuleCard from "@/components/dashboard/ModuleCard";
 import DashboardAction from "@/components/dashboard/DashboardAction";
 import ModulePath from "@/components/dashboard/ModulePath";
-import { usePlayerWallet } from "@/hooks/usePlayerWallet";
 import GamePanel from "@/components/ui/GamePanel";
+
 
 const modules = [
   {
@@ -62,6 +66,10 @@ const modules = [
 
 export default function Dashboard() {
   const wallet = usePlayerWallet();
+
+  const dashboardRef = useRef<HTMLDivElement>(null);
+
+  const { points, dimensions } = useModulePath(dashboardRef);
   return (
     <main className="relative min-h-screen overflow-hidden bg-black">
 
@@ -82,7 +90,8 @@ export default function Dashboard() {
         }}
       />
 
-      <div 
+      <div
+          ref={dashboardRef}
           className="
             relative z-10
             mx-auto flex min-h-screen w-full max-w-400 flex-col
@@ -95,7 +104,12 @@ export default function Dashboard() {
 
         {/* Caminho vertical — Mobile e Tablet */}
         <div className="pointer-events-none absolute inset-0 z-0 lg:hidden">
-          <ModulePath variant="mobile" />
+          <ModulePath
+            variant="mobile"
+            points={points}
+            width={dimensions.width}
+            height={dimensions.height}
+          />
         </div>
 
         {/* HEADER */}
@@ -238,12 +252,14 @@ export default function Dashboard() {
                     ${module.mobilePosition}
                   `}
                 >
-                  <ModuleCard
-                    name={module.name}
-                    moduleId={module.moduleId}
-                    image={module.image}
-                    stars={module.stars}
-                  />
+                  <div data-module-path className="w-fit">
+                    <ModuleCard
+                      name={module.name}
+                      moduleId={module.moduleId}
+                      image={module.image}
+                      stars={module.stars}
+                    />
+                  </div>
                 </div>
 
                 {/* Posicionamento desktop */}

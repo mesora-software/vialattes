@@ -1,12 +1,58 @@
+import type { PathPoint } from "@/hooks/useModulePath";
+
 interface ModulePathProps {
   variant: "mobile" | "desktop";
+  points?: PathPoint[];
+  width?: number;
+  height?: number;
 }
 
-export default function ModulePath({ variant }: ModulePathProps) {
+export default function ModulePath({
+  variant,
+  points = [],
+  width = 0,
+  height = 0,
+}: ModulePathProps) {
   if (variant === "mobile") {
+    if (points.length < 2 || width <= 0 || height <= 0) {
+      return null;
+    }
+
+    const firstPoint = points[0];
+    const lastPoint = points[points.length - 1];
+
+    const startPoint = {
+      x: width / 2,
+      y: 0,
+    };
+
+    const endPoint = {
+      x: width / 2,
+      y: height,
+    };
+
+    const allPoints = [startPoint, ...points, endPoint];
+
+    const pathData = allPoints.reduce((path, point, index) => {
+      if (index === 0) {
+        return `M ${point.x} ${point.y}`;
+      }
+
+      const previous = allPoints[index - 1];
+
+      const controlY = (previous.y + point.y) / 2;
+
+      return `
+        ${path}
+        C ${previous.x} ${controlY},
+          ${point.x} ${controlY},
+          ${point.x} ${point.y}
+      `;
+    }, "");
+
     return (
       <svg
-        viewBox="0 0 300 1200"
+        viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="none"
         className="
           pointer-events-none
@@ -17,15 +63,7 @@ export default function ModulePath({ variant }: ModulePathProps) {
         aria-hidden="true"
       >
         <path
-          d="
-            M 150 0
-            C 150 80, 75 100, 75 200
-            S 225 300, 225 400
-            S 75 500, 75 600
-            S 225 700, 225 800
-            S 75 900, 75 1000
-            S 150 1120, 150 1200
-          "
+          d={pathData}
           fill="none"
           stroke="#ff66c4"
           strokeWidth="4"

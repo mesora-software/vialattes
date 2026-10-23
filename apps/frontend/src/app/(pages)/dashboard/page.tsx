@@ -93,8 +93,21 @@ export default function Dashboard() {
           "
       >
 
+        {/* Caminho vertical — Mobile e Tablet */}
+        <div className="pointer-events-none absolute inset-0 z-0 lg:hidden">
+          <ModulePath variant="mobile" />
+        </div>
+
         {/* HEADER */}
-        <header className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-2 sm:gap-4 lg:items-center">
+        <header 
+          className="
+            relative z-10
+            grid w-full grid-cols-[auto_minmax(0,1fr)_auto]
+            items-start gap-2
+            sm:gap-4
+            lg:items-center
+          "
+        >
 
           {/* Patente */}
           <div className="w-18 shrink-0 select-none sm:w-19 md:w-20 lg:w-23 lg:-translate-4">
@@ -190,9 +203,9 @@ export default function Dashboard() {
         <section className="flex flex-1 items-center justify-center py-12 lg:py-0">
           <div className="relative w-full">
 
-            {/* Caminho pontilhado */}
-            <div className="pointer-events-none absolute inset-0 z-0">
-              <ModulePath />
+            {/* Caminho horizontal — Desktop */}
+            <div className="pointer-events-none absolute inset-0 z-0 hidden lg:block">
+              <ModulePath variant="desktop" />
             </div>
 
             {/* Módulos */}
@@ -251,8 +264,8 @@ export default function Dashboard() {
         {/* FOOTER */}
         <footer
           className="
-            grid w-full
-            grid-cols-2
+            relative z-10
+            grid w-full grid-cols-2
             items-center justify-items-center
             gap-x-4 gap-y-6
             py-6 font-bold

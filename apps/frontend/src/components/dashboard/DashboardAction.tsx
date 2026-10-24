@@ -30,7 +30,13 @@ export default function DashboardAction({
   return (
     <Link
       href={href}
-      className="flex items-center select-none transition-transform duration-200 hover:scale-105"
+      className="
+        flex min-w-0
+        items-center justify-center
+        select-none
+        transition-transform duration-200
+        hover:scale-105
+      "
     >
       {/* Ícone */}
       <Image
@@ -39,15 +45,38 @@ export default function DashboardAction({
         width={width}
         height={height}
         loading="eager"
-        className="relative z-20 object-contain"
+        className="
+          relative z-10
+          h-13.75 w-13.75
+          shrink-0 object-contain
+          sm:h-17.5 sm:w-17.5
+          lg:h-22.5 lg:w-22.5
+        "
       />
 
       {/* Visor */}
       <GamePanel
-        className="-ml-6"
-        contentClassName="h-9 min-w-20 px-6"
+        className="
+          -ml-4
+          sm:-ml-5
+          lg:-ml-6
+        "
+        contentClassName="
+          flex h-7 min-w-16
+          items-center justify-center
+          px-3
+          sm:h-8 sm:min-w-18 sm:px-4
+          lg:h-9 lg:min-w-20 lg:px-6
+        "
       >
-        <span className="font-heading text-xl">
+        <span
+          className="
+            font-heading
+            text-xs whitespace-nowrap
+            sm:text-sm
+            lg:text-xl
+          "
+        >
           {name}
         </span>
       </GamePanel>

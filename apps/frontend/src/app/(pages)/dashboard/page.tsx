@@ -293,10 +293,12 @@ export default function Dashboard() {
             relative z-10
             grid w-full grid-cols-2
             items-center justify-items-center
-            gap-x-4 gap-y-6
-            py-6 font-bold
+            gap-x-2 gap-y-4
+            py-4 font-bold
+            sm:gap-x-4 sm:gap-y-6
+            sm:py-5
             lg:grid-cols-4
-            lg:gap-x-6
+            lg:gap-x-6 lg:py-6
             xl:gap-x-12
             2xl:gap-x-20
           "

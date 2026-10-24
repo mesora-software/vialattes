@@ -19,7 +19,7 @@ const modules = [
     moduleId: "module01-cinematica",
     image: "/images/assets/game-modules/kinematics.svg",
     stars: 4,
-    position: "lg:-translate-x-[40px] lg:-translate-y-[50px]",
+    position: "xl:-translate-x-[40px] xl:-translate-y-[50px]",
     mobilePosition: "-translate-x-[25%]",
   },
   {
@@ -27,7 +27,7 @@ const modules = [
     moduleId: "module02-dinamica",
     image: "/images/assets/game-modules/dynamic.svg",
     stars: 4,
-    position: "lg:-translate-x-[60px] lg:translate-y-[180px]",
+    position: "xl:-translate-x-[60px] xl:translate-y-[180px]",
     mobilePosition: "translate-x-[25%]",
   },
   {
@@ -35,7 +35,7 @@ const modules = [
     moduleId: "module03-energia-mecanica",
     image: "/images/assets/game-modules/mechanical-energy.svg",
     stars: 4,
-    position: "lg:-translate-x-[20px] lg:-translate-y-[50px]",
+    position: "xl:-translate-x-[20px] xl:-translate-y-[50px]",
     mobilePosition: "-translate-x-[25%]",
   },
   {
@@ -43,7 +43,7 @@ const modules = [
     moduleId: "module04-estatica",
     image: "/images/assets/game-modules/static.svg",
     stars: 4,
-    position: "lg:translate-x-[10px] lg:translate-y-[190px]",
+    position: "xl:translate-x-[10px] xl:translate-y-[190px]",
     mobilePosition: "translate-x-[25%]",
   },
   {
@@ -51,7 +51,7 @@ const modules = [
     moduleId: "module05-termologia",
     image: "/images/assets/game-modules/thermology.svg",
     stars: 4,
-    position: "lg:translate-x-[40px] lg:-translate-y-[50px]",
+    position: "xl:translate-x-[40px] xl:-translate-y-[50px]",
     mobilePosition: "-translate-x-[25%]",
   },
   {
@@ -59,7 +59,7 @@ const modules = [
     moduleId: "module06-eletromagnetismo",
     image: "/images/assets/game-modules/eletromagnetism.svg",
     stars: 4,
-    position: "lg:translate-x-[40px] lg:translate-y-[180px]",
+    position: "xl:translate-x-[40px] xl:translate-y-[180px]",
     mobilePosition: "translate-x-[25%]",
   },
 ];
@@ -109,7 +109,7 @@ export default function Dashboard() {
       >
 
         {/* Caminho vertical — Mobile e Tablet */}
-        <div className="pointer-events-none absolute inset-0 z-0 lg:hidden">
+        <div className="pointer-events-none absolute inset-0 z-0 xl:hidden">
           <ModulePath
             variant="mobile"
             points={points}
@@ -223,11 +223,11 @@ export default function Dashboard() {
         </header>
        
         {/* MAIN */}
-        <section className="flex flex-1 items-center justify-center py-12 lg:py-0">
+        <section className="flex flex-1 items-center justify-center py-12 xl:pt-14 xl:pb-0">
           <div className="relative w-full">
 
             {/* Caminho horizontal — Desktop */}
-            <div className="pointer-events-none absolute inset-0 z-0 hidden lg:block">
+            <div className="pointer-events-none absolute inset-0 z-0 hidden xl:block">
               <ModulePath variant="desktop" />
             </div>
 
@@ -240,12 +240,12 @@ export default function Dashboard() {
                 gap-y-10
                 py-10
                 sm:gap-y-14
-                lg:min-h-90
-                lg:grid-cols-6
-                lg:items-start
-                lg:justify-items-stretch
-                lg:gap-4
-                lg:py-0
+                xl:min-h-90
+                xl:grid-cols-6
+                xl:items-start
+                xl:justify-items-stretch
+                xl:gap-4
+                xl:py-0
               "
             >
               {modules.map((module) => (
@@ -257,7 +257,7 @@ export default function Dashboard() {
                 <div
                   className={`
                     flex justify-center
-                    lg:hidden
+                    xl:hidden
                     ${module.mobilePosition}
                   `}
                 >
@@ -272,7 +272,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Posicionamento desktop */}
-                <div className={`hidden lg:block ${module.position}`}>
+                <div className={`hidden xl:block ${module.position}`}>
                   <ModuleCard
                     name={module.name}
                     moduleId={module.moduleId}

@@ -86,7 +86,7 @@ export default function ModulePath({
           pointer-events-none
           absolute inset-0
           h-full w-full
-          lg:hidden
+          xl:hidden
         "
         aria-hidden="true"
       >
@@ -117,7 +117,7 @@ export default function ModulePath({
         absolute top-0 -left-30
         hidden h-full
         w-[calc(100%+225px)]
-        lg:block
+        xl:block
       "
       aria-hidden="true"
     >

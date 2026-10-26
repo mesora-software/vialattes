@@ -263,7 +263,7 @@ export default function MissionComplete({
             <div
               className="
                 relative w-full
-                [container-type:inline-size]
+                container-type:inline-size
               "
             >
               <Image

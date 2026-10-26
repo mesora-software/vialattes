@@ -212,10 +212,10 @@ export default function AimPanel({
 
   if (variant === "mobile") {
     return (
-      <div className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-[#7458a9] bg-[#1a1033]/95 p-2 text-center shadow-[0_0_16px_#7458a966] select-none">
+      <div className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-game-panel-edge bg-primary-dark/95 p-2 text-center shadow-[0_0_16px_#7458a966] select-none">
         {/* Cabeçalho */}
         <div className="flex w-full items-center justify-between gap-2">
-          <span className="font-game text-[11px] text-[#fdd501]">
+          <span className="font-game text-[11px] text-tertiary">
             SISTEMA DE MIRA
           </span>
 
@@ -232,7 +232,8 @@ export default function AimPanel({
         {/* Posição atual */}
         <output
           aria-label="Posição atual do drone"
-          className="w-full rounded-md border border-[#7458a9] bg-[#402e6a] py-1 font-game text-2xl text-[#aaff00]"
+          className="w-full rounded-md border border-game-panel-edge bg-primary-dark py-1 font-game text-2xl
+          text-secondary"
         >
           {position}
         </output>
@@ -245,7 +246,7 @@ export default function AimPanel({
             {...getMovementProps("left")}
             disabled={isShooting || position <= -10}
             aria-label="Mover drone para esquerda"
-            className="flex min-h-11 min-w-11 touch-none items-center justify-center rounded-lg bg-[#402e6a] transition-transform active:scale-95 disabled:opacity-40"
+            className="flex min-h-11 min-w-11 touch-none items-center justify-center rounded-lg bg-primary-dark transition-transform active:scale-95 disabled:opacity-40"
           >
             <Image
               src={`${assets}/btn-left.svg`}
@@ -263,7 +264,7 @@ export default function AimPanel({
             {...getMovementProps("right")}
             disabled={isShooting || position >= 10}
             aria-label="Mover drone para direita"
-            className="flex min-h-11 min-w-11 touch-none items-center justify-center rounded-lg bg-[#402e6a] transition-transform active:scale-95 disabled:opacity-40"
+            className="flex min-h-11 min-w-11 touch-none items-center justify-center rounded-lg bg-primary-dark transition-transform active:scale-95 disabled:opacity-40"
           >
             <Image
               src={`${assets}/btn-right.svg`}
@@ -282,7 +283,7 @@ export default function AimPanel({
           onClick={onFire}
           disabled={isShooting}
           aria-label="Disparar bomba"
-          className="flex min-h-11 w-full touch-manipulation items-center justify-center rounded-lg bg-[#402e6a] px-2 transition-transform active:scale-95 disabled:opacity-40"
+          className="flex min-h-11 w-full touch-manipulation items-center justify-center rounded-lg bg-primary-dark px-2 transition-transform active:scale-95 disabled:opacity-40"
         >
           <Image
             src={`${assets}/btn-fire.svg`}
@@ -355,7 +356,7 @@ export default function AimPanel({
 
         {/* Visor da coordenada */}
         <div className="pointer-events-none absolute left-[23%] top-[62%] flex h-[10%] w-[28%] items-center justify-center">
-          <span className="text-3xl font-bold text-[#aaff00]">
+          <span className="text-3xl font-bold text-secondary">
             {position}
           </span>
         </div>

@@ -491,10 +491,16 @@ function PositionGameClient() {
           </div>
         </div>
 
-        {/* Painel compacto mobile */}
+        {/* Painel de mira mobile: mesmo design do desktop */}
         {!showMissionComplete && (
           <aside
-            className="hidden w-49 shrink-0 self-center max-lg:landscape:block"
+            className="
+              hidden
+              shrink-0
+              self-center
+              max-lg:landscape:block
+              max-lg:landscape:w-[clamp(140px,20vw,210px)]
+            "
             aria-label="Controles de mira"
           >
             <AimPanel

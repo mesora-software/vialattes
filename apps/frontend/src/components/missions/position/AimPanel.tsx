@@ -18,11 +18,11 @@ interface AimPanelProps {
   variant?: "desktop" | "mobile";
 }
 
+type Direction = "left" | "right";
+
 // Configurações da movimentação contínua
 const HOLD_DELAY = 300;
 const MOVE_INTERVAL = 120;
-
-type Direction = "left" | "right";
 
 export default function AimPanel({
   position,
@@ -34,9 +34,11 @@ export default function AimPanel({
 }: AimPanelProps) {
   const assets = "/images/missions/position";
 
+  const isMobile = variant === "mobile";
+
   const [isOpen, setIsOpen] = useState(true);
 
-  // Referências para controlar a movimentação contínua
+  // Referências para movimentação contínua
   const holdTimeoutRef = useRef<ReturnType<
     typeof setTimeout
   > | null>(null);
@@ -53,7 +55,7 @@ export default function AimPanel({
   const moveLeftRef = useRef(onMoveLeft);
   const moveRightRef = useRef(onMoveRight);
 
-  // Manter as referências atualizadas
+  // Manter as referências sincronizadas com as propriedades
   useEffect(() => {
     positionRef.current = position;
     isShootingRef.current = isShooting;
@@ -77,7 +79,7 @@ export default function AimPanel({
     activePointerRef.current = null;
   }, []);
 
-  // Executar um passo na direção selecionada
+  // Executar um passo
   const moveStep = useCallback(
     (direction: Direction): boolean => {
       if (isShootingRef.current) {
@@ -97,8 +99,6 @@ export default function AimPanel({
         return false;
       }
 
-      // Atualizar imediatamente a referência para impedir
-      // múltiplos movimentos sobre a mesma coordenada.
       positionRef.current =
         direction === "left"
           ? currentPosition - 1
@@ -115,7 +115,7 @@ export default function AimPanel({
     [stopMoving]
   );
 
-  // Iniciar movimentação por toque ou clique
+  // Iniciar movimentação
   const startMoving = useCallback(
     (
       event: PointerEvent<HTMLButtonElement>,
@@ -127,7 +127,6 @@ export default function AimPanel({
 
       event.preventDefault();
 
-      // Evitar iniciar duas movimentações simultâneas
       if (activePointerRef.current !== null) {
         return;
       }
@@ -139,11 +138,9 @@ export default function AimPanel({
       // Primeiro movimento imediato
       const moved = moveStep(direction);
 
-      if (!moved) {
-        return;
-      }
+      if (!moved) return;
 
-      // Esperar antes de iniciar a repetição
+      // Iniciar repetição após o tempo de espera
       holdTimeoutRef.current = setTimeout(() => {
         holdTimeoutRef.current = null;
 
@@ -155,7 +152,7 @@ export default function AimPanel({
     [moveStep]
   );
 
-  // Encerrar movimentação ao soltar o botão
+  // Encerrar movimentação
   const handlePointerUp = useCallback(
     (event: PointerEvent<HTMLButtonElement>) => {
       if (activePointerRef.current !== event.pointerId) {
@@ -175,21 +172,21 @@ export default function AimPanel({
     [stopMoving]
   );
 
-  // Encerrar movimentação caso o disparo seja iniciado
+  // Parar movimentação durante disparos
   useEffect(() => {
     if (isShooting) {
       stopMoving();
     }
   }, [isShooting, stopMoving]);
 
-  // Limpar timers ao desmontar o componente
+  // Limpar timers ao desmontar
   useEffect(() => {
     return () => {
       stopMoving();
     };
   }, [stopMoving]);
 
-  // Propriedades compartilhadas pelos botões direcionais
+  // Eventos compartilhados dos botões
   const getMovementProps = (direction: Direction) => ({
     onPointerDown: (
       event: PointerEvent<HTMLButtonElement>
@@ -206,105 +203,18 @@ export default function AimPanel({
     ) => event.preventDefault(),
   });
 
-  // =========================================================
-  // PAINEL MOBILE
-  // =========================================================
-
-  if (variant === "mobile") {
-    return (
-      <div className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-game-panel-edge bg-primary-dark/95 p-2 text-center shadow-[0_0_16px_#7458a966] select-none">
-        {/* Cabeçalho */}
-        <div className="flex w-full items-center justify-between gap-2">
-          <span className="font-game text-[11px] text-tertiary">
-            SISTEMA DE MIRA
-          </span>
-
-          <Image
-            src={`${assets}/radar.svg`}
-            alt="Radar"
-            width={34}
-            height={34}
-            className="h-8 w-8 object-contain"
-            draggable={false}
-          />
-        </div>
-
-        {/* Posição atual */}
-        <output
-          aria-label="Posição atual do drone"
-          className="w-full rounded-md border border-game-panel-edge bg-primary-dark py-1 font-game text-2xl
-          text-secondary"
-        >
-          {position}
-        </output>
-
-        {/* Controles direcionais */}
-        <div className="flex w-full items-center justify-center gap-3">
-          {/* Esquerda */}
-          <button
-            type="button"
-            {...getMovementProps("left")}
-            disabled={isShooting || position <= -10}
-            aria-label="Mover drone para esquerda"
-            className="flex min-h-11 min-w-11 touch-none items-center justify-center rounded-lg bg-primary-dark transition-transform active:scale-95 disabled:opacity-40"
-          >
-            <Image
-              src={`${assets}/btn-left.svg`}
-              alt=""
-              width={40}
-              height={40}
-              className="pointer-events-none"
-              draggable={false}
-            />
-          </button>
-
-          {/* Direita */}
-          <button
-            type="button"
-            {...getMovementProps("right")}
-            disabled={isShooting || position >= 10}
-            aria-label="Mover drone para direita"
-            className="flex min-h-11 min-w-11 touch-none items-center justify-center rounded-lg bg-primary-dark transition-transform active:scale-95 disabled:opacity-40"
-          >
-            <Image
-              src={`${assets}/btn-right.svg`}
-              alt=""
-              width={40}
-              height={40}
-              className="pointer-events-none"
-              draggable={false}
-            />
-          </button>
-        </div>
-
-        {/* Disparar */}
-        <button
-          type="button"
-          onClick={onFire}
-          disabled={isShooting}
-          aria-label="Disparar bomba"
-          className="flex min-h-11 w-full touch-manipulation items-center justify-center rounded-lg bg-primary-dark px-2 transition-transform active:scale-95 disabled:opacity-40"
-        >
-          <Image
-            src={`${assets}/btn-fire.svg`}
-            alt="Disparar"
-            width={140}
-            height={44}
-            className="pointer-events-none h-10 w-auto max-w-full object-contain"
-            draggable={false}
-          />
-        </button>
-      </div>
-    );
-  }
-
-  // =========================================================
-  // PAINEL DESKTOP
-  // =========================================================
-
   return (
-    <div className="relative w-87.5 select-none">
-      {/* PAINEL ABERTO */}
+    <div
+      className={
+        isMobile
+          ? "relative w-full select-none"
+          : "relative w-87.5 select-none"
+      }
+    >
+      {/* =====================================================
+          PAINEL ABERTO
+      ===================================================== */}
+
       <div
         className={`relative w-full origin-top-left transition-all duration-500 ease-in-out ${
           isOpen
@@ -314,7 +224,7 @@ export default function AimPanel({
         aria-hidden={!isOpen}
         inert={!isOpen}
       >
-        {/* Estrutura do painel aberto */}
+        {/* Imagem base */}
         <Image
           src={`${assets}/aim-panel-base.svg`}
           alt="Sistema de mira"
@@ -325,22 +235,24 @@ export default function AimPanel({
           priority
         />
 
-        {/* Botão fechar */}
-        <button
-          type="button"
-          onClick={() => setIsOpen(false)}
-          aria-label="Fechar painel de mira"
-          className="absolute right-[17%] top-[5%] z-30 w-[9%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
-        >
-          <Image
-            src={`${assets}/close.svg`}
-            alt=""
-            width={50}
-            height={50}
-            className="pointer-events-none h-auto w-full"
-            draggable={false}
-          />
-        </button>
+        {/* Fechar painel: somente desktop */}
+        {!isMobile && (
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            aria-label="Fechar painel de mira"
+            className="absolute right-[17%] top-[5%] z-30 w-[9%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+          >
+            <Image
+              src={`${assets}/close.svg`}
+              alt=""
+              width={50}
+              height={50}
+              className="pointer-events-none h-auto w-full"
+              draggable={false}
+            />
+          </button>
+        )}
 
         {/* Radar */}
         <div className="pointer-events-none absolute left-[33%] top-[18%] w-[33%]">
@@ -354,9 +266,15 @@ export default function AimPanel({
           />
         </div>
 
-        {/* Visor da coordenada */}
+        {/* Visor de posição */}
         <div className="pointer-events-none absolute left-[23%] top-[62%] flex h-[10%] w-[28%] items-center justify-center">
-          <span className="text-3xl font-bold text-secondary">
+          <span
+            className={
+              isMobile
+                ? "font-bold text-secondary text-[clamp(12px,2.5vw,13px)]"
+                : "text-3xl font-bold text-secondary"
+            }
+          >
             {position}
           </span>
         </div>
@@ -403,7 +321,7 @@ export default function AimPanel({
           onClick={onFire}
           disabled={isShooting}
           aria-label="Disparar bomba"
-          className="absolute z-10 left-[20%] top-[60%] w-[59%] cursor-pointer transition-transform hover:scale-[1.03] active:scale-95"
+          className="absolute z-10 left-[20%] top-[60%] w-[59%] cursor-pointer transition-transform hover:scale-[1.03] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Image
             src={`${assets}/btn-fire.svg`}
@@ -416,43 +334,46 @@ export default function AimPanel({
         </button>
       </div>
 
-      {/* PAINEL FECHADO */}
-      <div
-        className={`absolute left-13 top-0 w-full origin-top-left transition-all duration-300 ease-in-out ${
-          isOpen
-            ? "pointer-events-none z-0 scale-[0.98] opacity-0"
-            : "z-10 scale-100 opacity-100"
-        }`}
-        aria-hidden={isOpen}
-        inert={isOpen}
-      >
-        {/* Estrutura do painel fechado */}
-        <Image
-          src={`${assets}/closed-aim-panel-base.svg`}
-          alt="Sistema de mira fechado"
-          width={550}
-          height={750}
-          className="pointer-events-none block h-auto w-[73%]"
-          draggable={false}
-        />
+      {/* =====================================================
+          PAINEL FECHADO: SOMENTE DESKTOP
+      ===================================================== */}
 
-        {/* Botão abrir */}
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          aria-label="Abrir painel de mira"
-          className="absolute right-[31%] top-[23%] z-30 w-[9%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+      {!isMobile && (
+        <div
+          className={`absolute left-13 top-0 w-full origin-top-left transition-all duration-300 ease-in-out ${
+            isOpen
+              ? "pointer-events-none z-0 scale-[0.98] opacity-0"
+              : "z-10 scale-100 opacity-100"
+          }`}
+          aria-hidden={isOpen}
+          inert={isOpen}
         >
           <Image
-            src={`${assets}/open.svg`}
-            alt=""
-            width={50}
-            height={50}
-            className="pointer-events-none h-auto w-full"
+            src={`${assets}/closed-aim-panel-base.svg`}
+            alt="Sistema de mira fechado"
+            width={550}
+            height={750}
+            className="pointer-events-none block h-auto w-[73%]"
             draggable={false}
           />
-        </button>
-      </div>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            aria-label="Abrir painel de mira"
+            className="absolute right-[31%] top-[23%] z-30 w-[9%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+          >
+            <Image
+              src={`${assets}/open.svg`}
+              alt=""
+              width={50}
+              height={50}
+              className="pointer-events-none h-auto w-full"
+              draggable={false}
+            />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

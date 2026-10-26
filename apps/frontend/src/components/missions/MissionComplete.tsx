@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -37,22 +36,22 @@ function RewardDisplay({
 }: RewardDisplayProps) {
   return (
     <div
-      className={`absolute flex h-[12%] w-[34%] flex-col items-center justify-center gap-1 ${className}`}
+      className={`absolute flex h-[12%] w-[34%] flex-col items-center justify-center gap-1 max-lg:landscape:gap-0 ${className}`}
     >
-      <span className="text-xs text-text-primary sm:text-xl">
+      <span className="text-xs text-text-primary sm:text-xl max-lg:landscape:text-[clamp(7px,1.4vh,12px)]">
         {title}
       </span>
 
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-2 max-lg:landscape:gap-1">
         <Image
           src={icon}
           alt=""
           width={40}
           height={40}
-          className={`size-6 shrink-0 object-contain sm:size-8 ${iconClassName}`}
+          className={`size-6 shrink-0 object-contain sm:size-8 max-lg:landscape:size-[clamp(12px,3vh,20px)] ${iconClassName}`}
         />
 
-        <span className="text-lg whitespace-nowrap text-tertiary sm:text-3xl">
+        <span className="text-lg whitespace-nowrap text-tertiary sm:text-3xl max-lg:landscape:text-[clamp(10px,2.5vh,18px)]">
           +{value.toLocaleString("pt-BR")}
         </span>
       </div>
@@ -76,7 +75,7 @@ function NavigationButton({
     />
   );
 
-  const baseClassName = `block w-[37%] shrink-0 ${className}`;
+  const baseClassName = `block w-[37%] shrink-0 max-lg:landscape:w-[34%] ${className}`;
 
   if (!href || href === "#") {
     return (
@@ -128,24 +127,70 @@ export default function MissionComplete({
       <div className="absolute inset-0 bg-black/80" />
 
       {/* Conteúdo principal */}
-      <div className="relative z-10 flex min-h-full items-start justify-center px-4 py-8">
-        <div className="flex w-full max-w-300 flex-col items-center justify-center gap-2 md:flex-row md:gap-4">
+      <div
+        className="
+          relative z-10
+          flex min-h-full items-start justify-center
+          px-4 py-8
 
+          max-lg:landscape:min-h-dvh
+          max-lg:landscape:items-center
+          max-lg:landscape:px-3
+          max-lg:landscape:py-2
+        "
+      >
+        <div
+          className="
+            flex w-full max-w-300
+            flex-col items-center justify-center gap-2
+
+            md:flex-row md:gap-4
+
+            max-lg:landscape:flex-row
+            max-lg:landscape:gap-2
+          "
+        >
           {/* Prof. Leonardo Lattes */}
-          <div className="relative w-40 shrink-0 sm:w-56 md:w-[40%] md:translate-y-20">
+          <div
+            className="
+              relative w-40 shrink-0
+
+              sm:w-56
+
+              md:w-[40%]
+              md:translate-y-20
+
+              max-lg:landscape:w-auto
+              max-lg:landscape:max-w-[38%]
+              max-lg:landscape:translate-y-4
+            "
+          >
             <Image
               src="/images/assets/characters/prof-lattes/leonard-mission-complete.png"
               alt="Prof. Leonardo Lattes comemorando a vitória"
               width={1060}
               height={1060}
-              className="h-auto w-full object-contain drop-shadow-2xl"
+              className="
+                h-auto w-full object-contain drop-shadow-2xl
+
+                max-lg:landscape:h-[min(78dvh,340px)]
+                max-lg:landscape:w-auto
+              "
               priority
             />
           </div>
 
           {/* Painel e botões */}
-          <div className="flex w-full max-w-150 flex-col items-center">
+          <div
+            className="
+              flex w-full max-w-150
+              flex-col items-center
 
+              max-lg:landscape:w-[min(55vw,52dvh)]
+              max-lg:landscape:max-w-none
+              max-lg:landscape:shrink-0
+            "
+          >
             {/* Painel base */}
             <div className="relative w-full">
               <Image
@@ -159,7 +204,6 @@ export default function MissionComplete({
 
               {/* Informações da missão */}
               <div className="absolute inset-0 font-game">
-
                 <h2
                   id="mission-complete-title"
                   className="sr-only"
@@ -168,12 +212,34 @@ export default function MissionComplete({
                 </h2>
 
                 {/* Inimigos derrotados */}
-                <div className="absolute top-[38%] left-[15%] flex h-[11%] w-[70%] flex-col items-center justify-center">
-                  <p className="text-center text-2xl text-text-primary [-webkit-text-stroke:0.3px_black]">
+                <div
+                  className="
+                    absolute top-[38%] left-[15%]
+                    flex h-[11%] w-[70%]
+                    flex-col items-center justify-center
+                  "
+                >
+                  <p
+                    className="
+                      text-center text-2xl
+                      text-text-primary
+                      [-webkit-text-stroke:0.3px_black]
+
+                      max-lg:landscape:text-[clamp(10px,2.6vh,18px)]
+                    "
+                  >
                     Zips derrotados
                   </p>
 
-                  <span className="translate-y-4 text-lg text-tertiary sm:text-2xl">
+                  <span
+                    className="
+                      translate-y-4 text-lg text-tertiary
+                      sm:text-2xl
+
+                      max-lg:landscape:translate-y-1
+                      max-lg:landscape:text-[clamp(10px,2.5vh,18px)]
+                    "
+                  >
                     {defeatedEnemies}
                   </span>
                 </div>
@@ -184,7 +250,7 @@ export default function MissionComplete({
                   icon="/images/assets/ui/xp.svg"
                   value={xp}
                   className="top-[61%] left-[18%]"
-                  iconClassName="-translate-x-2 sm:size-10"
+                  iconClassName="-translate-x-2 sm:size-10 max-lg:landscape:translate-x-0"
                 />
 
                 <RewardDisplay
@@ -193,13 +259,19 @@ export default function MissionComplete({
                   value={lattecoins}
                   className="top-[61%] left-[48%]"
                 />
-
               </div>
             </div>
 
             {/* Navegação */}
-            <div className="relative z-20 -mt-[22%] flex w-full items-center justify-center gap-2">
+            <div
+              className="
+                relative z-20
+                mt-[-22%]
+                flex w-full items-center justify-center gap-2
 
+                max-lg:landscape:gap-1
+              "
+            >
               <NavigationButton
                 href="/dashboard"
                 image="btn-back-dashboard.svg"
@@ -211,7 +283,6 @@ export default function MissionComplete({
                 image="btn-next-mission.svg"
                 label="Ir para a próxima missão"
               />
-
             </div>
           </div>
         </div>

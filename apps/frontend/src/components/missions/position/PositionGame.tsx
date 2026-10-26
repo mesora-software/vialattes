@@ -63,7 +63,7 @@ const TOTAL_XP =
 const TOTAL_LATTECOINS =
   TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
 
-const PREVIEW_MISSION_COMPLETE = false;
+const PREVIEW_MISSION_COMPLETE = true;
 
 // Utilitários
 function getRandomInt(min: number, max: number) {

@@ -33,6 +33,7 @@ type Shot = {
   position: number;
   phase: "falling" | "exploding";
   bombSize: number;
+  fallDuration: number;
 };
 
 type RewardEffect = {
@@ -49,6 +50,8 @@ const NEXT_ROUND_DELAY = 500;
 
 const DESKTOP_BOMB_SIZE = 40;
 const MOBILE_BOMB_SIZE = 22;
+const DESKTOP_BOMB_SPEED = 400;
+const MOBILE_BOMB_SPEED = 140;
 
 const MOBILE_BREAKPOINT = 1024;
 
@@ -151,28 +154,39 @@ function PositionGameClient() {
     const area = bombAreaRef.current;
     if (!area) return;
 
-    // O layout mobile é aplicado em telas menores que 1024px
-    // quando o dispositivo está na orientação horizontal.
     const isMobileLandscape =
       window.innerWidth < MOBILE_BREAKPOINT &&
       window.matchMedia("(orientation: landscape)").matches;
 
+    // Dimensões responsivas da bomba
     const bombSize = isMobileLandscape
       ? MOBILE_BOMB_SIZE
       : DESKTOP_BOMB_SIZE;
 
-    // Calcular a distância considerando o tamanho da bomba.
-    setBombDistance(
+    // Velocidade de queda conforme o dispositivo
+    const bombSpeed = isMobileLandscape
+      ? MOBILE_BOMB_SPEED
+      : DESKTOP_BOMB_SPEED;
+
+    // Distância percorrida pela bomba
+    const distance = Math.max(
+      0,
       area.getBoundingClientRect().height -
         bombSize +
         AXIS_OFFSET
     );
+
+    // Duração proporcional à distância e à velocidade
+    const fallDuration = (distance / bombSpeed) * 1000;
+
+    setBombDistance(distance);
 
     setShot({
       id: crypto.randomUUID(),
       position: dronePosition,
       phase: "falling",
       bombSize,
+      fallDuration,
     });
   }, [isShooting, showMissionComplete, dronePosition]);
 
@@ -390,7 +404,7 @@ function PositionGameClient() {
               {shot?.phase === "falling" && (
                 <div
                   key={shot.id}
-                  className="absolute top-0 z-20 animate-[bomb-fall_900ms_linear_forwards]"
+                  className="absolute top-0 z-20"
                   style={
                     {
                       left: `${
@@ -400,6 +414,7 @@ function PositionGameClient() {
                       height: `${shot.bombSize}px`,
                       marginLeft: `${-shot.bombSize / 2}px`,
                       "--bomb-distance": `${bombDistance}px`,
+                      animation: `bomb-fall ${shot.fallDuration}ms linear forwards`,
                     } as CSSProperties
                   }
                   onAnimationEnd={(event) => {

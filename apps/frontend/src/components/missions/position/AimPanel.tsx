@@ -9,6 +9,7 @@ interface AimPanelProps {
   onMoveRight: () => void;
   onFire: () => void;
   isShooting: boolean;
+  variant?: "desktop" | "mobile";
 }
 
 export default function AimPanel({
@@ -17,13 +18,92 @@ export default function AimPanel({
   onMoveRight,
   onFire,
   isShooting,
+  variant = "desktop",
 }: AimPanelProps) {
   const assets = "/images/missions/position";
   const [isOpen, setIsOpen] = useState(true);
 
+  if (variant === "mobile") {
+    return (
+      <div className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-[#7458a9] bg-[#1a1033]/95 p-2 text-center shadow-[0_0_16px_#7458a966] select-none">
+        <div className="flex w-full items-center justify-between gap-2">
+          <span className="font-game text-[11px] text-[#fdd501]">
+            SISTEMA DE MIRA
+          </span>
+
+          <Image
+            src={`${assets}/radar.svg`}
+            alt="Radar"
+            width={34}
+            height={34}
+            className="h-8 w-8 object-contain"
+            draggable={false}
+          />
+        </div>
+
+        <output
+          aria-label="Posição atual do drone"
+          className="w-full rounded-md border border-[#7458a9] bg-[#402e6a] py-1 font-game text-2xl text-[#aaff00]"
+        >
+          {position}
+        </output>
+
+        <div className="flex w-full items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={onMoveLeft}
+            disabled={isShooting || position <= -10}
+            aria-label="Mover drone para esquerda"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-[#402e6a] active:scale-95 disabled:opacity-40"
+          >
+            <Image
+              src={`${assets}/btn-left.svg`}
+              alt=""
+              width={40}
+              height={40}
+              draggable={false}
+            />
+          </button>
+
+          <button
+            type="button"
+            onClick={onMoveRight}
+            disabled={isShooting || position >= 10}
+            aria-label="Mover drone para direita"
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-[#402e6a] active:scale-95 disabled:opacity-40"
+          >
+            <Image
+              src={`${assets}/btn-right.svg`}
+              alt=""
+              width={40}
+              height={40}
+              draggable={false}
+            />
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={onFire}
+          disabled={isShooting}
+          aria-label="Disparar bomba"
+          className="flex min-h-11 w-full items-center justify-center rounded-lg bg-[#402e6a] px-2 active:scale-95 disabled:opacity-40"
+        >
+          <Image
+            src={`${assets}/btn-fire.svg`}
+            alt="Disparar"
+            width={140}
+            height={44}
+            className="h-10 w-auto max-w-full object-contain"
+            draggable={false}
+          />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-87.5 select-none">
-
       {/* PAINEL ABERTO */}
       <div
         className={`relative w-full origin-top-left transition-all duration-500 ease-in-out ${

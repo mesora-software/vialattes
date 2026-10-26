@@ -19,7 +19,7 @@ export default function PositionAxis() {
         {positions.map((position) => (
           <span
             key={position}
-            className="absolute -translate-x-1/2 text-sm font-bold text-[#fdd501]"
+            className="absolute -translate-x-1/2 text-sm font-bold text-[#fdd501] max-lg:landscape:text-[10px]"
             style={{
               left: `${((position + 10) / 20) * 100}%`,
             }}
@@ -31,5 +31,3 @@ export default function PositionAxis() {
     </div>
   );
 }
-
-

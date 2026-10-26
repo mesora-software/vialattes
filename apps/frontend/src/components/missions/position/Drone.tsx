@@ -5,15 +5,13 @@ interface DroneProps {
 }
 
 export default function Drone({ position }: DroneProps) {
-  const percentage = ((position + 10) / 20) * 100; // Converte a posição do drone em uma porcentagem horizontal
+  const percentage = ((position + 10) / 20) * 100;
 
   return (
     <div
-      className="absolute top-0 z-50 -translate-x-1/2"
-      style={{ 
+      className="absolute top-0 z-50 -translate-x-1/2 h-22.5 w-22.5 max-lg:landscape:h-12 max-lg:landscape:w-12"
+      style={{
         left: `${percentage}%`,
-        width: "90px",
-        height: "90px",
       }}
     >
       <Image

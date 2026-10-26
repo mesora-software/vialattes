@@ -34,11 +34,9 @@ export default function ZipEnemy({
 
   return (
     <div
-      className="absolute bottom-7.5 -translate-x-1/2"
+      className="absolute bottom-7.5 -translate-x-1/2 h-17.5 w-17.5 max-lg:landscape:h-10 max-lg:landscape:w-10"
       style={{
         left: `${((position + 10) / 20) * 100}%`,
-        width: "70px",
-        height: "70px",
       }}
     >
       {status === "armed" ? (

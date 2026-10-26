@@ -13,15 +13,16 @@ import { createPortal } from "react-dom";
 const subscribe = () => () => {};
 
 function getClientSnapshot() {
-   return true;
+  return true;
 }
 
 function getServerSnapshot() {
-   return false;
+  return false;
 }
 
 interface DraggablePanelProps {
   children: ReactNode;
+  className?: string;
 }
 
 interface Position {
@@ -31,13 +32,14 @@ interface Position {
 
 export default function DraggablePanel({
   children,
+  className = "",
 }: DraggablePanelProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
   const mounted = useSyncExternalStore(
-   subscribe,
-   getClientSnapshot,
-   getServerSnapshot
+    subscribe,
+    getClientSnapshot,
+    getServerSnapshot
   );
 
   const [position, setPosition] = useState<Position | null>(null);
@@ -160,7 +162,7 @@ export default function DraggablePanel({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      className={`fixed z-50 touch-none ${
+      className={`fixed z-50 touch-none ${className} ${
         isDragging ? "cursor-grabbing" : "cursor-grab"
       }`}
       style={{

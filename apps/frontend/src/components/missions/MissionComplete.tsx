@@ -36,22 +36,57 @@ function RewardDisplay({
 }: RewardDisplayProps) {
   return (
     <div
-      className={`absolute flex h-[12%] w-[34%] flex-col items-center justify-center gap-1 max-lg:landscape:gap-0 ${className}`}
+      className={`
+        absolute h-[18%] w-[34%]
+        ${className}
+      `}
     >
-      <span className="text-xs text-text-primary sm:text-xl max-lg:landscape:text-[clamp(7px,1.4vh,12px)]">
+      {/* Título da recompensa */}
+      <span
+        className="
+          absolute top-[5%] left-0
+          flex h-[35%] w-full
+          items-center justify-center
+
+          whitespace-nowrap
+          text-text-primary
+
+          text-[clamp(8px,2.6cqw,20px)]
+          leading-none
+        "
+      >
         {title}
       </span>
 
-      <div className="flex items-center justify-center gap-2 max-lg:landscape:gap-1">
+      {/* Valor da recompensa */}
+      <div
+        className="
+          absolute top-[45%] left-0
+          flex h-[40%] w-full
+          items-center justify-center
+          gap-[1cqw]
+        "
+      >
         <Image
           src={icon}
           alt=""
           width={40}
           height={40}
-          className={`size-6 shrink-0 object-contain sm:size-8 max-lg:landscape:size-[clamp(12px,3vh,20px)] ${iconClassName}`}
+          className={`
+            h-[clamp(12px,5cqw,40px)]
+            w-[clamp(12px,5cqw,40px)]
+            shrink-0 object-contain
+            ${iconClassName}
+          `}
         />
 
-        <span className="text-lg whitespace-nowrap text-tertiary sm:text-3xl max-lg:landscape:text-[clamp(10px,2.5vh,18px)]">
+        <span
+          className="
+            whitespace-nowrap text-tertiary
+            text-[clamp(11px,4cqw,30px)]
+            leading-none
+          "
+        >
           +{value.toLocaleString("pt-BR")}
         </span>
       </div>
@@ -75,14 +110,21 @@ function NavigationButton({
     />
   );
 
-  const baseClassName = `block w-[37%] shrink-0 max-lg:landscape:w-[34%] ${className}`;
+  const baseClassName = `
+    block w-[37%] shrink-0
+    max-lg:landscape:w-[34%]
+    ${className}
+  `;
 
   if (!href || href === "#") {
     return (
       <div
         role="img"
         aria-label={`${label} — indisponível`}
-        className={`${baseClassName} cursor-not-allowed opacity-70`}
+        className={`
+          ${baseClassName}
+          cursor-not-allowed opacity-70
+        `}
       >
         {imageElement}
       </div>
@@ -93,7 +135,14 @@ function NavigationButton({
     <Link
       href={href}
       aria-label={label}
-      className={`${baseClassName} transition-transform duration-200 hover:scale-105 focus-visible:scale-105 focus-visible:outline-2 focus-visible:outline-tertiary`}
+      className={`
+        ${baseClassName}
+        transition-transform duration-200
+        hover:scale-105
+        focus-visible:scale-105
+        focus-visible:outline-2
+        focus-visible:outline-tertiary
+      `}
     >
       {imageElement}
     </Link>
@@ -111,9 +160,15 @@ export default function MissionComplete({
       role="dialog"
       aria-modal="true"
       aria-labelledby="mission-complete-title"
-      className="fixed inset-0 z-100 overflow-y-auto bg-black"
+      className="
+        fixed inset-0 z-100
+        overflow-y-auto bg-black
+      "
     >
-      {/* Cenário do laboratório */}
+      {/* =====================================================
+          CENÁRIO
+      ===================================================== */}
+
       <Image
         src="/images/assets/backgrounds/laboratory.png"
         alt=""
@@ -126,11 +181,15 @@ export default function MissionComplete({
       {/* Escurecimento do cenário */}
       <div className="absolute inset-0 bg-black/80" />
 
-      {/* Conteúdo principal */}
+      {/* =====================================================
+          CONTEÚDO PRINCIPAL
+      ===================================================== */}
+
       <div
         className="
           relative z-10
-          flex min-h-full items-start justify-center
+          flex min-h-full
+          items-start justify-center
           px-4 py-8
 
           max-lg:landscape:min-h-dvh
@@ -142,15 +201,20 @@ export default function MissionComplete({
         <div
           className="
             flex w-full max-w-300
-            flex-col items-center justify-center gap-2
+            flex-col items-center
+            justify-center gap-2
 
-            md:flex-row md:gap-4
+            md:flex-row
+            md:gap-4
 
             max-lg:landscape:flex-row
             max-lg:landscape:gap-2
           "
         >
-          {/* Prof. Leonardo Lattes */}
+          {/* =================================================
+              PROFESSOR LEONARDO LATTES
+          ================================================= */}
+
           <div
             className="
               relative w-40 shrink-0
@@ -171,28 +235,37 @@ export default function MissionComplete({
               width={1060}
               height={1060}
               className="
-                h-auto w-full object-contain drop-shadow-2xl
+                h-auto w-full
+                object-contain drop-shadow-2xl
 
-                max-lg:landscape:h-[min(78dvh,340px)]
+                max-lg:landscape:h-[min(78dvh,480px)]
                 max-lg:landscape:w-auto
               "
               priority
             />
           </div>
 
-          {/* Painel e botões */}
+          {/* =================================================
+              PAINEL E BOTÕES
+          ================================================= */}
+
           <div
             className="
               flex w-full max-w-150
               flex-col items-center
 
-              max-lg:landscape:w-[min(55vw,52dvh)]
+              max-lg:landscape:w-[min(55vw,92dvh)]
               max-lg:landscape:max-w-none
               max-lg:landscape:shrink-0
             "
           >
             {/* Painel base */}
-            <div className="relative w-full">
+            <div
+              className="
+                relative w-full
+                [container-type:inline-size]
+              "
+            >
               <Image
                 src={`${ASSETS}/panel-base.svg`}
                 alt=""
@@ -202,7 +275,10 @@ export default function MissionComplete({
                 priority
               />
 
-              {/* Informações da missão */}
+              {/* =============================================
+                  INFORMAÇÕES DA MISSÃO
+              ============================================= */}
+
               <div className="absolute inset-0 font-game">
                 <h2
                   id="mission-complete-title"
@@ -211,63 +287,78 @@ export default function MissionComplete({
                   Missão concluída!
                 </h2>
 
-                {/* Inimigos derrotados */}
-                <div
+                {/* ===========================================
+                    ZIPS DERROTADOS
+                    Título e valor independentes
+                =========================================== */}
+
+                {/* Título */}
+                <p
                   className="
-                    absolute top-[38%] left-[15%]
-                    flex h-[11%] w-[70%]
-                    flex-col items-center justify-center
+                    absolute top-[39%] left-[15%]
+                    flex h-[5%] w-[70%]
+                    items-center justify-center
+
+                    whitespace-nowrap
+                    text-center text-text-primary
+
+                    text-[clamp(10px,4cqw,26px)]
+                    leading-none
+
+                    [-webkit-text-stroke:0.3px_black]
                   "
                 >
-                  <p
-                    className="
-                      text-center text-2xl
-                      text-text-primary
-                      [-webkit-text-stroke:0.3px_black]
+                  Zips derrotados
+                </p>
 
-                      max-lg:landscape:text-[clamp(10px,2.6vh,18px)]
-                    "
-                  >
-                    Zips derrotados
-                  </p>
+                {/* Número */}
+                <span
+                  className="
+                    absolute top-[46%] left-[15%]
+                    flex h-[6%] w-[70%]
+                    items-center justify-center
 
-                  <span
-                    className="
-                      translate-y-4 text-lg text-tertiary
-                      sm:text-2xl
+                    whitespace-nowrap
+                    text-tertiary
 
-                      max-lg:landscape:translate-y-1
-                      max-lg:landscape:text-[clamp(10px,2.5vh,18px)]
-                    "
-                  >
-                    {defeatedEnemies}
-                  </span>
-                </div>
+                    text-[clamp(12px,4.5cqw,32px)]
+                    leading-none
+                  "
+                >
+                  {defeatedEnemies}
+                </span>
 
-                {/* Recompensas */}
+                {/* ===========================================
+                    RECOMPENSAS
+                =========================================== */}
+
                 <RewardDisplay
                   title="Experiência"
                   icon="/images/assets/ui/xp.svg"
                   value={xp}
-                  className="top-[61%] left-[18%]"
-                  iconClassName="-translate-x-2 sm:size-10 max-lg:landscape:translate-x-0"
+                  className="top-[58%] left-[18%]"
                 />
 
                 <RewardDisplay
                   title="Lattecoins"
                   icon="/images/assets/ui/lattecoin.svg"
                   value={lattecoins}
-                  className="top-[61%] left-[48%]"
+                  className="top-[58%] left-[48%]"
                 />
               </div>
             </div>
 
-            {/* Navegação */}
+            {/* ===============================================
+                NAVEGAÇÃO
+            =============================================== */}
+
             <div
               className="
                 relative z-20
                 mt-[-22%]
-                flex w-full items-center justify-center gap-2
+                flex w-full
+                items-center justify-center
+                gap-2
 
                 max-lg:landscape:gap-1
               "

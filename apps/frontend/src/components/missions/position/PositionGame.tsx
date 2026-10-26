@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type CSSProperties,
 } from "react";
 import Image from "next/image";
 import AimPanel from "./AimPanel";
@@ -31,6 +32,7 @@ type Shot = {
   id: string;
   position: number;
   phase: "falling" | "exploding";
+  bombSize: number;
 };
 
 type RewardEffect = {
@@ -44,7 +46,12 @@ type RewardEffect = {
 const TOTAL_ZIPS = POSITION_REWARDS.totalZips;
 const EXPLOSION_DURATION = 500;
 const NEXT_ROUND_DELAY = 500;
-const BOMB_SIZE = 40;
+
+const DESKTOP_BOMB_SIZE = 40;
+const MOBILE_BOMB_SIZE = 22;
+
+const MOBILE_BREAKPOINT = 1024;
+
 const AXIS_OFFSET = 30;
 
 const TOTAL_XP =
@@ -87,6 +94,7 @@ function createZips(count: number): Zip[] {
 
 // Detectar renderização no navegador
 const subscribe = () => () => {};
+
 const getClientSnapshot = () => true;
 const getServerSnapshot = () => false;
 
@@ -143,9 +151,20 @@ function PositionGameClient() {
     const area = bombAreaRef.current;
     if (!area) return;
 
+    // O layout mobile é aplicado em telas menores que 1024px
+    // quando o dispositivo está na orientação horizontal.
+    const isMobileLandscape =
+      window.innerWidth < MOBILE_BREAKPOINT &&
+      window.matchMedia("(orientation: landscape)").matches;
+
+    const bombSize = isMobileLandscape
+      ? MOBILE_BOMB_SIZE
+      : DESKTOP_BOMB_SIZE;
+
+    // Calcular a distância considerando o tamanho da bomba.
     setBombDistance(
       area.getBoundingClientRect().height -
-        BOMB_SIZE +
+        bombSize +
         AXIS_OFFSET
     );
 
@@ -153,6 +172,7 @@ function PositionGameClient() {
       id: crypto.randomUUID(),
       position: dronePosition,
       phase: "falling",
+      bombSize,
     });
   }, [isShooting, showMissionComplete, dronePosition]);
 
@@ -376,11 +396,11 @@ function PositionGameClient() {
                       left: `${
                         ((shot.position + 10) / 20) * 100
                       }%`,
-                      width: "40px",
-                      height: "40px",
-                      marginLeft: "-20px",
+                      width: `${shot.bombSize}px`,
+                      height: `${shot.bombSize}px`,
+                      marginLeft: `${-shot.bombSize / 2}px`,
                       "--bomb-distance": `${bombDistance}px`,
-                    } as React.CSSProperties
+                    } as CSSProperties
                   }
                   onAnimationEnd={(event) => {
                     if (

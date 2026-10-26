@@ -72,7 +72,7 @@ export default function MissionPage() {
 
         {/* Aviso para dispositivos na orientação vertical */}
         <div
-          className="fixed inset-0 z-[100] hidden flex-col items-center justify-center gap-5 bg-[#090617] px-8 text-center text-white max-lg:portrait:flex"
+          className="fixed inset-0 z-100 hidden flex-col items-center justify-center gap-5 bg-[#090617] px-8 text-center text-white max-lg:portrait:flex"
           role="status"
           aria-live="polite"
         >

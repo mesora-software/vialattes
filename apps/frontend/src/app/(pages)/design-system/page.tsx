@@ -3,7 +3,7 @@ import ColorPalette from "@/components/design-system/ColorPalette";
 import Typography from "@/components/design-system/Typography";
 
 export default function DesignSystemPage() {
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV === "production") {
     notFound();
   }
 

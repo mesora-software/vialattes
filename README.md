@@ -106,19 +106,17 @@ O frontend do Vialattes foi desenvolvido utilizando as seguintes tecnologias:
 
 | Tecnologia | Finalidade |
 |---|---|
-| **Next.js** | Framework para desenvolvimento da aplicação web |
-| **React** | Construção de interfaces baseadas em componentes |
-| **TypeScript** | Desenvolvimento com tipagem estática |
-| **Tailwind CSS** | Estilização das interfaces |
-| **Zustand** | Gerenciamento de estado |
-| **Framer Motion** | Animações e transições de interface |
-| **React Hook Form** | Gerenciamento de formulários |
-| **Zod** | Definição de esquemas e validação de dados |
-| **shadcn/ui** | Componentes de interface |
+| **Next.js 16** | Framework para desenvolvimento da aplicação web e gerenciamento de rotas |
+| **React 19** | Construção de interfaces interativas baseadas em componentes |
+| **TypeScript 5** | Desenvolvimento com tipagem estática |
+| **Tailwind CSS 4** | Estilização das interfaces |
+| **CSS** | Estilos personalizados, animações e transições |
+| **Lucide React** | Biblioteca de ícones |
+| **ESLint 9** | Análise estática e padronização do código |
 
-A arquitetura utiliza o **Next.js App Router**, com organização modular dos componentes e das páginas.
+A aplicação utiliza o **Next.js App Router**, com organização modular de páginas e componentes.
 
-O projeto também adota uma estrutura de monorepo para facilitar sua evolução.
+As animações da missão Posição são implementadas utilizando recursos nativos de CSS e a lógica de interação da aplicação.
 
 ---
 

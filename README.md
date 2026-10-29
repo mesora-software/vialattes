@@ -64,7 +64,7 @@ A atividade integra elementos visuais e interativos a um conceito fundamental da
 
 <div align="center">
 
-<img src="./docs/images/position-mission.gif" alt="Demonstração da missão Posição do Vialattes" width="850" />
+<img src="./docs/images/mission-position.gif" alt="Demonstração da missão Posição do Vialattes" width="850" />
 
 </div>
 

@@ -63,7 +63,8 @@ const TOTAL_XP =
 const TOTAL_LATTECOINS =
   TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
 
-const PREVIEW_MISSION_COMPLETE = true;
+const PREVIEW_MISSION_COMPLETE = false;
+
 
 // Utilitários
 function getRandomInt(min: number, max: number) {
@@ -120,7 +121,9 @@ function PositionGameClient() {
 
   const processedShots = useRef<Set<string>>(new Set());
   const bombAreaRef = useRef<HTMLDivElement>(null);
-
+  const shotIdCounter = useRef(0);
+  const sessionId = useRef<string | null>(null);
+  
   const isShooting = shot !== null;
 
   // Remover animações de recompensa concluídas
@@ -181,8 +184,14 @@ function PositionGameClient() {
 
     setBombDistance(distance);
 
+    if(sessionId.current === null) {
+      sessionId.current = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    }
+
+    const shotId = `${sessionId.current}-shot-${++shotIdCounter.current}`;
+
     setShot({
-      id: crypto.randomUUID(),
+      id: shotId,
       position: dronePosition,
       phase: "falling",
       bombSize,
@@ -378,7 +387,7 @@ function PositionGameClient() {
           <div className="relative min-h-35 flex-1 max-lg:landscape:min-h-27">
             {/* Painel de mira desktop */}
             {!showMissionComplete && (
-              <DraggablePanel className="max-lg:landscape:hidden">
+              <DraggablePanel className="max-lg:hidden">
                 <AimPanel
                   position={dronePosition}
                   onMoveLeft={moveLeft}

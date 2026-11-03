@@ -95,7 +95,13 @@ export default function MissionPage() {
           >
             ← Voltar ao Dashboard
           </AnimatedUnderlineLink>
+
+          <p className="max-w-sm font-body text-base">
+            OBS: Se a tela não girar automaticamente, tente desativar o bloqueio de rotação do seu dispositivo.
+          </p>
+
         </div>
+        
 
         {/* Jogo */}
         <PositionGame />

@@ -1,21 +1,25 @@
-import { Fredoka, Geist, Changa_One } from "next/font/google";
+import localFont from "next/font/local";
 
-export const fredoka = Fredoka({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+export const fredoka = localFont({
+  src: "./files/Fredoka-VariableFont_wdth,wght.ttf",
+  weight: "400 700",
+  style: "normal",
   variable: "--font-fredoka",
   display: "swap",
 });
 
-export const geist = Geist({
-  subsets: ["latin"],
+export const geist = localFont({
+  src: "./files/Geist-VariableFont_wght.ttf",
+  weight: "100 900",
+  style: "normal",
   variable: "--font-geist",
   display: "swap",
 });
 
-export const changaOne = Changa_One({
-  subsets: ["latin"],
+export const changaOne = localFont({
+  src: "./files/ChangaOne-Regular.ttf",
   weight: "400",
+  style: "normal",
   variable: "--font-changa-one",
   display: "swap",
 });

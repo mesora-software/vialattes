@@ -1,8 +1,10 @@
-export default function Home() {
+import ComingSoon from "@/components/shared/ComingSoon";
+
+export default function QuizPage() {
   return (
-    <>
-      <h1>Página de Quiz</h1>
-    </>
-    
-  )
+    <ComingSoon
+      title="Quiz"
+      description="Estamos preparando novos desafios para você testar seus conhecimentos de Física!"
+    />
+  );
 }

@@ -1,8 +1,10 @@
-export default function Home() {
+import ComingSoon from "@/components/shared/ComingSoon";
+
+export default function ConquistasPage() {
   return (
-    <>
-      <h1>Página de Conquistas</h1>
-    </>
-    
-  )
+    <ComingSoon
+      title="Conquistas"
+      description="Em breve, você poderá acompanhar suas medalhas e celebrar suas vitórias pelo universo!"
+    />
+  );
 }

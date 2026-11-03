@@ -1,9 +1,10 @@
-export default function Home() {
+import ComingSoon from "@/components/shared/ComingSoon";
+
+export default function FeedbackPage() {
   return (
-    <>
-      <h1>Página de feedback</h1>
-      <p>Formulário</p>
-    </>
-    
-  )
+    <ComingSoon
+      title="Feedback"
+      description="Estamos preparando um canal para ouvir suas ideias e sugestões para melhorar o Vialattes!"
+    />
+  );
 }

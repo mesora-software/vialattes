@@ -1,8 +1,10 @@
-export default function Home() {
+import ComingSoon from "@/components/shared/ComingSoon";
+
+export default function ColoniaPage() {
   return (
-    <>
-      <h1>Página da Colônia</h1>
-    </>
-    
-  )
+    <ComingSoon
+      title="Colônia"
+      description="Nossa equipe está preparando sua futura base espacial. Novas construções e descobertas aguardam você!"
+    />
+  );
 }

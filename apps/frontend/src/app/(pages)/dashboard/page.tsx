@@ -306,25 +306,25 @@ export default function Dashboard() {
 
           <DashboardAction
             name="Colônia"
-            image="/images/assets/ui/colony.svg"
+            image="/images/assets/ui/colony.webp"
             href="/colonia"
           />
 
           <DashboardAction
             name="Quiz"
-            image="/images/assets/ui/quiz.svg"
+            image="/images/assets/ui/quiz.webp"
             href="/quiz"
           />
 
           <DashboardAction
             name="Conquistas"
-            image="/images/assets/ui/rewards.svg"
+            image="/images/assets/ui/rewards.webp"
             href="/conquistas"
           />
 
           <DashboardAction
             name="Feedback"
-            image="/images/assets/ui/feedback.svg"
+            image="/images/assets/ui/feedback.webp"
             href="/feedback"
           />
 

@@ -34,7 +34,7 @@ export default function RewardPopup({
       >
         <div className="flex items-center gap-1 text-sm font-bold text-white drop-shadow-[0_2px_3px_#000]">
           <Image
-            src="/images/assets/ui/xp.svg"
+            src="/images/assets/ui/xp.webp"
             alt="XP"
             width={22}
             height={22}
@@ -44,7 +44,7 @@ export default function RewardPopup({
 
         <div className="flex items-center gap-1 text-sm font-bold text-[#fdd501] drop-shadow-[0_2px_3px_#000]">
           <Image
-            src="/images/assets/ui/lattecoin.svg"
+            src="/images/assets/ui/lattecoin.webp"
             alt="Lattecoins"
             width={22}
             height={22}

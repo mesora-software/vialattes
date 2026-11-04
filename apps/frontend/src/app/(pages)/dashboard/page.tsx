@@ -156,13 +156,13 @@ export default function Dashboard() {
           >
 
             <HudValue
-              icon="/images/assets/ui/xp.svg"
+              icon="/images/assets/ui/xp.webp"
               alt="Experiência"
               value={wallet.xp}
             />
 
             <HudValue
-              icon="/images/assets/ui/lattecoin.svg"
+              icon="/images/assets/ui/lattecoin.webp"
               alt="Lattecoins"
               value={wallet.lattecoins}
             />
@@ -187,7 +187,7 @@ export default function Dashboard() {
                 aria-describedby="login-tooltip"
               >
                 <Image
-                  src="/images/assets/ui/login.svg"
+                  src="/images/assets/ui/login.webp"
                   alt="Login"
                   width={80}
                   height={80}

@@ -135,7 +135,7 @@ export default function Dashboard() {
           {/* Patente */}
           <div className="w-18 shrink-0 select-none sm:w-19 md:w-20 lg:w-23 lg:-translate-4">
             <Image
-              src="/images/assets/patents/recruit.svg"
+              src="/images/assets/patents/recruit.webp"
               alt="Recruta"
               width={100}
               height={100}

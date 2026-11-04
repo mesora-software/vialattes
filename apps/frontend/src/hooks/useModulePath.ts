@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export interface PathPoint {
   x: number;
@@ -25,7 +25,7 @@ export function useModulePath(
     height: 0,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = containerRef.current;
 
     if (!container) return;
@@ -54,15 +54,12 @@ export function useModulePath(
         };
       };
 
-      // Centros dos módulos
       const newPoints = Array.from(moduleElements).map(getCenter);
 
-      // Entrada: centro horizontal do Header
       const headerCenter = header
         ? getCenter(header)
         : { x: containerRect.width / 2, y: 0 };
 
-      // Saída: centro horizontal do Footer
       const footerCenter = footer
         ? getCenter(footer)
         : {
@@ -108,3 +105,4 @@ export function useModulePath(
     dimensions,
   };
 }
+

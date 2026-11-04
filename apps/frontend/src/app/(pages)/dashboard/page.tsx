@@ -92,7 +92,7 @@ export default function Dashboard() {
         "
         style={{
           backgroundImage:
-            "url('/images/assets/backgrounds/dashboard-bg.png')",
+            "url('/images/assets/backgrounds/dashboard-bg.webp')",
         }}
       />
 

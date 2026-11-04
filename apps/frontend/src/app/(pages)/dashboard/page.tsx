@@ -17,7 +17,7 @@ const modules = [
   {
     name: "Cinemática",
     moduleId: "module01-cinematica",
-    image: "/images/assets/game-modules/kinematics.svg",
+    image: "/images/assets/game-modules/kinematics.webp",
     stars: 4,
     position: "xl:-translate-x-[40px] xl:-translate-y-[50px]",
     mobilePosition: "-translate-x-[25%]",
@@ -25,7 +25,7 @@ const modules = [
   {
     name: "Dinâmica",
     moduleId: "module02-dinamica",
-    image: "/images/assets/game-modules/dynamic.svg",
+    image: "/images/assets/game-modules/dynamic.webp",
     stars: 4,
     position: "xl:-translate-x-[60px] xl:translate-y-[180px]",
     mobilePosition: "translate-x-[25%]",
@@ -33,7 +33,7 @@ const modules = [
   {
     name: "Energia Mecânica",
     moduleId: "module03-energia-mecanica",
-    image: "/images/assets/game-modules/mechanical-energy.svg",
+    image: "/images/assets/game-modules/mechanical-energy.webp",
     stars: 4,
     position: "xl:-translate-x-[20px] xl:-translate-y-[50px]",
     mobilePosition: "-translate-x-[25%]",
@@ -41,7 +41,7 @@ const modules = [
   {
     name: "Estática",
     moduleId: "module04-estatica",
-    image: "/images/assets/game-modules/static.svg",
+    image: "/images/assets/game-modules/static.webp",
     stars: 4,
     position: "xl:translate-x-[10px] xl:translate-y-[190px]",
     mobilePosition: "translate-x-[25%]",
@@ -49,7 +49,7 @@ const modules = [
   {
     name: "Termologia",
     moduleId: "module05-termologia",
-    image: "/images/assets/game-modules/thermology.svg",
+    image: "/images/assets/game-modules/thermology.webp",
     stars: 4,
     position: "xl:translate-x-[40px] xl:-translate-y-[50px]",
     mobilePosition: "-translate-x-[25%]",
@@ -57,7 +57,7 @@ const modules = [
   {
     name: "Eletromagnetismo",
     moduleId: "module06-eletromagnetismo",
-    image: "/images/assets/game-modules/eletromagnetism.svg",
+    image: "/images/assets/game-modules/eletromagnetism.webp",
     stars: 4,
     position: "xl:translate-x-[40px] xl:translate-y-[180px]",
     mobilePosition: "translate-x-[25%]",

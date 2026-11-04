@@ -334,14 +334,14 @@ export default function MissionComplete({
 
                 <RewardDisplay
                   title="Experiência"
-                  icon="/images/assets/ui/xp.svg"
+                  icon="/images/assets/ui/xp.webp"
                   value={xp}
                   className="top-[58%] left-[18%]"
                 />
 
                 <RewardDisplay
                   title="Lattecoins"
-                  icon="/images/assets/ui/lattecoin.svg"
+                  icon="/images/assets/ui/lattecoin.webp"
                   value={lattecoins}
                   className="top-[58%] left-[48%]"
                 />

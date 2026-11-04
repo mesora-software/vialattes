@@ -24,7 +24,7 @@ export default function MissionPage() {
         {/* Header */}
         <header className="flex items-center justify-between gap-3 select-none max-lg:landscape:min-h-11">
           <Image
-            src="/images/assets/patents/recruit.svg"
+            src="/images/assets/patents/recruit.webp"
             alt="Recruta"
             width={90}
             height={90}
@@ -34,14 +34,14 @@ export default function MissionPage() {
           {/* XP */}
           <div className="flex items-center gap-3 lg:gap-10 lg:-translate-y-8 max-lg:landscape:scale-75 max-lg:landscape:origin-center">
             <HudValue
-              icon="/images/assets/ui/xp.svg"
+              icon="/images/assets/ui/xp.webp"
               alt="Experiência"
               value={wallet.xp}
             />
 
             {/* Lattecoins */}
             <HudValue
-              icon="/images/assets/ui/lattecoin.svg"
+              icon="/images/assets/ui/lattecoin.webp"
               alt="Lattecoins"
               value={wallet.lattecoins}
             />

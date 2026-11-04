@@ -49,7 +49,7 @@ export default function ModuleCard({
             return (
               <Image
                 key={index}
-                src="/images/assets/ui/star-empty.svg"
+                src="/images/assets/ui/star-empty.webp"
                 alt="Estrela vazia"
                 width={20}
                 height={20}
@@ -112,7 +112,7 @@ export default function ModuleCard({
           "
         >
           <Image
-            src="/images/assets/ui/lock.svg"
+            src="/images/assets/ui/lock.webp"
             alt="Módulo bloqueado"
             width={55}
             height={55}

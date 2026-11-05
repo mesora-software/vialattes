@@ -15,10 +15,11 @@ export default function Drone({ position }: DroneProps) {
       }}
     >
       <Image
-        src="/images/missions/position/drone.svg"
+        src="/images/missions/position/drone-animated.webp"
         alt="Drone"
         width={90}
         height={90}
+        unoptimized
         className="block h-full w-full object-contain"
         priority
       />

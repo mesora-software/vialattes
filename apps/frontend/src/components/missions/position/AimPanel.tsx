@@ -257,7 +257,7 @@ export default function AimPanel({
         {/* Radar */}
         <div className="pointer-events-none absolute left-[30%] top-[18%] w-[42%]">
           <Image
-            src={`${assets}/radar.webp`}
+            src={`${assets}/radar-animated.webp`}
             alt="Radar"
             width={260}
             height={260}

@@ -41,7 +41,7 @@ export default function ZipEnemy({
     >
       {status === "armed" ? (
         <Image
-          src="/images/assets/enemies/zip-armed.svg"
+          src="/images/assets/enemies/zip-armed.webp"
           alt="Inimigo Zip"
           width={70}
           height={70}
@@ -56,7 +56,7 @@ export default function ZipEnemy({
         />
       ) : (
         <Image
-          src="/images/assets/enemies/zip-defeated.svg"
+          src="/images/assets/enemies/zip-defeated.webp"
           alt="Zip derrotado"
           width={70}
           height={70}

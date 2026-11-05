@@ -51,7 +51,7 @@ const NEXT_ROUND_DELAY = 500;
 const DESKTOP_BOMB_SIZE = 40;
 const MOBILE_BOMB_SIZE = 22;
 const DESKTOP_BOMB_SPEED = 400;
-const MOBILE_BOMB_SPEED = 140;
+const MOBILE_BOMB_SPEED = 260;
 
 const MOBILE_BREAKPOINT = 1024;
 
@@ -437,7 +437,7 @@ function PositionGameClient() {
                   }}
                 >
                   <Image
-                    src="/images/missions/position/bomb.svg"
+                    src="/images/missions/position/bomb.webp"
                     alt="Bomba"
                     width={40}
                     height={40}

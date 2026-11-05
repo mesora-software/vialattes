@@ -207,8 +207,8 @@ export default function AimPanel({
     <div
       className={
         isMobile
-          ? "relative w-full select-none"
-          : "relative w-87.5 select-none"
+          ? "relative w-full max-w-67.5 select-none"
+          : "relative w-67.5 select-none"
       }
     >
       {/* =====================================================
@@ -226,7 +226,7 @@ export default function AimPanel({
       >
         {/* Imagem base */}
         <Image
-          src={`${assets}/aim-panel-base.svg`}
+          src={`${assets}/aim-panel-base.webp`}
           alt="Sistema de mira"
           width={550}
           height={750}
@@ -241,10 +241,10 @@ export default function AimPanel({
             type="button"
             onClick={() => setIsOpen(false)}
             aria-label="Fechar painel de mira"
-            className="absolute right-[17%] top-[5%] z-30 w-[9%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+            className="absolute right-[7%] top-[4%] z-30 w-[11%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
           >
             <Image
-              src={`${assets}/close.svg`}
+              src={`${assets}/close.webp`}
               alt=""
               width={50}
               height={50}
@@ -340,7 +340,7 @@ export default function AimPanel({
 
       {!isMobile && (
         <div
-          className={`absolute left-13 top-0 w-full origin-top-left transition-all duration-300 ease-in-out ${
+          className={`absolute left-3 top-0 w-full origin-top-left transition-all duration-300 ease-in-out ${
             isOpen
               ? "pointer-events-none z-0 scale-[0.98] opacity-0"
               : "z-10 scale-100 opacity-100"
@@ -349,11 +349,11 @@ export default function AimPanel({
           inert={isOpen}
         >
           <Image
-            src={`${assets}/closed-aim-panel-base.svg`}
+            src={`${assets}/closed-aim-panel.webp`}
             alt="Sistema de mira fechado"
             width={550}
             height={750}
-            className="pointer-events-none block h-auto w-[73%]"
+            className="pointer-events-none block h-auto w-[92%]"
             draggable={false}
           />
 
@@ -361,10 +361,10 @@ export default function AimPanel({
             type="button"
             onClick={() => setIsOpen(true)}
             aria-label="Abrir painel de mira"
-            className="absolute right-[31%] top-[23%] z-30 w-[9%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+            className="absolute right-[13%] top-[23%] z-30 w-[11%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
           >
             <Image
-              src={`${assets}/open.svg`}
+              src={`${assets}/open.webp`}
               alt=""
               width={50}
               height={50}

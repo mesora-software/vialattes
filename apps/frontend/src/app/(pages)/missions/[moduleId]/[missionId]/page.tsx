@@ -16,7 +16,7 @@ export default function MissionPage() {
         className="pointer-events-none absolute inset-0 bg-cover bg-position-[center_100%] bg-no-repeat opacity-60"
         style={{
           backgroundImage:
-            "url('/images/missions/position/background.png')",
+            "url('/images/missions/position/position-background.webp')",
         }}
       />
 

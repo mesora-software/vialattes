@@ -241,7 +241,7 @@ export default function AimPanel({
             type="button"
             onClick={() => setIsOpen(false)}
             aria-label="Fechar painel de mira"
-            className="absolute right-[7%] top-[4%] z-30 w-[11%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+            className="absolute right-[7%] top-[4%] z-30 w-[11%] cursor-pointer transition-transform hover:scale-105 active:scale-95"
           >
             <Image
               src={`${assets}/close.webp`}
@@ -255,19 +255,20 @@ export default function AimPanel({
         )}
 
         {/* Radar */}
-        <div className="pointer-events-none absolute left-[33%] top-[18%] w-[33%]">
+        <div className="pointer-events-none absolute left-[30%] top-[18%] w-[42%]">
           <Image
-            src={`${assets}/radar.svg`}
+            src={`${assets}/radar.webp`}
             alt="Radar"
             width={260}
             height={260}
+            unoptimized
             className="h-auto w-full"
             draggable={false}
           />
         </div>
 
         {/* Visor de posição */}
-        <div className="pointer-events-none absolute left-[23%] top-[62%] flex h-[10%] w-[28%] items-center justify-center">
+        <div className="pointer-events-none absolute left-[15%] top-[61%] flex h-[11%] w-[35%] items-center justify-center">
           <span
             className={
               isMobile
@@ -285,10 +286,10 @@ export default function AimPanel({
           {...getMovementProps("left")}
           disabled={isShooting || position <= -10}
           aria-label="Mover drone para esquerda"
-          className="absolute z-20 left-[51%] top-[61%] w-[12%] touch-none cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          className="absolute z-20 left-[53%] top-[61%] w-[16%] touch-none cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Image
-            src={`${assets}/btn-left.svg`}
+            src={`${assets}/btn-left.webp`}
             alt=""
             width={80}
             height={80}
@@ -303,10 +304,10 @@ export default function AimPanel({
           {...getMovementProps("right")}
           disabled={isShooting || position >= 10}
           aria-label="Mover drone para direita"
-          className="absolute z-20 left-[65%] top-[61%] w-[12%] touch-none cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          className="absolute z-20 left-[71%] top-[61%] w-[16%] touch-none cursor-pointer transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Image
-            src={`${assets}/btn-right.svg`}
+            src={`${assets}/btn-right.webp`}
             alt=""
             width={80}
             height={80}
@@ -321,10 +322,10 @@ export default function AimPanel({
           onClick={onFire}
           disabled={isShooting}
           aria-label="Disparar bomba"
-          className="absolute z-10 left-[20%] top-[60%] w-[59%] cursor-pointer transition-transform hover:scale-[1.03] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          className="absolute z-10 left-[13%] top-[82%] w-[74%] cursor-pointer transition-transform hover:scale-[1.01] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Image
-            src={`${assets}/btn-fire.svg`}
+            src={`${assets}/btn-fire.webp`}
             alt=""
             width={400}
             height={110}
@@ -361,7 +362,7 @@ export default function AimPanel({
             type="button"
             onClick={() => setIsOpen(true)}
             aria-label="Abrir painel de mira"
-            className="absolute right-[13%] top-[23%] z-30 w-[11%] cursor-pointer transition-transform hover:scale-110 active:scale-95"
+            className="absolute right-[13%] top-[23%] z-30 w-[11%] cursor-pointer transition-transform hover:scale-105 active:scale-95"
           >
             <Image
               src={`${assets}/open.webp`}

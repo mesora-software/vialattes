@@ -228,8 +228,8 @@ export default function AimPanel({
         <Image
           src={`${assets}/aim-panel-base.webp`}
           alt="Sistema de mira"
-          width={550}
-          height={750}
+          width={766}
+          height={992}
           className="pointer-events-none block h-auto w-full"
           draggable={false}
           priority
@@ -327,8 +327,8 @@ export default function AimPanel({
           <Image
             src={`${assets}/btn-fire.webp`}
             alt=""
-            width={400}
-            height={110}
+            width={640}
+            height={161}
             className="pointer-events-none h-auto w-full"
             draggable={false}
           />
@@ -352,8 +352,8 @@ export default function AimPanel({
           <Image
             src={`${assets}/closed-aim-panel.webp`}
             alt="Sistema de mira fechado"
-            width={550}
-            height={750}
+            width={750}
+            height={175}
             className="pointer-events-none block h-auto w-[92%]"
             draggable={false}
           />

@@ -1,7 +1,16 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  animate,
+} from "framer-motion";
+
 
 interface MissionCompleteProps {
   defeatedEnemies: number;
@@ -15,7 +24,9 @@ interface RewardDisplayProps {
   icon: string;
   value: number;
   className: string;
+  delay: number;
   iconClassName?: string;
+  reduceMotion: boolean;
 }
 
 interface NavigationButtonProps {
@@ -25,17 +36,85 @@ interface NavigationButtonProps {
   className?: string;
 }
 
+interface AnimatedCounterProps {
+  value: number;
+  delay: number;
+  reduceMotion: boolean;
+  prefix?: string;
+  className?: string;
+}
+
 const ASSETS = "/images/assets/ui/mission-complete";
+
+const COUNT_DURATION = 0.75;
+
+
+function AnimatedCounter({
+  value,
+  delay,
+  reduceMotion,
+  prefix = "",
+  className = "",
+}: AnimatedCounterProps) {
+  const count = useMotionValue(0);
+
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useMotionValueEvent(count, "change", (latest) => {
+      setDisplayValue(Math.round(latest));
+  });
+
+  useEffect(() => {
+    if (reduceMotion) {
+      return;
+    }
+
+    const controls = animate(count, value, {
+      duration: COUNT_DURATION,
+      delay,
+      ease: "easeOut",
+    });
+
+    return () => controls.stop();
+  }, [count, value, delay, reduceMotion]);
+
+  const currentValue = reduceMotion ? value : displayValue;
+
+  return (
+    <span className={className}>
+      {prefix}
+      {currentValue.toLocaleString("pt-BR")}
+    </span>
+  );
+}
+
 
 function RewardDisplay({
   title,
   icon,
   value,
   className,
+  delay,
   iconClassName = "",
+  reduceMotion,
 }: RewardDisplayProps) {
   return (
-    <div
+    <motion.div
+      initial={
+        reduceMotion
+          ? false
+          : { opacity: 0, y: 12, scale: 0.9 }
+      }
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.4,
+        delay: reduceMotion ? 0 : delay,
+        ease: "easeOut",
+      }}
       className={`
         absolute h-[18%] w-[34%]
         ${className}
@@ -80,17 +159,19 @@ function RewardDisplay({
           `}
         />
 
-        <span
+        <AnimatedCounter
+          value={value}
+          delay={delay}
+          reduceMotion={reduceMotion}
+          prefix="+"
           className="
             whitespace-nowrap text-tertiary
             text-[clamp(11px,4cqw,30px)]
             leading-none
           "
-        >
-          +{value.toLocaleString("pt-BR")}
-        </span>
+        />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -155,6 +236,9 @@ export default function MissionComplete({
   lattecoins,
   nextMissionHref,
 }: MissionCompleteProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = shouldReduceMotion === true;
+
   return (
     <div
       role="dialog"
@@ -232,10 +316,11 @@ export default function MissionComplete({
             "
           >
             <Image
-              src="/images/assets/characters/prof-lattes/prof-lattes-celebrating.webp"
-              alt="Prof. Leonardo Lattes comemorando a vitória"
+              src="/images/assets/characters/prof-lattes/prof-lattes-celebrating-animated.webp"
+              alt="Prof. Lattes pulando e comemorando a vitória"
               width={356}
               height={540}
+              unoptimized
               className="
                 h-auto w-full
                 object-contain drop-shadow-2xl
@@ -251,7 +336,21 @@ export default function MissionComplete({
               PAINEL E BOTÕES
           ================================================= */}
 
-          <div
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, scale: 0.85, y: 100 }
+            }
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 1.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="
               flex w-full max-w-120
               flex-col items-center
@@ -291,11 +390,23 @@ export default function MissionComplete({
 
                 {/* ===========================================
                     ZIPS DERROTADOS
-                    Título e valor independentes
                 =========================================== */}
 
-                {/* Título */}
-                <p
+                <motion.div
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, y: 12 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.4,
+                    delay: reduceMotion ? 0 : 0.8,
+                    ease: "easeOut",
+                  }}
                   className="
                     absolute top-[37.5%] left-[15%]
                     flex h-[5%] w-[70%]
@@ -311,10 +422,23 @@ export default function MissionComplete({
                   "
                 >
                   Zips derrotados
-                </p>
+                </motion.div>
 
-                {/* Número */}
-                <span
+                <motion.div
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, y: 12 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.4,
+                    delay: reduceMotion ? 0 : 0.8,
+                    ease: "easeOut",
+                  }}
                   className="
                     absolute top-[45%] left-[15%]
                     flex h-[6%] w-[70%]
@@ -327,8 +451,12 @@ export default function MissionComplete({
                     leading-none
                   "
                 >
-                  {defeatedEnemies}
-                </span>
+                  <AnimatedCounter
+                    value={defeatedEnemies}
+                    delay={0.8}
+                    reduceMotion={reduceMotion}
+                  />
+                </motion.div>
 
                 {/* ===========================================
                     RECOMPENSAS
@@ -338,6 +466,8 @@ export default function MissionComplete({
                   title="Experiência"
                   icon="/images/assets/ui/xp.webp"
                   value={xp}
+                  delay={1.2}
+                  reduceMotion={reduceMotion}
                   className="top-[57%] left-[18%]"
                 />
 
@@ -345,6 +475,8 @@ export default function MissionComplete({
                   title="Lattecoins"
                   icon="/images/assets/ui/lattecoin.webp"
                   value={lattecoins}
+                  delay={1.6}
+                  reduceMotion={reduceMotion}
                   className="top-[57%] left-[48%]"
                 />
               </div>
@@ -377,7 +509,7 @@ export default function MissionComplete({
                 label="Ir para a próxima missão"
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

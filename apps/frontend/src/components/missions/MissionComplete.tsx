@@ -1,7 +1,16 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  animate,
+} from "framer-motion";
+
 
 interface MissionCompleteProps {
   defeatedEnemies: number;
@@ -15,7 +24,9 @@ interface RewardDisplayProps {
   icon: string;
   value: number;
   className: string;
+  delay: number;
   iconClassName?: string;
+  reduceMotion: boolean;
 }
 
 interface NavigationButtonProps {
@@ -25,17 +36,85 @@ interface NavigationButtonProps {
   className?: string;
 }
 
+interface AnimatedCounterProps {
+  value: number;
+  delay: number;
+  reduceMotion: boolean;
+  prefix?: string;
+  className?: string;
+}
+
 const ASSETS = "/images/assets/ui/mission-complete";
+
+const COUNT_DURATION = 0.75;
+
+
+function AnimatedCounter({
+  value,
+  delay,
+  reduceMotion,
+  prefix = "",
+  className = "",
+}: AnimatedCounterProps) {
+  const count = useMotionValue(0);
+
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useMotionValueEvent(count, "change", (latest) => {
+      setDisplayValue(Math.round(latest));
+  });
+
+  useEffect(() => {
+    if (reduceMotion) {
+      return;
+    }
+
+    const controls = animate(count, value, {
+      duration: COUNT_DURATION,
+      delay,
+      ease: "easeOut",
+    });
+
+    return () => controls.stop();
+  }, [count, value, delay, reduceMotion]);
+
+  const currentValue = reduceMotion ? value : displayValue;
+
+  return (
+    <span className={className}>
+      {prefix}
+      {currentValue.toLocaleString("pt-BR")}
+    </span>
+  );
+}
+
 
 function RewardDisplay({
   title,
   icon,
   value,
   className,
+  delay,
   iconClassName = "",
+  reduceMotion,
 }: RewardDisplayProps) {
   return (
-    <div
+    <motion.div
+      initial={
+        reduceMotion
+          ? false
+          : { opacity: 0, y: 12, scale: 0.9 }
+      }
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.4,
+        delay: reduceMotion ? 0 : delay,
+        ease: "easeOut",
+      }}
       className={`
         absolute h-[18%] w-[34%]
         ${className}
@@ -80,17 +159,19 @@ function RewardDisplay({
           `}
         />
 
-        <span
+        <AnimatedCounter
+          value={value}
+          delay={delay}
+          reduceMotion={reduceMotion}
+          prefix="+"
           className="
             whitespace-nowrap text-tertiary
             text-[clamp(11px,4cqw,30px)]
             leading-none
           "
-        >
-          +{value.toLocaleString("pt-BR")}
-        </span>
+        />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -104,8 +185,8 @@ function NavigationButton({
     <Image
       src={`${ASSETS}/${image}`}
       alt=""
-      width={1085}
-      height={365}
+      width={543}
+      height={183}
       className="h-auto w-full"
     />
   );
@@ -155,6 +236,9 @@ export default function MissionComplete({
   lattecoins,
   nextMissionHref,
 }: MissionCompleteProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = shouldReduceMotion === true;
+
   return (
     <div
       role="dialog"
@@ -170,7 +254,7 @@ export default function MissionComplete({
       ===================================================== */}
 
       <Image
-        src="/images/assets/backgrounds/laboratory.png"
+        src="/images/assets/backgrounds/laboratory.webp"
         alt=""
         fill
         priority
@@ -190,7 +274,8 @@ export default function MissionComplete({
           relative z-10
           flex min-h-full
           items-start justify-center
-          px-4 py-8
+          px-4 py-3
+          sm:py-6
 
           max-lg:landscape:min-h-dvh
           max-lg:landscape:items-center
@@ -202,7 +287,7 @@ export default function MissionComplete({
           className="
             flex w-full max-w-300
             flex-col items-center
-            justify-center gap-2
+            justify-center gap-0
 
             md:flex-row
             md:gap-4
@@ -217,23 +302,25 @@ export default function MissionComplete({
 
           <div
             className="
-              relative w-40 shrink-0
+              relative w-32 shrink-0
 
-              sm:w-56
+              sm:w-44
 
-              md:w-[40%]
-              md:translate-y-20
+              md:w-[30%]
+              md:max-w-85
+              md:translate-y-8
 
               max-lg:landscape:w-auto
               max-lg:landscape:max-w-[38%]
-              max-lg:landscape:translate-y-4
+              max-lg:landscape:translate-y-0
             "
           >
             <Image
-              src="/images/assets/characters/prof-lattes/leonard-mission-complete.png"
-              alt="Prof. Leonardo Lattes comemorando a vitória"
-              width={1060}
-              height={1060}
+              src="/images/assets/characters/prof-lattes/prof-lattes-celebrating-animated.webp"
+              alt="Prof. Lattes pulando e comemorando a vitória"
+              width={356}
+              height={540}
+              unoptimized
               className="
                 h-auto w-full
                 object-contain drop-shadow-2xl
@@ -249,9 +336,23 @@ export default function MissionComplete({
               PAINEL E BOTÕES
           ================================================= */}
 
-          <div
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, scale: 0.85, y: 100 }
+            }
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 1.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="
-              flex w-full max-w-150
+              flex w-full max-w-120
               flex-col items-center
 
               max-lg:landscape:w-[min(55vw,92dvh)]
@@ -267,10 +368,10 @@ export default function MissionComplete({
               "
             >
               <Image
-                src={`${ASSETS}/panel-base.svg`}
+                src={`${ASSETS}/panel-base.webp`}
                 alt=""
-                width={810}
-                height={795}
+                width={540}
+                height={540}
                 className="h-auto w-full"
                 priority
               />
@@ -289,13 +390,25 @@ export default function MissionComplete({
 
                 {/* ===========================================
                     ZIPS DERROTADOS
-                    Título e valor independentes
                 =========================================== */}
 
-                {/* Título */}
-                <p
+                <motion.div
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, y: 12 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.4,
+                    delay: reduceMotion ? 0 : 0.8,
+                    ease: "easeOut",
+                  }}
                   className="
-                    absolute top-[39%] left-[15%]
+                    absolute top-[37.5%] left-[15%]
                     flex h-[5%] w-[70%]
                     items-center justify-center
 
@@ -309,12 +422,25 @@ export default function MissionComplete({
                   "
                 >
                   Zips derrotados
-                </p>
+                </motion.div>
 
-                {/* Número */}
-                <span
+                <motion.div
+                  initial={
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, y: 12 }
+                  }
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.4,
+                    delay: reduceMotion ? 0 : 0.8,
+                    ease: "easeOut",
+                  }}
                   className="
-                    absolute top-[46%] left-[15%]
+                    absolute top-[45%] left-[15%]
                     flex h-[6%] w-[70%]
                     items-center justify-center
 
@@ -325,8 +451,12 @@ export default function MissionComplete({
                     leading-none
                   "
                 >
-                  {defeatedEnemies}
-                </span>
+                  <AnimatedCounter
+                    value={defeatedEnemies}
+                    delay={0.8}
+                    reduceMotion={reduceMotion}
+                  />
+                </motion.div>
 
                 {/* ===========================================
                     RECOMPENSAS
@@ -336,14 +466,18 @@ export default function MissionComplete({
                   title="Experiência"
                   icon="/images/assets/ui/xp.webp"
                   value={xp}
-                  className="top-[58%] left-[18%]"
+                  delay={1.2}
+                  reduceMotion={reduceMotion}
+                  className="top-[57%] left-[18%]"
                 />
 
                 <RewardDisplay
                   title="Lattecoins"
                   icon="/images/assets/ui/lattecoin.webp"
                   value={lattecoins}
-                  className="top-[58%] left-[48%]"
+                  delay={1.6}
+                  reduceMotion={reduceMotion}
+                  className="top-[57%] left-[48%]"
                 />
               </div>
             </div>
@@ -365,17 +499,17 @@ export default function MissionComplete({
             >
               <NavigationButton
                 href="/dashboard"
-                image="btn-back-dashboard.svg"
+                image="btn-back-dashboard.webp"
                 label="Voltar ao Dashboard"
               />
 
               <NavigationButton
                 href={nextMissionHref}
-                image="btn-next-mission.svg"
+                image="btn-next-mission.webp"
                 label="Ir para a próxima missão"
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

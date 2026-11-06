@@ -114,14 +114,15 @@ export default function ModuleCard({
           <Image
             src="/images/assets/ui/lock.webp"
             alt="Módulo bloqueado"
-            width={55}
-            height={55}
+            width={500}
+            height={500}
             loading="eager"
             className="
-              h-9.5 w-9.5
+              size-9.5 object-contain
+              h-auto w-9.5
               drop-shadow-[0_3px_6px_rgba(0,0,0,0.8)]
-              sm:h-11.5 sm:w-11.5
-              lg:h-13.75 lg:w-13.75
+              sm:h-11.5
+              lg:h-13.75
             "
           />
         </div>

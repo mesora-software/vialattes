@@ -72,7 +72,7 @@ export default function HomeHeader() {
           "
         >
           <Image
-            src="/images/home/vialattes-logo.svg"
+            src="/images/home/vialattes-logo.webp"
             alt="Vialattes"
             fill
             priority

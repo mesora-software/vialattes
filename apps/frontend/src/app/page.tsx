@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import HomeHeader from "@/components/home/Homeheader";
+import HomeHeader from "@/components/home/HomeHeader";
 
 const features = [
   {
@@ -35,12 +35,17 @@ export default function Home() {
           <picture className="absolute inset-0 block">
             <source
               media="(max-width: 767px)"
-              srcSet="/images/home/vialattes-hero-mobile.png"
+              type="image/webp"
+              srcSet="/images/home/vialattes-hero-mobile.webp"
             />
 
             <img
-              src="/images/home/vialattes-hero.png"
+              src="/images/home/vialattes-hero-desktop.webp"
               alt=""
+              width={1672}
+              height={940}
+              fetchPriority="high"
+              decoding="async"
               className="h-full w-full object-cover object-center"
             />
           </picture>
@@ -133,7 +138,7 @@ export default function Home() {
                 px-4 py-3
                 text-center text-sm font-extrabold
                 shadow-[0_0_10px_rgba(177,255,45,0.25)]
-                transition-transform 
+                transition-transform
                 hover:scale-105
                 sm:gap-3 sm:px-7 sm:py-4 sm:text-xl
               "
@@ -221,6 +226,11 @@ export default function Home() {
             md:px-10
           "
         >
+          {/* Título semântico da seção, oculto visualmente */}
+          <h2 id="recursos-title" className="sr-only">
+            Recursos do Vialattes
+          </h2>
+
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {features.map((feature) => (
               <article

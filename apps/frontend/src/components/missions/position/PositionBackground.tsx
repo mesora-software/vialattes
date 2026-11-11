@@ -1,0 +1,153 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+const BACKGROUND_WIDTH = 1366;
+const BACKGROUND_HEIGHT = 768;
+
+// Coordenadas relativas à imagem original
+const UFO = {
+  left: 68.9,
+  top: 32.5,
+  width: 16,
+};
+
+const BEAM = {
+  left: 68.8,
+  top: 39,
+  width: 5.5,
+};
+
+type SceneSize = {
+  width: number;
+  height: number;
+};
+
+export default function PositionBackground() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [containerSize, setContainerSize] =
+    useState<SceneSize | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+
+      if (!entry) return;
+
+      const { width, height } = entry.contentRect;
+
+      setContainerSize((current) => {
+        if (
+          current?.width === width &&
+          current?.height === height
+        ) {
+          return current;
+        }
+
+        return { width, height };
+      });
+    });
+
+    observer.observe(container);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scale = containerSize
+    ? Math.max(
+        containerSize.width / BACKGROUND_WIDTH,
+        containerSize.height / BACKGROUND_HEIGHT
+      )
+    : 1;
+
+  const scaledWidth = BACKGROUND_WIDTH * scale;
+  const scaledHeight = BACKGROUND_HEIGHT * scale;
+
+  const offsetX = containerSize
+    ? (containerSize.width - scaledWidth) / 2
+    : 0;
+
+  const offsetY = containerSize
+    ? containerSize.height - scaledHeight
+    : 0;
+
+  return (
+    <div
+      ref={containerRef}
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden opacity-60"
+    >
+      {/* Superfície compartilhada do cenário */}
+      {containerSize && (
+        <div
+          className="absolute"
+          style={{
+            width: BACKGROUND_WIDTH,
+            height: BACKGROUND_HEIGHT,
+            left: offsetX,
+            top: offsetY,
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+          }}
+        >
+          {/* Cenário estático */}
+          <Image
+            src="/images/missions/position/background-clean.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-fill"
+            draggable={false}
+          />
+
+          {/* Disco voador */}
+          <div
+            className="absolute"
+            style={{
+              left: `${UFO.left}%`,
+              top: `${UFO.top}%`,
+              width: `${UFO.width}%`,
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Image
+              src="/images/missions/position/ufo.png"
+              alt=""
+              width={768}
+              height={410}
+              className="block h-auto w-full"
+              draggable={false}
+            />
+          </div>
+
+          {/* Feixe luminoso */}
+          <div
+            className="absolute"
+            style={{
+              left: `${BEAM.left}%`,
+              top: `${BEAM.top}%`,
+              width: `${BEAM.width}%`,
+              transform: "translateX(-50%)",
+            }}
+          >
+            <Image
+              src="/images/missions/position/ufo-beam.png"
+              alt=""
+              width={307}
+              height={540}
+              className="block h-auto w-full mask-[linear-gradient(to_bottom,black_0%,black_75%,transparent_100%)]"
+              draggable={false}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

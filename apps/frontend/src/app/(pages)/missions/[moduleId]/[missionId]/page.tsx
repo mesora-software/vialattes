@@ -3,6 +3,7 @@
 import Image from "next/image";
 import HudValue from "@/components/ui/HudValue";
 import PositionGame from "@/components/missions/position/PositionGame";
+import PositionBackground from "@/components/missions/position/PositionBackground";
 import AnimatedUnderlineLink from "@/components/ui/AnimatedUnderlineLink";
 import { usePlayerWallet } from "@/hooks/usePlayerWallet";
 
@@ -11,14 +12,8 @@ export default function MissionPage() {
 
   return (
     <main className="relative flex min-h-dvh w-full max-w-full flex-col overflow-x-clip bg-black">
-      {/* Background */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-position-[center_100%] bg-no-repeat opacity-60"
-        style={{
-          backgroundImage:
-            "url('/images/missions/position/position-background.webp')",
-        }}
-      />
+      {/* Background em camadas */}
+      <PositionBackground />
 
       <div className="relative z-10 mx-4 my-2 flex min-w-0 flex-1 flex-col sm:mx-8 lg:mx-20 lg:my-2.5 max-lg:landscape:mx-4 max-lg:landscape:my-1">
         {/* Header */}

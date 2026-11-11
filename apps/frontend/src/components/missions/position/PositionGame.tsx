@@ -63,7 +63,7 @@ const TOTAL_XP =
 const TOTAL_LATTECOINS =
   TOTAL_ZIPS * POSITION_REWARDS.lattecoinsPerZip;
 
-const PREVIEW_MISSION_COMPLETE = true;
+const PREVIEW_MISSION_COMPLETE = false;
 
 
 // Utilitários

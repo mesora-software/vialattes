@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import UFOAnimation from "./UFOAnimation";
 import BuildingSmoke from "./BuildingSmoke";
+import BuildingFire from "./BuildingFire";
 
 const BACKGROUND_WIDTH = 1366;
 const BACKGROUND_HEIGHT = 768;
@@ -33,6 +34,13 @@ const SMOKE_SOURCES = [
   { id: 4, left: 62, top: 75, width: 85, duration: 6, delay: 0.8, opacity: 0.95 },
   { id: 5, left: 77, top: 70, width: 90, duration: 6.5, delay: 3.2, opacity: 0.95 },
 ];
+
+
+const FIRE_SOURCES = [
+  { id: 1, left: 39, top: 76, width: 45, duration: 2.5, delay: 0, },
+  { id: 2, left: 64.5, top: 73, width: 40, duration: 2.8, delay: 1.2,},
+];
+
 
 type SceneSize = {
   width: number;
@@ -184,6 +192,24 @@ export default function PositionBackground() {
                 width={smoke.width}
                 duration={smoke.duration}
                 delay={smoke.delay}
+              />
+            </div>
+          ))}
+
+          {/* Incêndios localizados nos prédios */}
+          {FIRE_SOURCES.map((fire) => (
+            <div
+              key={fire.id}
+              className="absolute"
+              style={{
+                left: `${fire.left}%`,
+                top: `${fire.top}%`,
+              }}
+            >
+              <BuildingFire
+                width={fire.width}
+                duration={fire.duration}
+                delay={fire.delay}
               />
             </div>
           ))}

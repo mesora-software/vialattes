@@ -185,3 +185,99 @@ body {
   }
 }
 
+
+/* =========================================
+   BUILDING FIRE
+========================================= */
+
+@keyframes building-fire-flicker {
+  0% {
+    transform: translateX(-50%) scaleY(0.85) rotate(-4deg);
+    opacity: 0.7;
+  }
+
+  25% {
+    transform: translateX(-45%) scaleY(1.1) rotate(3deg);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(-55%) scaleY(0.95) rotate(-2deg);
+    opacity: 0.85;
+  }
+
+  75% {
+    transform: translateX(-48%) scaleY(1.2) rotate(4deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-50%) scaleY(0.85) rotate(-4deg);
+    opacity: 0.7;
+  }
+}
+
+.building-fire-flame {
+  animation-name: building-fire-flicker;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes building-fire-glow {
+  0%, 100% {
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.building-fire-glow {
+  animation: building-fire-glow 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .building-fire-flame,
+  .building-fire-glow {
+    animation: none;
+  }
+}
+
+
+/* =========================================
+   FIRE SMOKE
+========================================= */
+
+@keyframes building-fire-smoke-rise {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.75;
+  }
+
+  60% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: translate(8px, -65px) scale(1.8);
+    opacity: 0;
+  }
+}
+
+.building-fire-smoke-particle {
+  opacity: 0;
+  animation-name: building-fire-smoke-rise;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .building-fire-smoke-particle {
+    animation: none;
+  }
+}

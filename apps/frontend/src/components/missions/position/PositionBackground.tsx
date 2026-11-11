@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import UFOAnimation from "./UFOAnimation";
 
 const BACKGROUND_WIDTH = 1366;
 const BACKGROUND_HEIGHT = 768;
@@ -9,8 +10,8 @@ const BACKGROUND_HEIGHT = 768;
 // Coordenadas relativas à imagem original
 const UFO = {
   left: 68.9,
-  top: 32.5,
-  width: 16,
+  top: 33,
+  width: 15,
 };
 
 const BEAM = {
@@ -117,14 +118,7 @@ export default function PositionBackground() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            <Image
-              src="/images/missions/position/ufo.png"
-              alt=""
-              width={768}
-              height={410}
-              className="block h-auto w-full"
-              draggable={false}
-            />
+            <UFOAnimation />
           </div>
 
           {/* Feixe luminoso */}
@@ -137,14 +131,26 @@ export default function PositionBackground() {
               transform: "translateX(-50%)",
             }}
           >
+            {/* Feixe original com pulsação */}
             <Image
               src="/images/missions/position/ufo-beam.png"
               alt=""
               width={307}
               height={540}
-              className="block h-auto w-full mask-[linear-gradient(to_bottom,black_0%,black_75%,transparent_100%)]"
+              className="ufo-beam-pulse block h-auto w-full mask-[linear-gradient(to_bottom,black_0%,black_75%,transparent_100%)]"
               draggable={false}
             />
+
+            {/* Energia luminosa subindo */}
+            <div
+              className="ufo-beam-energy pointer-events-none absolute inset-0 overflow-hidden"
+              style={{
+                maskImage:
+                  "linear-gradient(to bottom, black 0%, black 75%, transparent 100%)",
+              }}
+            >
+              <div className="ufo-beam-energy-wave absolute inset-x-0" />
+            </div>
           </div>
         </div>
       )}

@@ -78,3 +78,71 @@ body {
   }
 }
 
+/* Faixa de energia subindo pelo feixe */
+@keyframes ufo-energy-rise {
+  from {
+    transform: translateY(300%);
+  }
+
+  to {
+    transform: translateY(-150%);
+  }
+}
+
+.ufo-beam-energy {
+  clip-path: polygon(
+    25% 0%,
+    75% 0%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+.ufo-beam-energy-wave {
+  top: 0;
+  height: 35%;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(130, 255, 255, 0.08) 20%,
+    rgba(170, 255, 255, 0.65) 50%,
+    rgba(130, 255, 255, 0.08) 80%,
+    transparent 100%
+  );
+
+  filter: blur(4px);
+  animation: ufo-energy-rise 2.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ufo-beam-energy-wave {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Pulsação suave do feixe original */
+@keyframes ufo-beam-pulse {
+  0%, 100% {
+    opacity: 0.65;
+    filter: brightness(1.3);
+  }
+
+  50% {
+    opacity: 1.1;
+    filter: brightness(1.1);
+  }
+}
+
+.ufo-beam-pulse {
+  animation: ufo-beam-pulse 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ufo-beam-pulse {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+}

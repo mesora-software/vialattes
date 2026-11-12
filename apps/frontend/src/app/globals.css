@@ -281,3 +281,87 @@ body {
     animation: none;
   }
 }
+
+
+/* =========================================
+   BACKGROUND DRONES
+========================================= */
+
+@keyframes background-drone-1 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(-3deg);
+  }
+
+  25% {
+    transform: translate(170px, 5px) rotate(2deg);
+  }
+
+  50% {
+    transform: translate(90px, 58px) rotate(0deg);
+  }
+
+  75% {
+    transform: translate(-200px, 22px) rotate(-2deg);
+  }
+}
+
+@keyframes background-drone-2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(2deg);
+  }
+
+  30% {
+    transform: translate(-85px, 20px) rotate(-2deg);
+  }
+
+  60% {
+    transform: translate(-345px, -10px) rotate(1deg);
+  }
+
+  85% {
+    transform: translate(-55px, -25px) rotate(0deg);
+  }
+}
+
+@keyframes background-drone-3 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(-55px, -20px) rotate(3deg);
+  }
+
+  50% {
+    transform: translate(-215px, 10px) rotate(-2deg);
+  }
+
+  75% {
+    transform: translate(100px, 28px) rotate(1deg);
+  }
+}
+
+.background-drone {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.background-drone-1 {
+  animation-name: background-drone-1;
+}
+
+.background-drone-2 {
+  animation-name: background-drone-2;
+}
+
+.background-drone-3 {
+  animation-name: background-drone-3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .background-drone {
+    animation: none;
+  }
+}
+
+

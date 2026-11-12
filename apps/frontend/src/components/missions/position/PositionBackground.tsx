@@ -6,14 +6,15 @@ import { useEffect, useRef, useState } from "react";
 import UFOAnimation from "./UFOAnimation";
 import BuildingSmoke from "./BuildingSmoke";
 import BuildingFire from "./BuildingFire";
+import BackgroundDrones from "./BackgroundDrones";
 
 const BACKGROUND_WIDTH = 1366;
 const BACKGROUND_HEIGHT = 768;
 
 // Coordenadas relativas à imagem original
 const UFO = {
-  left: 68.9,
-  top: 33,
+  left: 68.8,
+  top: 31.9,
   width: 15,
 };
 
@@ -131,6 +132,9 @@ export default function PositionBackground() {
             className="object-fill"
             draggable={false}
           />
+
+          { /* Drones distantes voando pelo cenário */ }
+          <BackgroundDrones />
 
           {/* Disco voador */}
           <div

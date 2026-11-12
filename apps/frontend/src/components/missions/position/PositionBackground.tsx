@@ -1,8 +1,8 @@
-
 "use client";
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+
 import UFOAnimation from "./UFOAnimation";
 import BuildingSmoke from "./BuildingSmoke";
 import BuildingFire from "./BuildingFire";
@@ -27,21 +27,20 @@ const BEAM = {
 // Fontes de fumaça ambiental
 const SMOKE_SOURCES = [
   // Fumaças distantes
-  { id: 1, left: 21, top: 70, width: 55, duration: 7.5, delay: 0, opacity: 0.65 },
-  { id: 2, left: 35, top: 67, width: 60, duration: 8, delay: 1.3, opacity: 0.7 },
-  { id: 3, left: 49, top: 73, width: 65, duration: 7, delay: 2.1, opacity: 0.75 },
+  { id: 1, left: 21, top: 70, width: 55, duration: 7.5, delay: 0, opacity: 0.65, },
+  { id: 2, left: 35, top: 67, width: 60, duration: 8, delay: 1.3, opacity: 0.7, },
+  { id: 3, left: 49, top: 73, width: 65, duration: 7, delay: 2.1, opacity: 0.75, },
 
   // Fumaças próximas
-  { id: 4, left: 62, top: 75, width: 85, duration: 6, delay: 0.8, opacity: 0.95 },
-  { id: 5, left: 77, top: 70, width: 90, duration: 6.5, delay: 3.2, opacity: 0.95 },
+  { id: 4, left: 62, top: 75, width: 85, duration: 6, delay: 0.8, opacity: 0.95, },
+  { id: 5, left: 77, top: 70, width: 90, duration: 6.5, delay: 3.2, opacity: 0.95, },
 ];
 
-
+// Incêndios localizados
 const FIRE_SOURCES = [
   { id: 1, left: 39, top: 76, width: 45, duration: 2.5, delay: 0, },
-  { id: 2, left: 64.5, top: 73, width: 40, duration: 2.8, delay: 1.2,},
+  { id: 2, left: 64.5, top: 73, width: 40, duration: 2.8, delay: 1.2, },
 ];
-
 
 type SceneSize = {
   width: number;
@@ -54,6 +53,8 @@ export default function PositionBackground() {
   const [containerSize, setContainerSize] =
     useState<SceneSize | null>(null);
 
+  // Mede o contêiner para posicionar as animações.
+  // A imagem principal não depende desta medição.
   useEffect(() => {
     const container = containerRef.current;
 
@@ -109,10 +110,29 @@ export default function PositionBackground() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden opacity-60"
     >
-      {/* Superfície compartilhada do cenário */}
+      {/* =========================================
+          CENÁRIO ESTÁTICO
+          Carregado independentemente do ResizeObserver
+      ========================================= */}
+
+      <Image
+        src="/images/missions/position/background-clean.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-bottom"
+        draggable={false}
+      />
+
+      {/* =========================================
+          CAMADAS ANIMADAS
+          Posicionadas após a medição do contêiner
+      ========================================= */}
+
       {containerSize && (
         <div
-          className="absolute"
+          className="pointer-events-none absolute"
           style={{
             width: BACKGROUND_WIDTH,
             height: BACKGROUND_HEIGHT,
@@ -122,18 +142,7 @@ export default function PositionBackground() {
             transformOrigin: "top left",
           }}
         >
-          {/* Cenário estático */}
-          <Image
-            src="/images/missions/position/background-clean.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-fill"
-            draggable={false}
-          />
-
-          { /* Drones distantes voando pelo cenário */ }
+          {/* Drones distantes voando pelo cenário */}
           <BackgroundDrones />
 
           {/* Disco voador */}
@@ -222,4 +231,3 @@ export default function PositionBackground() {
     </div>
   );
 }
-

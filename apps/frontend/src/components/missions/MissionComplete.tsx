@@ -1,16 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  animate,
-} from "framer-motion";
-
+import styles from "./MissionComplete.module.css";
 
 interface MissionCompleteProps {
   defeatedEnemies: number;
@@ -48,7 +41,14 @@ const ASSETS = "/images/assets/ui/mission-complete";
 
 const COUNT_DURATION = 0.75;
 
+// Mantém os atrasos configuráveis das animações CSS.
+function entranceDelay(seconds: number): CSSProperties {
+  return {
+    "--entrance-delay": `${seconds}s`,
+  } as CSSProperties;
+}
 
+// Contador animado sem dependência do Framer Motion.
 function AnimatedCounter({
   value,
   delay,
@@ -56,27 +56,52 @@ function AnimatedCounter({
   prefix = "",
   className = "",
 }: AnimatedCounterProps) {
-  const count = useMotionValue(0);
-
   const [displayValue, setDisplayValue] = useState(0);
-
-  useMotionValueEvent(count, "change", (latest) => {
-      setDisplayValue(Math.round(latest));
-  });
 
   useEffect(() => {
     if (reduceMotion) {
       return;
     }
 
-    const controls = animate(count, value, {
-      duration: COUNT_DURATION,
-      delay,
-      ease: "easeOut",
-    });
+    let frameId = 0;
+    let startTime: number | null = null;
 
-    return () => controls.stop();
-  }, [count, value, delay, reduceMotion]);
+    const durationMs = COUNT_DURATION * 1000;
+    const delayMs = delay * 1000;
+
+    const update = (timestamp: number) => {
+      if (startTime === null) {
+        startTime = timestamp;
+      }
+
+      const elapsed = timestamp - startTime - delayMs;
+
+      if (elapsed < 0) {
+        frameId = requestAnimationFrame(update);
+        return;
+      }
+
+      const progress = Math.min(
+        Math.max(elapsed / durationMs, 0),
+        1
+      );
+
+      // Curva ease-out cúbica.
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setDisplayValue(Math.round(value * eased));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(update);
+      }
+    };
+
+    frameId = requestAnimationFrame(update);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
+  }, [value, delay, reduceMotion]);
 
   const currentValue = reduceMotion ? value : displayValue;
 
@@ -88,7 +113,7 @@ function AnimatedCounter({
   );
 }
 
-
+// Exibe uma recompensa com animação de entrada.
 function RewardDisplay({
   title,
   icon,
@@ -99,26 +124,13 @@ function RewardDisplay({
   reduceMotion,
 }: RewardDisplayProps) {
   return (
-    <motion.div
-      initial={
-        reduceMotion
-          ? false
-          : { opacity: 0, y: 12, scale: 0.9 }
-      }
-      animate={{
-        opacity: 1,
-        y: 0,
-        scale: 1,
-      }}
-      transition={{
-        duration: reduceMotion ? 0 : 0.4,
-        delay: reduceMotion ? 0 : delay,
-        ease: "easeOut",
-      }}
+    <div
       className={`
         absolute h-[18%] w-[34%]
+        ${styles.rewardEntrance}
         ${className}
       `}
+      style={entranceDelay(delay)}
     >
       {/* Título da recompensa */}
       <span
@@ -171,10 +183,11 @@ function RewardDisplay({
           "
         />
       </div>
-    </motion.div>
+    </div>
   );
 }
 
+// Botões de navegação da tela de conclusão.
 function NavigationButton({
   href,
   image,
@@ -230,14 +243,36 @@ function NavigationButton({
   );
 }
 
+// Tela principal de conclusão da missão.
 export default function MissionComplete({
   defeatedEnemies,
   xp,
   lattecoins,
   nextMissionHref,
 }: MissionCompleteProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const reduceMotion = shouldReduceMotion === true;
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  // Respeita as preferências de acessibilidade do sistema.
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    const updatePreference = () => {
+      setReduceMotion(mediaQuery.matches);
+    };
+
+    updatePreference();
+
+    mediaQuery.addEventListener("change", updatePreference);
+
+    return () => {
+      mediaQuery.removeEventListener(
+        "change",
+        updatePreference
+      );
+    };
+  }, []);
 
   return (
     <div
@@ -336,29 +371,16 @@ export default function MissionComplete({
               PAINEL E BOTÕES
           ================================================= */}
 
-          <motion.div
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, scale: 0.85, y: 100 }
-            }
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: reduceMotion ? 0 : 1.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="
+          <div
+            className={`
+              ${styles.panelEntrance}
               flex w-full max-w-120
               flex-col items-center
 
               max-lg:landscape:w-[min(55vw,92dvh)]
               max-lg:landscape:max-w-none
               max-lg:landscape:shrink-0
-            "
+            `}
           >
             {/* Painel base */}
             <div
@@ -392,22 +414,9 @@ export default function MissionComplete({
                     ZIPS DERROTADOS
                 =========================================== */}
 
-                <motion.div
-                  initial={
-                    reduceMotion
-                      ? false
-                      : { opacity: 0, y: 12 }
-                  }
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: reduceMotion ? 0 : 0.4,
-                    delay: reduceMotion ? 0 : 0.8,
-                    ease: "easeOut",
-                  }}
-                  className="
+                <div
+                  className={`
+                    ${styles.textEntrance}
                     absolute top-[37.5%] left-[15%]
                     flex h-[5%] w-[70%]
                     items-center justify-center
@@ -419,27 +428,15 @@ export default function MissionComplete({
                     leading-none
 
                     [-webkit-text-stroke:0.3px_black]
-                  "
+                  `}
+                  style={entranceDelay(0.8)}
                 >
                   Zips derrotados
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={
-                    reduceMotion
-                      ? false
-                      : { opacity: 0, y: 12 }
-                  }
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: reduceMotion ? 0 : 0.4,
-                    delay: reduceMotion ? 0 : 0.8,
-                    ease: "easeOut",
-                  }}
-                  className="
+                <div
+                  className={`
+                    ${styles.textEntrance}
                     absolute top-[45%] left-[15%]
                     flex h-[6%] w-[70%]
                     items-center justify-center
@@ -449,14 +446,15 @@ export default function MissionComplete({
 
                     text-[clamp(12px,4.5cqw,32px)]
                     leading-none
-                  "
+                  `}
+                  style={entranceDelay(0.8)}
                 >
                   <AnimatedCounter
                     value={defeatedEnemies}
                     delay={0.8}
                     reduceMotion={reduceMotion}
                   />
-                </motion.div>
+                </div>
 
                 {/* ===========================================
                     RECOMPENSAS
@@ -509,9 +507,10 @@ export default function MissionComplete({
                 label="Ir para a próxima missão"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+

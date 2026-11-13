@@ -55,6 +55,37 @@ const MOBILE_BOMB_SPEED = 260;
 
 const MOBILE_BREAKPOINT = 1024;
 
+// Observa o layout sem montar painéis que não serão exibidos.
+type PanelMode = "desktop" | "mobile-landscape" | "hidden";
+
+function subscribePanelMode(onStoreChange: () => void) {
+  const desktop = window.matchMedia(`(min-width: ${MOBILE_BREAKPOINT}px)`);
+  const landscape = window.matchMedia("(orientation: landscape)");
+
+  desktop.addEventListener("change", onStoreChange);
+  landscape.addEventListener("change", onStoreChange);
+
+  return () => {
+    desktop.removeEventListener("change", onStoreChange);
+    landscape.removeEventListener("change", onStoreChange);
+  };
+}
+
+function getPanelModeSnapshot(): PanelMode {
+  if (window.matchMedia(`(min-width: ${MOBILE_BREAKPOINT}px)`).matches) {
+    return "desktop";
+  }
+
+  return window.matchMedia("(orientation: landscape)").matches
+    ? "mobile-landscape"
+    : "hidden";
+}
+
+function getPanelModeServerSnapshot(): PanelMode {
+  return "hidden";
+}
+
+
 const AXIS_OFFSET = 30;
 
 const TOTAL_XP =
@@ -104,6 +135,11 @@ const getServerSnapshot = () => false;
 
 // Lógica principal da missão
 function PositionGameClient() {
+  const panelMode = useSyncExternalStore(
+    subscribePanelMode,
+    getPanelModeSnapshot,
+    getPanelModeServerSnapshot
+  );
   // Estados
   const [dronePosition, setDronePosition] = useState(0);
   const [zips, setZips] = useState<Zip[]>(() => createZips(1));
@@ -386,7 +422,7 @@ function PositionGameClient() {
           {/* Área do drone */}
           <div className="relative min-h-35 flex-1 max-lg:landscape:min-h-27">
             {/* Painel de mira desktop */}
-            {!showMissionComplete && (
+            {!showMissionComplete && panelMode === "desktop" && (
               <DraggablePanel className="max-lg:hidden">
                 <AimPanel
                   position={dronePosition}
@@ -501,7 +537,7 @@ function PositionGameClient() {
         </div>
 
         {/* Painel de mira mobile: mesmo design do desktop */}
-        {!showMissionComplete && (
+        {!showMissionComplete && panelMode === "mobile-landscape" && (
           <aside
             className="
               hidden
